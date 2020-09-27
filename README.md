@@ -32,11 +32,11 @@ install  : i
 ## on current project directory
 npm init 
 npm install express -s
-sudo npm i nodemon -g # after installed, type "nodemon" on current project directory
+(sudo) npm i nodemon -g # after installed, type "nodemon" on current project directory
 ```
   
-###### constructor
+###### constructor (using express generator)
 ```sh
-## tree
+(sudo) npm install express-generator -g
 ```
   
