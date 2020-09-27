@@ -24,10 +24,14 @@ npm - v
   
 ###### npm dependencies
 ```sh
-## on current project directory
+## short-cut
+--save   : -s
+--global : -g
+install  : i
 
+## on current project directory
 npm init 
-npm install express   # -s(--save) or -g(--global)
+npm install express -s
 sudo npm i nodemon -g # after installed, type "nodemon" on current project directory
 ```
   
