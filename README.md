@@ -38,5 +38,6 @@ npm install express -s
 ###### constructor (using express generator)
 ```sh
 (sudo) npm install express-generator -g
+express [project-name]
 ```
   
