@@ -39,5 +39,6 @@ npm install express -s
 ```sh
 (sudo) npm install express-generator -g
 express [project-name]
+cd [project-name] && npm install
 ```
   
