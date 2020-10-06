@@ -1,9 +1,9 @@
 /* global */
 * {
-    margin: 0;
-    padding: 0;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    /* margin: 0; */
+    /* padding: 0; */
     list-style-type: none;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -88,4 +88,21 @@ a:active {
 /* color */
 .beta {
     color: gainsboro;
+}
+
+/* bootstrap custom style */
+.btn-primary,
+.btn-primary:visited {
+    background-color: #1976d2 !important;
+    border-color: #1976d2;
+}
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: #1566b7 !important;
+    border-color: #1566b7;
+}
+
+.icons {
+    /* invert() 함수는 주어진 이미지의 색을 반전 */
+    filter: invert(100%);
 }
