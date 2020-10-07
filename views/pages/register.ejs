@@ -1,0 +1,189 @@
+<div class="container">
+    <form>
+        <div class="row mb-3">
+            <label for="name" class="col-sm-2 col-form-label">Name<b class="must">*</b></label>
+            <div class="col-4">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Harvey">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="phone" class="col-sm-2 col-form-label">Phone<b class="must">*</b></label>
+            <div class="col-4">
+                <div class="input-group">
+                    <input type="number" aria-label="phone1" class="form-control" name="phone1" placeholder="010">
+                    <input type="number" aria-label="phone2" class="form-control" name="phone2" placeholder="1234">
+                    <input type="number" aria-label="phone3" class="form-control" name="phone3" placeholder="5678">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="address1" class="col-sm-2 col-form-label">Address1<b class="must">*</b></label>
+            <div class="col-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="address1" placeholder="click!! search button -->"
+                        readonly>
+                    <button class="btn btn-outline-secondary" type="button" id="btnSearch">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="address2" class="col-sm-2 col-form-label">Address2<b class="must">*</b></label>
+            <div class="col-4">
+                <div class="col-8">
+                    <input type="text" class="form-control" name="address2" placeholder="Detail Address">
+                </div>
+                <div class="col-4">
+                    <input type="text" class="form-control col-md-2" name="zipCode" placeholder="Zip Code">
+                </div>
+
+                <!-- <span class="input-group-text" id="zipcode">ZipCode</span> -->
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="birthday" class="col-sm-2 col-form-label">Birthday<b class="must">*</b></label>
+            <div class="col-4">
+                <div class="input-group">
+                    <select class="form-select form-select">
+                        <option selected>Year</option>
+                    </select>
+                    <select class="form-select form-select">
+                        <option selected>Month</option>
+                    </select>
+                    <select class="form-select form-select">
+                        <option selected>Day</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <fieldset>
+            <div class="row mb-3">
+                <legend class="col-form-label col-sm-2 pt-0">Gender<b class="must">*</b></legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="gender1" value="option1">
+                        <label class="form-check-label" for="gender1">
+                            Male
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="gender2" value="option2">
+                        <label class="form-check-label" for="gender2">
+                            Female
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="row mb-3">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-4">
+                <input type="text" class="form-control" name="email" id="email" placeholder="harvey@gmail.com">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="registrationDate" class="col-sm-2 col-form-label">Job</label>
+            <div class="col-4">
+                <select class="form-select form-select">
+                    <option selected>Etc.</option>
+                </select>
+            </div>
+        </div>
+        <fieldset>
+            <div class="row mb-3">
+                <legend class="col-form-label col-sm-2 pt-0">Baptism</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="baptism" id="baptism1" value="option1">
+                        <label class="form-check-label" for="baptism1">
+                            Done
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="baptism" id="baptism2" value="option2">
+                        <label class="form-check-label" for="baptism2">
+                            Not Yet
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="row mb-3">
+            <label for="registrationDate" class="col-sm-2 col-form-label">Registration Date<b class="must">*</b></label>
+            <div class="col-4">
+                <div class="input-group">
+                    <select class="form-select form-select">
+                        <option selected>Year</option>
+                    </select>
+                    <select class="form-select form-select">
+                        <option selected>Month</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="addressLayer"></div>
+
+<!-- Address API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+    document.querySelector("#btnSearch").addEventListener("click", getAddress);
+    const addressLayer = document.querySelector(".addressLayer");
+
+    function getAddress() {
+
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                if (data) {
+                    document.querySelector("[name=address1]").value = data.address;
+                    document.querySelector("#zipcode").innerHTML = data.zonecode;
+                }
+                closeDaumPostCode();
+            },
+            width: "100%",
+            height: "100%",
+            maxSuggestItems: 5
+        }).embed(addressLayer);
+
+        displayDaumPostCode();
+        initLayerPosition();
+    }
+
+    // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+    function initLayerPosition() {
+        const width = 480; //우편번호서비스가 들어갈 element의 width
+        const height = 640; //우편번호서비스가 들어갈 element의 height
+        const borderWidth = 2; //샘플에서 사용하는 border의 두께
+
+        // 위에서 선언한 값들을 실제 element에 넣는다.
+        addressLayer.style.width = width + "px";
+        addressLayer.style.height = height + "px";
+        addressLayer.style.border = borderWidth + "px solid #595959";
+        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        addressLayer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + "px";
+        addressLayer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + "px";
+    }
+
+    function displayDaumPostCode() {
+        // iframe을 넣은 element를 보이게 한다.
+        addressLayer.style.display = "block";
+    }
+
+    function closeDaumPostCode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        addressLayer.style.display = "none";
+    }
+</script>
+
+<style>
+    .addressLayer {
+        display: none;
+        position: fixed;
+        overflow: hidden;
+        z-index: 10;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
