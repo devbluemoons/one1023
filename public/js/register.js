@@ -1,8 +1,16 @@
 import * as daum from "./lib/daumPostCode.js";
 
 window.onload = function () {
+
+    // set daum post code
+    const addressLayer = document.querySelector(".addressLayer");
+    document.querySelector("#btnSearch").addEventListener("click", function () {
+        daum.getAddress(addressLayer);
+    });
+
     setBirthDate();
     setJoinDate();
+
 };
 
 function setBirthDate(){
@@ -64,9 +72,3 @@ function setJoinDate(){
         document.querySelector("[name=joinMonth]").appendChild(option);
     }
 }
-
-// set daum post code
-const addressLayer = document.querySelector(".addressLayer");
-document.querySelector("#btnSearch").addEventListener("click", function () {
-    daum.getAddress(addressLayer);
-});
