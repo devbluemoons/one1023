@@ -1,32 +1,32 @@
 <div class="container">
-    <div class="col-4 alert alert-danger" role="alert">
+    <div class="col-5 alert alert-danger" role="alert">
         [!] Please, fill in the required fields marked with *
     </div>
     <form id="registerForm">
         <div class="row">
             <div class="col-6">
                 <div class="row mb-3">
-                    <label for="name" class="col-4 col-form-label"><b class="must">*</b>Name</label>
-                    <div class="col-8">
+                    <label for="name" class="col-3 col-form-label"><b class="must">*</b>Name</label>
+                    <div class="col-9">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Harvey" required>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="phone" class="col-4 col-form-label"><b class="must">*</b>Phone</label>
-                    <div class="col-8">
+                    <label for="contact" class="col-3 col-form-label"><b class="must">*</b>Contact</label>
+                    <div class="col-9">
                         <div class="input-group">
-                            <input type="number" aria-label="phone1" class="form-control" name="phone1"
+                            <input type="number" aria-label="contact1" class="form-control" name="contact1"
                                 placeholder="010" required>
-                            <input type="number" aria-label="phone2" class="form-control" name="phone2"
+                            <input type="number" aria-label="contact2" class="form-control" name="contact2"
                                 placeholder="1234" required>
-                            <input type="number" aria-label="phone3" class="form-control" name="phone3"
+                            <input type="number" aria-label="contact3" class="form-control" name="contact3"
                                 placeholder="5678" required>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="address1" class="col-4 col-form-label"><b class="must">*</b>Address1</label>
-                    <div class="col-8">
+                    <label for="address1" class="col-3 col-form-label"><b class="must">*</b>Address1</label>
+                    <div class="col-9">
                         <div class="input-group">
                             <input type="text" class="form-control" name="address1"
                                 placeholder="click!! search button -->" readonly>
@@ -35,13 +35,13 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="address2" class="col-4 col-form-label"><b class="must">*</b>Address2</label>
-                    <div class="col-8">
+                    <label for="address2" class="col-3 col-form-label"><b class="must">*</b>Address2</label>
+                    <div class="col-9">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <input type="text" class="form-control" name="zipCode" placeholder="Zip Code" readonly>
                             </div>
-                            <div class="col-8">
+                            <div class="col-9">
                                 <input type="text" class="form-control" name="address2" placeholder="Detail Address"
                                     required>
                             </div>
@@ -50,7 +50,7 @@
                 </div>
                 <fieldset>
                     <div class="row mb-3">
-                        <legend class="col-form-label col-4 pt-0"><b class="must">*</b>Gender</legend>
+                        <legend class="col-form-label col-3 pt-0"><b class="must">*</b>Gender</legend>
                         <div class="col-sm-8">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="gender1" value="option1"
@@ -70,16 +70,16 @@
                     </div>
                 </fieldset>
                 <div class="row mb-3">
-                    <label for="birthday" class="col-4 col-form-label"><b class="must">*</b>Birthday</label>
-                    <div class="col-8">
+                    <label for="birthday" class="col-3 col-form-label"><b class="must">*</b>Birthday</label>
+                    <div class="col-9">
                         <div class="input-group">
-                            <select class="form-select form-select" required>
+                            <select class="form-select form-select" name="birthYear" required>
                                 <option selected>Year</option>
                             </select>
-                            <select class="form-select form-select" required>
+                            <select class="form-select form-select" name="birthMonth" required>
                                 <option selected>Month</option>
                             </select>
-                            <select class="form-select form-select" required>
+                            <select class="form-select form-select" name="birthDay" required>
                                 <option selected>Day</option>
                             </select>
                         </div>
@@ -87,8 +87,8 @@
                 </div>
                 <fieldset>
                     <div class="row mb-3">
-                        <legend class="col-form-label col-4 pt-0"><b class="must">*</b>Marital Status</legend>
-                        <div class="col-8">
+                        <legend class="col-form-label col-3 pt-0"><b class="must">*</b>Marital Status</legend>
+                        <div class="col-9">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="maritalStatus" id="maritalStatus1"
                                     value="option1" required>
@@ -107,15 +107,15 @@
                     </div>
                 </fieldset>
                 <div class="row mb-3">
-                    <label for="registrationDate" class="col-4 col-form-label">
-                        <b class="must">*</b>Registration Date
+                    <label for="joinDate" class="col-3 col-form-label">
+                        <b class="must">*</b>Join Date
                     </label>
-                    <div class="col-8">
+                    <div class="col-9">
                         <div class="input-group">
-                            <select class="form-select form-select" required>
+                            <select class="form-select form-select" name="joinYear" required>
                                 <option selected>Year</option>
                             </select>
-                            <select class="form-select form-select" required>
+                            <select class="form-select form-select" name="joinMonth" required>
                                 <option selected>Month</option>
                             </select>
                         </div>
@@ -130,21 +130,21 @@
 
             <div class="col-6">
                 <div class="row mb-3">
-                    <label for="email" class="col-4 col-form-label">Email</label>
-                    <div class="col-8">
+                    <label for="email" class="col-3 col-form-label">Email</label>
+                    <div class="col-9">
                         <input type="text" class="form-control" name="email" id="email" placeholder="harvey@gmail.com">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="job" class="col-4 col-form-label">Job</label>
-                    <div class="col-8">
+                    <label for="job" class="col-3 col-form-label">Job</label>
+                    <div class="col-9">
                         <input type="text" class="form-control" name="job" id="job" placeholder="Software Developer">
                     </div>
                 </div>
                 <fieldset>
                     <div class="row mb-3">
-                        <legend class="col-form-label col-4 pt-0">Baptism</legend>
-                        <div class="col-8">
+                        <legend class="col-form-label col-3 pt-0">Baptism</legend>
+                        <div class="col-9">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="baptism" id="baptism1"
                                     value="option1">
@@ -163,27 +163,45 @@
                     </div>
                 </fieldset>
                 <div class="row mb-3">
-                    <label for="group" class="col-4 col-form-label">Group</label>
-                    <div class="col-8">
+                    <label for="group" class="col-3 col-form-label">Group</label>
+                    <div class="col-9">
                         <select class="form-select form-select" id="group">
                             <option selected>...</option>
                         </select>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="role" class="col-4 col-form-label">Role</label>
-                    <div class="col-8">
+                    <label for="role" class="col-3 col-form-label">Role</label>
+                    <div class="col-9">
                         <select class="form-select form-select" id="role">
                             <option selected>...</option>
                         </select>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="role" class="col-4 col-form-label">Service</label>
-                    <div class="col-8">
+                    <label for="role" class="col-3 col-form-label">Service</label>
+                    <div class="col-9">
                         <select class="form-select form-select" id="service">
                             <option selected>...</option>
                         </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="role" class="col-3 col-form-label">Attendance</label>
+                    <div class="col-9">
+                        <select class="form-select form-select" id="attendance">
+                            <option selected>...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="image" class="col-3 col-form-label">Image</label>
+                    <div class="col-9">
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="image"
+                                accept="image/x-png, image/gif, image/jpeg">
+                            <button class="btn btn-outline-secondary" type="button" name="delete">Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,65 +211,6 @@
 
 <div class="addressLayer"></div>
 
-<!-- Address API -->
+<!-- Daum Post Code API -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<script>
-    document.querySelector("#btnSearch").addEventListener("click", getAddress);
-    const addressLayer = document.querySelector(".addressLayer");
-
-    function getAddress() {
-
-        new daum.Postcode({
-            oncomplete: function (data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                if (data) {
-                    document.querySelector("[name=zipCode]").value = data.zonecode;
-                    document.querySelector("[name=address1]").value = data.address;
-                }
-                closeDaumPostCode();
-            },
-            width: "100%",
-            height: "100%",
-            maxSuggestItems: 5
-        }).embed(addressLayer);
-
-        displayDaumPostCode();
-        initLayerPosition();
-    }
-
-    // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-    function initLayerPosition() {
-        const width = 480; //우편번호서비스가 들어갈 element의 width
-        const height = 640; //우편번호서비스가 들어갈 element의 height
-        const borderWidth = 2; //샘플에서 사용하는 border의 두께
-
-        // 위에서 선언한 값들을 실제 element에 넣는다.
-        addressLayer.style.width = width + "px";
-        addressLayer.style.height = height + "px";
-        addressLayer.style.border = borderWidth + "px solid #595959";
-        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
-        addressLayer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width) / 2 - borderWidth) + "px";
-        addressLayer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height) / 2 - borderWidth) + "px";
-    }
-
-    function displayDaumPostCode() {
-        // iframe을 넣은 element를 보이게 한다.
-        addressLayer.style.display = "block";
-    }
-
-    function closeDaumPostCode() {
-        // iframe을 넣은 element를 안보이게 한다.
-        addressLayer.style.display = "none";
-    }
-</script>
-
-<style>
-    .addressLayer {
-        display: none;
-        position: fixed;
-        overflow: hidden;
-        z-index: 10;
-        -webkit-overflow-scrolling: touch;
-    }
-</style>
+<script src="js/register.js" type="module"></script>

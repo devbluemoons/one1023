@@ -107,11 +107,18 @@ a:active {
     filter: invert(100%);
 }
 
-/* feature */
+/* features */
 .beta {
     color: gainsboro;
 }
 .must {
     color: red;
     padding: 5px;
+}
+.addressLayer {
+    display: none;
+    position: fixed;
+    overflow: hidden;
+    z-index: 10;
+    -webkit-overflow-scrolling: touch;
 }
