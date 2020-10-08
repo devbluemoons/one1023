@@ -1,0 +1,31 @@
+.icons {
+    /* invert() 함수는 주어진 이미지의 색을 반전 */
+    filter: invert(100%);
+}
+
+.beta {
+    color: gainsboro;
+}
+.must {
+    color: red;
+    padding: 5px;
+}
+.addressLayer {
+    display: none;
+    position: fixed;
+    overflow: hidden;
+    z-index: 10;
+    -webkit-overflow-scrolling: touch;
+}
+.imagePreview {
+    width: 35%;
+    height: 120px;
+    text-align: center;
+    box-sizing: content-box;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+    color: lightgrey;
+}
+.imagePreview :first-child {
+    line-height: 120px;
+}

@@ -1,0 +1,11 @@
+/* bootstrap custom style */
+.btn-primary,
+.btn-primary:visited {
+    background-color: #1976d2 !important;
+    border-color: #1976d2;
+}
+.btn-primary:hover,
+.btn-primary:active {
+    background-color: #1566b7 !important;
+    border-color: #1566b7;
+}
