@@ -1,16 +1,17 @@
 import * as daum from "./lib/daumPostCode.js";
 
 window.onload = function () {
-
-    // set daum post code
-    const addressLayer = document.querySelector(".addressLayer");
-    document.querySelector("#btnSearch").addEventListener("click", function () {
-        daum.getAddress(addressLayer);
-    });
-
+    setDaumPostCode();
     setBirthDate();
     setJoinDate();
+    setImagePreview();
+};
 
+function setDaumPostCode(){
+    const layer = document.querySelector(".address-layer");
+    document.querySelector("#btnSearch").addEventListener("click", function () {
+        daum.getAddress(layer);
+    });
 };
 
 function setBirthDate(){
@@ -71,4 +72,58 @@ function setJoinDate(){
 
         document.querySelector("[name=joinMonth]").appendChild(option);
     }
+}
+
+function setImagePreview(){
+
+    const imageFile = document.querySelector("#imageFile");
+    const imageContainer = document.querySelector("#imagePreview");
+    const imagePreview = imageContainer.querySelector(".image-preview__real");
+    const imageText = imageContainer.querySelector(".image-preview__text");
+
+    imageFile.addEventListener("change", function(){
+        
+        const file = this.files[0];
+        
+        if (file) {
+            
+            const reader = new FileReader();
+            
+            imageText.style.display = "none";
+            imagePreview.style.display = "block";
+
+            reader.addEventListener("load", function(){
+                imagePreview.setAttribute("src", this.result);
+            });
+            reader.readAsDataURL(file);
+
+        } else {
+            imageText.style.display = null;
+            imagePreview.style.display = null;
+        }
+    });
+
+    // delete image File
+    document.querySelector("#btnDelete").addEventListener("click", function(){
+        imageFile.value = null;
+        imageText.style.display = null;
+        imagePreview.style.display = null;
+    });
+
+    // endlarge image
+    imagePreview.addEventListener("click", function(){
+
+        const enlargeImage = document.getElementById("enlargeImage");
+        const image = enlargeImage.querySelector("img");
+        const myModal = new bootstrap.Modal(enlargeImage);
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function(){
+            image.setAttribute("src", this.result);
+            image.style.width = "100%";
+        });
+        reader.readAsDataURL(imageFile.files[0]);
+        
+        myModal.show();
+    });
 }

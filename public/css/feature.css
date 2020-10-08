@@ -10,22 +10,34 @@
     color: red;
     padding: 5px;
 }
-.addressLayer {
+.address-layer {
     display: none;
     position: fixed;
     overflow: hidden;
     z-index: 10;
     -webkit-overflow-scrolling: touch;
 }
-.imagePreview {
-    width: 35%;
-    height: 120px;
-    text-align: center;
+.image-preview {
+    width: 180px;
+    min-height: 120px;
+
+    /* default text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     box-sizing: content-box;
     border: 2px solid lightgrey;
     border-radius: 5px;
     color: lightgrey;
+    font-weight: bold;
 }
-.imagePreview :first-child {
-    line-height: 120px;
+.image-preview__real {
+    display: none;
+    width: 100%;
 }
+.enlarge-image {
+    /* display: block; */
+    width: 100;
+}
+

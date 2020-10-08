@@ -198,16 +198,17 @@
                     <label for="image" class="col-3 col-form-label">Image</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="file" class="form-control" name="image"
+                            <input type="file" class="form-control" name="imageFile" id="imageFile"
                                 accept="image/x-png, image/gif, image/jpeg">
-                            <button class="btn btn-outline-secondary" type="button" name="delete">Delete</button>
+                            <button class="btn btn-outline-secondary" type="button" id="btnDelete">Delete</button>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-12 offset-md-3">
-                        <div class="imagePreview">
-                            <h5>Image-Preview</h5>
+                        <div class="image-preview" id="imagePreview">
+                            <img src="" alt="Image Preview" class="image-preview__real">
+                            <span class="image-preview__text">Image Preview</span>
                         </div>
                     </div>
                 </div>
@@ -216,8 +217,24 @@
     </form>
 </div>
 
-<div class="addressLayer"></div>
+<!-- Daum Post Code API Layer -->
+<div class="address-layer"></div>
 
+<!-- enlarge Image -->
+<div class="modal fade" id="enlargeImage" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <img src="" alt="Zoom In Image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Daum Post Code API -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="js/register.js" type="module"></script>
