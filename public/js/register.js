@@ -5,16 +5,17 @@ window.onload = function () {
     setBirthDate();
     setJoinDate();
     setImagePreview();
+    setEvent();
 };
 
-function setDaumPostCode(){
+function setDaumPostCode() {
     const layer = document.querySelector(".address-layer");
     document.querySelector("#btnSearch").addEventListener("click", function () {
         daum.getAddress(layer);
     });
-};
+}
 
-function setBirthDate(){
+function setBirthDate() {
     //birth year
     const date = new Date();
     const thisYear = date.getFullYear();
@@ -23,7 +24,6 @@ function setBirthDate(){
     const minimumYear = date.getFullYear();
 
     for (let i = minimumYear; i <= thisYear; i++) {
-        
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
@@ -32,31 +32,28 @@ function setBirthDate(){
     }
     //birth month
     for (let i = 1; i <= 12; i++) {
-        
         const option = document.createElement("option");
-        option.value = i;
-        option.text = i;
+        option.value = i < 10 ? "0" + i : i;
+        option.text = i < 10 ? "0" + i : i;
 
         document.querySelector("[name=birthMonth]").appendChild(option);
     }
     //birth day
     for (let i = 1; i <= 31; i++) {
-        
         const option = document.createElement("option");
-        option.value = i;
-        option.text = i;
+        option.value = i < 10 ? "0" + i : i;
+        option.text = i < 10 ? "0" + i : i;
 
         document.querySelector("[name=birthDay]").appendChild(option);
     }
 }
 
-function setJoinDate(){
+function setJoinDate() {
     //join year
     const openYear = 2015;
     const thisYear = Number(new Date().getFullYear());
 
     for (let i = openYear; i <= thisYear; i++) {
-        
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
@@ -65,38 +62,33 @@ function setJoinDate(){
     }
     //join month
     for (let i = 1; i <= 12; i++) {
-        
         const option = document.createElement("option");
-        option.value = i;
-        option.text = i;
+        option.value = i < 10 ? "0" + i : i;
+        option.text = i < 10 ? "0" + i : i;
 
         document.querySelector("[name=joinMonth]").appendChild(option);
     }
 }
 
-function setImagePreview(){
-
+function setImagePreview() {
     const imageFile = document.querySelector("#imageFile");
     const imageContainer = document.querySelector("#imagePreview");
     const imagePreview = imageContainer.querySelector(".image-preview__real");
     const imageText = imageContainer.querySelector(".image-preview__text");
 
-    imageFile.addEventListener("change", function(){
-        
+    imageFile.addEventListener("change", function () {
         const file = this.files[0];
-        
+
         if (file) {
-            
             const reader = new FileReader();
-            
+
             imageText.style.display = "none";
             imagePreview.style.display = "block";
 
-            reader.addEventListener("load", function(){
+            reader.addEventListener("load", function () {
                 imagePreview.setAttribute("src", this.result);
             });
             reader.readAsDataURL(file);
-
         } else {
             imageText.style.display = null;
             imagePreview.style.display = null;
@@ -104,26 +96,38 @@ function setImagePreview(){
     });
 
     // delete image File
-    document.querySelector("#btnDelete").addEventListener("click", function(){
+    document.querySelector("#btnRemove").addEventListener("click", function () {
         imageFile.value = null;
         imageText.style.display = null;
         imagePreview.style.display = null;
     });
 
     // endlarge image
-    imagePreview.addEventListener("click", function(){
-
-        const enlargeImage = document.getElementById("enlargeImage");
-        const image = enlargeImage.querySelector("img");
-        const myModal = new bootstrap.Modal(enlargeImage);
+    imagePreview.addEventListener("click", function () {
+        const imageContainer = document.getElementById("enlargeImage");
+        const image = imageContainer.querySelector("img");
+        const modal = new bootstrap.Modal(imageContainer);
         const reader = new FileReader();
 
-        reader.addEventListener("load", function(){
+        reader.addEventListener("load", function () {
             image.setAttribute("src", this.result);
             image.style.width = "100%";
         });
         reader.readAsDataURL(imageFile.files[0]);
-        
-        myModal.show();
+
+        modal.show();
     });
+}
+
+function setEvent() {
+    document.getElementById("btnSave").addEventListener("click", registerMember);
+}
+
+function registerMember() {
+    const joinForm = document.getElementById("joinForm");
+    const formData = new FormData(joinForm);
+
+    for (let entry of formData.entries()) {
+        console.log(entry);
+    }
 }
