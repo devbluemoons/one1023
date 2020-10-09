@@ -2,12 +2,13 @@ import * as daum from "./lib/daumPostCode.js";
 
 window.onload = function () {
     setDaumPostCode();
-    setBirthDate();
+    setBirthDay();
     setJoinDate();
     setImagePreview();
     setEvent();
 };
 
+// set Daum Post Code Api
 function setDaumPostCode() {
     const layer = document.querySelector(".address-layer");
     document.querySelector("#btnSearch").addEventListener("click", function () {
@@ -15,7 +16,8 @@ function setDaumPostCode() {
     });
 }
 
-function setBirthDate() {
+// set birthday select box
+function setBirthDay() {
     //birth year
     const date = new Date();
     const thisYear = date.getFullYear();
@@ -48,6 +50,7 @@ function setBirthDate() {
     }
 }
 
+// set join date select box
 function setJoinDate() {
     //join year
     const openYear = 2015;
@@ -70,6 +73,7 @@ function setJoinDate() {
     }
 }
 
+// set image preview function
 function setImagePreview() {
     const imageFile = document.querySelector("#imageFile");
     const imageContainer = document.querySelector("#imagePreview");
@@ -119,15 +123,62 @@ function setImagePreview() {
     });
 }
 
+// set all event
 function setEvent() {
     document.getElementById("btnSave").addEventListener("click", registerMember);
 }
 
+// register member information
 function registerMember() {
+    const formData = makeFormData();
+    verifyFormData(formData);
+    saveFormData(formData);
+}
+
+// make form data
+// return : member information
+function makeFormData() {
     const joinForm = document.getElementById("joinForm");
     const formData = new FormData(joinForm);
 
-    for (let entry of formData.entries()) {
-        console.log(entry);
-    }
+    // make birthday
+    const birthYear = formData.get("birthYear");
+    const birthMonth = formData.get("birthMonth");
+    const birthDay = formData.get("birthDay");
+    formData.append("birthday", [birthYear, birthMonth, birthDay].join());
+
+    // make join date
+    const joinYear = formData.get("joinYear");
+    const joinMonth = formData.get("joinMonth");
+    formData.append("joinDate", [joinYear, joinMonth].join());
+
+    return formData;
+}
+
+// verify form data
+// param : member information
+function verifyFormData(data) {
+    console.log(data);
+}
+
+// save form data
+// param : member information
+function saveFormData(data) {
+    fetch("/register/member", {
+        method: "POST",
+        body: data,
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+                return false;
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
