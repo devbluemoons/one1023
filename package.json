@@ -9,10 +9,13 @@
         "bootstrap-icons": "^1.0.0",
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
+        "dotenv": "^8.2.0",
         "ejs": "~2.6.1",
         "express": "~4.17.1",
         "express-ejs-layouts": "^2.5.0",
         "http-errors": "~1.6.3",
+        "mongodb": "^3.6.2",
+        "mongoose": "^5.10.9",
         "morgan": "~1.9.1"
     }
 }

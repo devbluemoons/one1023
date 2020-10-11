@@ -145,14 +145,21 @@ function makeFormData() {
     const birthYear = formData.get("birthYear");
     const birthMonth = formData.get("birthMonth");
     const birthDay = formData.get("birthDay");
-    formData.append("birthday", [birthYear, birthMonth, birthDay].join());
+    formData.append("birthday", [birthYear, birthMonth, birthDay].join(""));
 
     // make join date
     const joinYear = formData.get("joinYear");
     const joinMonth = formData.get("joinMonth");
-    formData.append("joinDate", [joinYear, joinMonth].join());
+    formData.append("joinDate", [joinYear, joinMonth].join(""));
 
-    return formData;
+    // set post parameter
+    const param = {};
+
+    formData.forEach((value, key) => {
+        param[key] = value;
+    });
+
+    return param;
 }
 
 // verify form data
@@ -164,9 +171,19 @@ function verifyFormData(data) {
 // save form data
 // param : member information
 function saveFormData(data) {
-    fetch("/register/member", {
-        method: "POST",
-        body: data,
+    // create member information
+    fetch("/member/create", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, cors, *same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+            "Content-Type": "multipart/form-data",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrer: "no-referrer", // no-referrer, *client
+        body: data, // body data type must match "Content-Type" header
     })
         .then(response => {
             if (!response.ok) {
@@ -176,9 +193,9 @@ function saveFormData(data) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            console.log("mission success!!", data);
         })
         .catch(error => {
-            console.log(error);
+            console.error(error);
         });
 }

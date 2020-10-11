@@ -1,6 +1,7 @@
-# one1023
-  
+## one1023
+
 ###### specification
+
 | dev tool            | version |
 | ------------------- | ------- |
 | nodejs              | 12.18.4 |
@@ -12,18 +13,22 @@
 | chartjs             |         |
 | mongo-community     | 4.4     |
 | mongoose            | 5.10.9  |
+| dotenv              | 8.2.0   |
 | javscript           | ES6+    |
-  
+
 ###### validation check (for MacOS)
+
 ```sh
 git --version
 node - v
 npm - v
 ```
-- if not yet installed nodejs
-- just go => https://nodejs.org
-  
+
+-   if not yet installed nodejs
+-   just go => https://nodejs.org
+
 ###### npm dependencies
+
 ```sh
 ## short-cut
 --save   : -s
@@ -31,15 +36,15 @@ npm - v
 install  : i
 
 ## on current project directory
-npm init 
+npm init
 npm install express -s
 (sudo) npm i nodemon -g # after installed, type "nodemon" on current project directory
 ```
-  
-###### constructor (using express generator)
+
+###### constructor (use express generator)
+
 ```sh
 (sudo) npm install express-generator -g
 express [project-name]
 cd [project-name] && npm install
 ```
-  

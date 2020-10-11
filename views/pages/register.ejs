@@ -1,6 +1,6 @@
 <div class="container">
     <div class="col-5 alert alert-danger" role="alert">
-        [!] Please, fill in the required fields marked with *
+        <div>[!] Please, fill in the required fields marked with *</div>
     </div>
     <form id="joinForm">
         <div class="row">
@@ -8,16 +8,16 @@
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Name</label>
                     <div class="col-9">
-                        <input type="text" class="form-control" name="name" placeholder="Harvey" required>
+                        <input type="text" class="form-control" name="name" placeholder="Harvey" required />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Contact</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="number" aria-label="contact1" class="form-control" name="contact1" placeholder="010" required>
-                            <input type="number" aria-label="contact2" class="form-control" name="contact2" placeholder="1234" required>
-                            <input type="number" aria-label="contact3" class="form-control" name="contact3" placeholder="5678" required>
+                            <input type="number" aria-label="contact1" class="form-control" name="contact1" placeholder="010" required />
+                            <input type="number" aria-label="contact2" class="form-control" name="contact2" placeholder="1234" required />
+                            <input type="number" aria-label="contact3" class="form-control" name="contact3" placeholder="5678" required />
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <label class="col-3 col-form-label"><b class="must">*</b>Address1</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="address1" placeholder="click!! search button -->" aria-required="true" readonly>
+                            <input type="text" class="form-control" name="address1" placeholder="click!! search button -->" aria-required="true" readonly />
                             <button class="btn btn-outline-secondary" type="button" id="btnSearch">Search</button>
                         </div>
                     </div>
@@ -35,10 +35,10 @@
                     <div class="col-9">
                         <div class="row">
                             <div class="col-3">
-                                <input type="text" class="form-control" name="zipCode" placeholder="Zip Code" aria-required="true" readonly>
+                                <input type="text" class="form-control" name="zipCode" placeholder="Zip Code" aria-required="true" readonly />
                             </div>
                             <div class="col-9">
-                                <input type="text" class="form-control" name="address2" placeholder="Detail Address" required>
+                                <input type="text" class="form-control" name="address2" placeholder="Detail Address" required />
                             </div>
                         </div>
                     </div>
@@ -48,11 +48,11 @@
                         <legend class="col-form-label col-3"><b class="must">*</b>Gender</legend>
                         <div class="col-9">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="M" required>
+                                <input class="form-check-input" type="radio" name="gender" value="M" required />
                                 <label class="form-check-label">Male</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="W" required>
+                                <input class="form-check-input" type="radio" name="gender" value="W" required />
                                 <label class="form-check-label">Female</label>
                             </div>
                         </div>
@@ -79,20 +79,28 @@
                         <legend class="col-form-label col-3"><b class="must">*</b>Marital Status</legend>
                         <div class="col-9">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="married" value="Y" required>
+                                <input class="form-check-input" type="radio" name="married" value="Y" required />
                                 <label class="form-check-label">Single</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="married" value="N" required>
+                                <input class="form-check-input" type="radio" name="married" value="N" required />
                                 <label class="form-check-label">Together</label>
                             </div>
                         </div>
                     </div>
                 </fieldset>
                 <div class="row mb-3">
-                    <label class="col-3 col-form-label">
-                        <b class="must">*</b>Join Date
-                    </label>
+                    <label class="col-3 col-form-label"> <b class="must">*</b>Faith state </label>
+                    <div class="col-9">
+                        <select class="form-select form-select" name="faithState" required>
+                            <option value="">...</option>
+                            <option value="01">new face</option>
+                            <option value="02">come from other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-3 col-form-label"> <b class="must">*</b>Join Date </label>
                     <div class="col-9">
                         <div class="input-group">
                             <select class="form-select form-select" name="joinYear" required>
@@ -106,7 +114,7 @@
                 </div>
                 <div class="row md-3">
                     <div class="col text-right">
-                        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+                        <button type="button" class="btn btn-primary" id="btnSave">Save</button>
                     </div>
                 </div>
             </div>
@@ -115,13 +123,13 @@
                 <div class="row mb-3">
                     <label class="col-3 col-form-label">Email</label>
                     <div class="col-9">
-                        <input type="text" class="form-control" name="email" placeholder="harvey@gmail.com">
+                        <input type="text" class="form-control" name="email" placeholder="harvey@gmail.com" />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-3 col-form-label">Job</label>
                     <div class="col-9">
-                        <input type="text" class="form-control" name="job" placeholder="Software Developer">
+                        <input type="text" class="form-control" name="job" placeholder="Software Developer" />
                     </div>
                 </div>
                 <fieldset>
@@ -129,11 +137,11 @@
                         <legend class="col-form-label col-3">Baptism</legend>
                         <div class="col-9">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="baptism" value="Y">
+                                <input class="form-check-input" type="radio" name="baptism" value="Y" />
                                 <label class="form-check-label">Done</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="baptism" value="N">
+                                <input class="form-check-input" type="radio" name="baptism" value="N" />
                                 <label class="form-check-label">Not yet</label>
                             </div>
                         </div>
@@ -175,7 +183,7 @@
                     <label class="col-3 col-form-label">Image</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="file" class="form-control" name="imageFile" id="imageFile" accept="image/x-png, image/gif, image/jpeg">
+                            <input type="file" class="form-control" name="imageFile" id="imageFile" accept="image/x-png, image/gif, image/jpeg" />
                             <button class="btn btn-outline-secondary" type="button" id="btnRemove">Remove</button>
                         </div>
                     </div>
@@ -183,7 +191,9 @@
                 <div class="row mb-3">
                     <div class="col-12 offset-md-3">
                         <div class="image-preview" id="imagePreview">
-                            <img src="" alt="Image Preview" class="image-preview__real">
+                            <a href="#">
+                                <img src="" alt="Image Preview" class="image-preview__real" />
+                            </a>
                             <span class="image-preview__text">Image Preview</span>
                         </div>
                     </div>
@@ -204,12 +214,13 @@
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img src="" alt="Zoom In Image">
+                <img src="" alt="Zoom In Image" />
             </div>
         </div>
     </div>
 </div>
 
+<script src="js/register.js" type="module"></script>
+
 <!-- Daum Post Code API -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="js/register.js" type="module"></script>

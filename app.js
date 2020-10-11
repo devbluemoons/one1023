@@ -41,3 +41,23 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+///////////////////
+//               //
+//  set MongoDB  //
+//               //
+///////////////////
+
+// use dotenv
+const dotenv = require("dotenv");
+dotenv.config();
+
+const mongoose = require("mongoose");
+// use native Promise of nodejs
+mongoose.Promise = global.Promise;
+
+// Connect to MongoDB
+mongoose
+    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Successfully connected to mongodb"))
+    .catch(e => console.error(e));
