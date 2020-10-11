@@ -1,17 +1,18 @@
 # one1023
   
 ###### specification
-| dev tool     | version |
-| ------------ | ------- |
-| nodejs       | 12.18.4 |
-| npm          | 6.14.46 |
-| express      | 4.17.1  |
-| bootstrap    | 5+      |
-| hansonTable  |         |
-| chartjs      |         |
-| mongoDB      |         |
-| mongoose     |         |
-| javscript    | ES6+    |
+| dev tool            | version |
+| ------------------- | ------- |
+| nodejs              | 12.18.4 |
+| npm                 | 6.14.46 |
+| express             | 4.17.1  |
+| express-ejs-layouts | 2.5.0   |
+| bootstrap           | 5+      |
+| hansonTable         |         |
+| chartjs             |         |
+| mongo-community     | 4.4     |
+| mongoose            | 5.10.9  |
+| javscript           | ES6+    |
   
 ###### validation check (for MacOS)
 ```sh
