@@ -1,22 +1,31 @@
 // member Shema
 const Member = require("../models/memberSchema");
 
+// set multer
+const multer = require("multer");
+const fields = multer().fields([]);
+
 module.exports = {
     create: (req, res, next) => {
-        console.log(req.body);
-
-        return false;
-
-        const member = makeFormData(req.body);
-
-        member
-            .save()
-            .then(() => {
-                res.render("/");
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        // multer fields
+        fields(req, res, error => {
+            // make form data
+            const member = makeFormData(req.body);
+            // save data
+            member
+                .save((error, savedDocument) => {
+                    if (error) {
+                        new Error(error);
+                    }
+                    console.log(savedDocument);
+                })
+                .then(() => {
+                    res.render("pages/register");
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
     },
     find: (req, res, next) => {
         console.log(req);
@@ -29,7 +38,6 @@ module.exports = {
 };
 
 function makeFormData(data) {
-    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     if (data) {
         return new Member({
             name: data.name,
@@ -45,7 +53,7 @@ function makeFormData(data) {
             birthday: data.birthday,
             married: data.married,
             faithState: data.faithState,
-            joinData: data.joinData,
+            joinDate: data.joinDate,
             email: data.email,
             job: data.job,
             baptism: data.baptism,
@@ -56,5 +64,5 @@ function makeFormData(data) {
             imagePath: data.imagePath,
         });
     }
-    return null;
+    return new Error("data is empty!");
 }

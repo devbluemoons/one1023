@@ -152,20 +152,18 @@ function makeFormData() {
     const joinMonth = formData.get("joinMonth");
     formData.append("joinDate", [joinYear, joinMonth].join(""));
 
-    // set post parameter
-    const param = {};
-
-    formData.forEach((value, key) => {
-        param[key] = value;
-    });
-
-    return param;
+    return formData;
 }
 
 // verify form data
 // param : member information
 function verifyFormData(data) {
-    console.log(data);
+    // set post parameter
+    const param = {};
+
+    data.forEach((value, key) => {
+        param[key] = value;
+    });
 }
 
 // save form data
@@ -173,29 +171,19 @@ function verifyFormData(data) {
 function saveFormData(data) {
     // create member information
     fetch("/member/create", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-            "Content-Type": "multipart/form-data",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: "follow", // manual, *follow, error
-        referrer: "no-referrer", // no-referrer, *client
-        body: data, // body data type must match "Content-Type" header
+        method: "POST",
+        body: data,
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
-                return false;
+                new Error(response);
             }
             return response.json();
         })
         .then(data => {
-            console.log("mission success!!", data);
+            console.log(data);
         })
         .catch(error => {
-            console.error(error);
+            new Error(error);
         });
 }
