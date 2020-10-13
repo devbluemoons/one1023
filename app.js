@@ -4,6 +4,7 @@ const layouts = require("express-ejs-layouts");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const multer = require("multer");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -21,8 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// set router
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+// set multer(TEST)
+app.use("/", multer.fields([]));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -48,11 +53,12 @@ module.exports = app;
 //               //
 ///////////////////
 
-// use dotenv
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+// use dotenv
 dotenv.config();
 
-const mongoose = require("mongoose");
 // use native Promise of nodejs
 mongoose.Promise = global.Promise;
 
