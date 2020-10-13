@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const memberSchema = mongoose.Schema(
+const memberSchema = new Schema(
     {
         name: {
             type: String,
@@ -86,7 +87,7 @@ const memberSchema = mongoose.Schema(
         },
         opinions: [
             {
-                id: mongoose.Schema.Types.ObjectId,
+                id: Schema.Types.ObjectId,
             },
             {
                 writer: String,

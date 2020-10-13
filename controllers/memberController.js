@@ -1,35 +1,28 @@
 // member Shema
 const Member = require("../models/memberSchema");
 
-// set multer
-const multer = require("multer");
-const fields = multer().fields([]);
-
 module.exports = {
     create: (req, res, next) => {
-        // multer fields
-        fields(req, res, error => {
-            // make form data
-            const member = makeFormData(req.body);
-            // save data
-            member
-                .save((error, savedDocument) => {
-                    if (error) {
-                        new Error(error);
-                    }
-                    console.log(savedDocument);
-                })
-                .then(() => {
-                    res.render("pages/register");
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        });
+        // make form data
+        const member = makeFormData(req.body);
+        // save data
+        member
+            .save()
+            .then(savedDocumnet => {
+                res.locals.redirect = "/register";
+                res.locals.user = savedDocumnet;
+                next();
+            })
+            .catch(error => {
+                console.error(error);
+            });
     },
     find: (req, res, next) => {
-        console.log(req);
-        console.log("mission success~");
+        Member.find({})
+            .exec()
+            .then(result => {
+                res.send(result);
+            });
     },
     edit: (req, res, next) => {
         console.log(req);
