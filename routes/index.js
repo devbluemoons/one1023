@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const multer = require("multer");
 
-// set multer (for receiving request.body)
+// set multer (for receiving request.body from "FormData")
 router.use("/", multer().fields([]));
 
 /* GET home page. */
