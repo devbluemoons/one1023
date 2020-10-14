@@ -29,9 +29,13 @@ function loadMemberList(data) {
 
     new Handsontable(tableContainer, {
         data: data,
+        bindRowsWithHeaders: true,
         rowHeaders: true,
-        colHeaders: true,
-        filters: true,
-        dropdownMenu: true,
+        colHeaders: ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Marital Status", "Faith State"],
+        preventOverflow: "vertical",
+        height: "100vh",
+        autoColumnSize: { useHeaders: true },
+        readOnly: true,
+        licenseKey: "non-commercial-and-evaluation",
     });
 }
