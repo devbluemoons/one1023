@@ -21,7 +21,7 @@ nav > ul {
     padding-top: 1em;
     padding-left: 0;
 }
-nav > ul > li {
+aside > nav > ul > li {
     padding: 20px;
 }
 nav > ul > li:hover {
