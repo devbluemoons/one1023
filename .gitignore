@@ -206,3 +206,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# File directory
+uploads/

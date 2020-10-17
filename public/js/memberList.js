@@ -29,15 +29,22 @@ function getMemberList() {
 // find member list
 function findMemberList(data) {
     const container = document.getElementById("dataTable");
-    const hot = new Handsontable(container, expands.standardSettings(data, getColHeaders(), getColumns(), 0.58));
-    hot.addHook("afterSelectionEnd", expands.selectAllRow);
+    const hot = new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns(), 0.58));
+
+    hot.render();
+
+    // hot.addHook("beforeInit", function (a, b, c) {
+    //     console.log(111111);
+    // });
+
+    // hot.selectRows(5);
 }
 
-function getColHeaders() {
+function makeColHeaders() {
     return ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Marital Status", "Faith State"];
 }
 
-function getColumns() {
+function makeColumns() {
     return [
         { data: null, renderer: expands.imageRenderer },
         { data: "name" },

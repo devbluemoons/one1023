@@ -16,6 +16,7 @@ router.get("/memberList", function (req, res, next) {
 });
 
 /* Controller Router */
+router.use("/file", require("../routes/fileRoute"));
 router.use("/member", require("../routes/memberRoute"));
 
 module.exports = router;

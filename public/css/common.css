@@ -89,3 +89,10 @@ a:active {
 .font24 {
     font-size: 24px;
 }
+
+/* table */
+table {
+    white-space: nowrap;
+    table-layout: auto;
+    width: 100%;
+}
