@@ -11,7 +11,6 @@ function findMemberList() {
         method: "GET",
     })
         .then(response => {
-            console.log(response);
             if (!response.ok) {
                 new Error(response);
             }
@@ -31,14 +30,7 @@ function findMemberList() {
 function setDataTable(data) {
     const container = document.getElementById("dataTable");
     const hot = new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns(), 0.58));
-
-    // hot.render();
-
-    // hot.addHook("beforeInit", function (a, b, c) {
-    //     console.log(111111);
-    // });
-
-    // hot.selectRows(5);
+    hot.selectRows(2);
 }
 
 function makeColHeaders() {

@@ -31,11 +31,11 @@ export function contactRenderer(instance, td, row, col, prop, value, cellPropert
 }
 
 export function memberDetailRenderer(instance, td, row, col, prop, value, cellProperties) {
-    if (value) {
-        const link = `<a href="http://www.apple.com" target="_blank">${value}</a>`;
-        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
-        Handsontable.dom.fastInnerHTML(td, link);
-    }
+    const _id = instance.getDataAtRowProp(row, "_id");
+    const link = `<a href="/member/view?id=${_id}" target="_blank">${value}</a>`;
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, link);
 }
 
 // set handsonTable properties

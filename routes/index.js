@@ -14,6 +14,9 @@ router.get("/member/register", function (req, res, next) {
 router.get("/member/list", function (req, res, next) {
     res.render("pages/member/list");
 });
+router.get("/member/view", function (req, res, next) {
+    res.render("pages/member/view");
+});
 
 /* Controller Router */
 router.use("/file", require("../routes/file"));
