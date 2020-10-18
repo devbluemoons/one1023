@@ -1,16 +1,17 @@
-import * as expands from "./common.js";
+import * as expands from "../common.js";
 
 window.onload = function () {
-    getMemberList();
+    findMemberList();
 };
 
 // get member list
-function getMemberList() {
+function findMemberList() {
     // create member information
-    fetch("member/list", {
+    fetch("/member/find", {
         method: "GET",
     })
         .then(response => {
+            console.log(response);
             if (!response.ok) {
                 new Error(response);
             }
@@ -18,7 +19,7 @@ function getMemberList() {
         })
         .then(data => {
             if (data) {
-                findMemberList(data);
+                setDataTable(data);
             }
         })
         .catch(error => {
@@ -27,11 +28,11 @@ function getMemberList() {
 }
 
 // find member list
-function findMemberList(data) {
+function setDataTable(data) {
     const container = document.getElementById("dataTable");
     const hot = new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns(), 0.58));
 
-    hot.render();
+    // hot.render();
 
     // hot.addHook("beforeInit", function (a, b, c) {
     //     console.log(111111);
@@ -41,17 +42,18 @@ function findMemberList(data) {
 }
 
 function makeColHeaders() {
-    return ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Marital Status", "Faith State"];
+    return ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Family", "Marital Status", "Faith State"];
 }
 
 function makeColumns() {
     return [
         { data: null, renderer: expands.imageRenderer },
-        { data: "name" },
+        { data: "name", renderer: expands.memberDetailRenderer },
         { data: "contact", renderer: expands.contactRenderer },
         { data: "address1" },
         { data: "gender" },
         { data: "birthday" },
+        { data: "family" },
         { data: "married" },
         { data: "faithState" },
     ];

@@ -10,19 +10,17 @@ body {
     width: 100%;
     height: 100%;
 }
-
 body {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
 }
-
+aside > nav > ul > li {
+    padding: 20px;
+}
 nav > ul {
     padding-top: 1em;
     padding-left: 0;
-}
-aside > nav > ul > li {
-    padding: 20px;
 }
 nav > ul > li:hover {
     background-color: #f2f2f2;
@@ -35,27 +33,18 @@ nav > ul > li > a {
     color: #595959;
 }
 
-/* a link */
-a {
-    color: aliceblue;
-}
-
 /* unvisited link */
 a:link {
     text-decoration: none;
 }
-
 /* visited link */
 a:visited {
     text-decoration: none;
 }
-
 /* mouse over link */
 a:hover {
-    color: aliceblue;
     text-decoration: none;
 }
-
 /* selected link */
 a:active {
     text-decoration: none;
@@ -95,4 +84,13 @@ table {
     white-space: nowrap;
     table-layout: auto;
     width: 100%;
+}
+
+/* header */
+header a:hover {
+    color: aliceblue;
+    text-decoration: none;
+}
+header a {
+    color: aliceblue;
 }

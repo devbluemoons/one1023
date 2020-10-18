@@ -1,4 +1,4 @@
-import * as daum from "./lib/daumPostCode.js";
+import * as daum from "../lib/daumPostCode.js";
 
 window.onload = function () {
     setDaumPostCode();
@@ -182,6 +182,7 @@ function saveFormData(data) {
         })
         .then(data => {
             console.log(data);
+            location.href = "/member/list";
         })
         .catch(error => {
             new Error(error);

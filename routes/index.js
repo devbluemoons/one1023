@@ -2,21 +2,21 @@ const router = require("express").Router();
 const multer = require("multer");
 
 // set multer (for receiving request.body from "FormData")
-router.use("/", multer().fields([]));
+// router.use("/", multer().any());
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
     res.render("index", { title: "Express" });
 });
-router.get("/register", function (req, res, next) {
-    res.render("pages/register");
+router.get("/member/register", function (req, res, next) {
+    res.render("pages/member/register");
 });
-router.get("/memberList", function (req, res, next) {
-    res.render("pages/memberList");
+router.get("/member/list", function (req, res, next) {
+    res.render("pages/member/list");
 });
 
 /* Controller Router */
-router.use("/file", require("../routes/fileRoute"));
-router.use("/member", require("../routes/memberRoute"));
+router.use("/file", require("../routes/file"));
+router.use("/member", require("./member"));
 
 module.exports = router;
