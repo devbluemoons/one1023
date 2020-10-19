@@ -158,18 +158,14 @@ function makeFormData() {
 // verify form data
 // param : member information
 function verifyFormData(data) {
-    // set post parameter
-    const param = {};
-
-    data.forEach((value, key) => {
-        param[key] = value;
-    });
+    // check required fields
+    // check variable type or specific field rule
 }
 
 // save form data
 // param : member information
 function saveFormData(data) {
-    // create member information
+    // create member
     fetch("/member/create", {
         method: "POST",
         body: data,
@@ -181,8 +177,9 @@ function saveFormData(data) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            location.href = "/member/list";
+            if (data) {
+                location.href = "/member/list";
+            }
         })
         .catch(error => {
             new Error(error);

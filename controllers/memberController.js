@@ -8,17 +8,19 @@ module.exports = {
         // save data
         member
             .save()
-            .then(savedDocumnet => {
-                res.locals.redirect = "/register";
-                res.locals.user = savedDocumnet;
-                next();
+            .then(savedDocument => {
+                if (savedDocument) {
+                    res.send(savedDocument);
+                }
             })
             .catch(error => {
-                console.error(error);
+                console.error(error.message);
+                next(error);
             });
     },
     find: (req, res, next) => {
         Member.find({})
+            .sort({ _id: -1 })
             .exec()
             .then(result => {
                 res.send(result);
@@ -27,6 +29,14 @@ module.exports = {
     edit: (req, res, next) => {
         console.log(req);
         console.log("mission success~");
+    },
+    redirectView: (req, res, next) => {
+        let redirectPath = res.locals.redirect;
+        if (redirectPath) {
+            res.redirect(redirectPath);
+        } else {
+            next();
+        }
     },
 };
 

@@ -20,6 +20,6 @@ router.get("/member/view", function (req, res, next) {
 
 /* Controller Router */
 router.use("/file", require("../routes/file"));
-router.use("/member", require("./member"));
+router.use("/member", multer().fields([]), require("./member"));
 
 module.exports = router;

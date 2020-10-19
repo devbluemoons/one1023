@@ -30,7 +30,8 @@ function findMemberList() {
 function setDataTable(data) {
     const container = document.getElementById("dataTable");
     const hot = new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns(), 0.58));
-    hot.selectRows(2);
+
+    // hot.selectRows(0);
 }
 
 function makeColHeaders() {
