@@ -40,7 +40,7 @@ function makeColHeaders() {
 
 function makeColumns() {
     return [
-        { data: null, renderer: expands.imageRenderer },
+        { data: "imagePath", renderer: expands.imageRenderer },
         { data: "name", renderer: expands.memberDetailRenderer },
         { data: "contact", renderer: expands.contactRenderer },
         { data: "address1" },

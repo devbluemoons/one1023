@@ -165,6 +165,7 @@ function verifyFormData(data) {
 // save form data
 // param : member information
 function saveFormData(data) {
+    console.log([...data]);
     // create member
     fetch("/member/create", {
         method: "POST",

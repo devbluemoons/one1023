@@ -1,10 +1,18 @@
-// member Shema
 const Member = require("../models/memberSchema");
+const uploadFile = require("../middlewares/uploadFile");
 
 module.exports = {
-    create: (req, res, next) => {
+    create: async (req, res, next) => {
+        // upload File
+        await uploadFile(req, res);
+
+        if (req.file) {
+            console.log(req.file);
+            req.body.imagePath = req.file.path;
+        }
         // make form data
         const member = makeFormData(req.body);
+
         // save data
         member
             .save()
@@ -20,7 +28,7 @@ module.exports = {
     },
     find: (req, res, next) => {
         Member.find({})
-            .sort({ _id: -1 })
+            .sort({ _id: -1 }) // descending
             .exec()
             .then(result => {
                 res.send(result);

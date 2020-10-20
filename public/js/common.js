@@ -6,18 +6,14 @@
 
 /* renderer */
 export function imageRenderer(instance, td, row, col, prop, value, cellProperties) {
-    const img = document.createElement("IMG");
-    img.src = "/file/12248147_1653319481612623_7179105678068856634_o.jpg";
-    // img.style.width = "100%";
-    img.style.height = "200%";
+    if (value) {
+        const img = document.createElement("IMG");
+        img.src = `/${value}` || "#";
+        img.style.width = "100%";
+        img.style.height = "200%";
 
-    Handsontable.renderers.TextRenderer.apply(this, arguments);
-    td.appendChild(img);
-
-    // Handsontable.dom.empty(td);
-    // const imagePath = value || "#";
-    // Handsontable.dom.fastInnerHTML(td);
-    // Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+        td.appendChild(img);
+    }
 }
 
 export function contactRenderer(instance, td, row, col, prop, value, cellProperties) {

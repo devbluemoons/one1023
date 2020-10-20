@@ -3,8 +3,8 @@ const File = require("../models/fileSchema");
 
 module.exports = {
     upload: (req, res, next) => {
-        res.send("upload success!"); // object를 리턴함
-        console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
+        console.log(req.file); // 콘솔(터미널)을 통해서 "req.file" 내용 확인 가능.
+        res.send(req.file); // object를 리턴함
     },
     find: (req, res, next) => {
         File.findById({ id: req.body.id })

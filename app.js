@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const usersRouter = require("./routes/usersRoute");
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // image directory
-app.use("/file", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
