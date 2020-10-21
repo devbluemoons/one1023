@@ -125,7 +125,12 @@ function setImagePreview() {
 
 // set all event
 function setEvent() {
+    // create member
     document.getElementById("btnSave").addEventListener("click", registerMember);
+    // number regular expression
+    document.querySelectorAll("[name^=contact]").forEach(item => {
+        item.addEventListener("keyup", numberRegExp);
+    });
 }
 
 // register member information
@@ -145,12 +150,12 @@ function makeFormData() {
     const birthYear = formData.get("birthYear");
     const birthMonth = formData.get("birthMonth");
     const birthDay = formData.get("birthDay");
-    formData.append("birthday", [birthYear, birthMonth, birthDay].join(""));
+    formData.set("birthday", [birthYear, birthMonth, birthDay].join(""));
 
     // make join date
     const joinYear = formData.get("joinYear");
     const joinMonth = formData.get("joinMonth");
-    formData.append("joinDate", [joinYear, joinMonth].join(""));
+    formData.set("joinDate", [joinYear, joinMonth].join(""));
 
     return formData;
 }
@@ -165,8 +170,6 @@ function verifyFormData(data) {
 // save form data
 // param : member information
 function saveFormData(data) {
-    console.log([...data]);
-    // create member
     fetch("/member/create", {
         method: "POST",
         body: data,
@@ -185,4 +188,10 @@ function saveFormData(data) {
         .catch(error => {
             new Error(error);
         });
+}
+
+// number regular expression
+function numberRegExp(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/, "");
+    e.target.value = e.target.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/, "");
 }

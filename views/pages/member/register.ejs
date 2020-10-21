@@ -10,24 +10,25 @@
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Name</label>
                     <div class="col-9">
-                        <input type="text" class="form-control" name="name" placeholder="Harvey" required />
+                        <input type="text" class="form-control" name="name" placeholder="Harvey" />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Contact</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="number" aria-label="contact1" class="form-control" name="contact1" placeholder="010" required />
-                            <input type="number" aria-label="contact2" class="form-control" name="contact2" placeholder="1234" required />
-                            <input type="number" aria-label="contact3" class="form-control" name="contact3" placeholder="5678" required />
+                            <input type="text" class="form-control" name="contact1" placeholder="010" maxlength="3" />
+                            <input type="text" class="form-control" name="contact2" placeholder="1234" maxlength="4" />
+                            <input type="text" class="form-control" name="contact3" placeholder="5678" maxlength="4" />
                         </div>
+                        <input type="hidden" name="contact" />
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Address1</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="address1" placeholder="click!! search button -->" aria-required="true" readonly />
+                            <input type="text" class="form-control" name="address1" placeholder="click!! search button -->" aria-="true" readonly />
                             <button class="btn btn-outline-secondary" type="button" id="btnSearch">Search</button>
                         </div>
                     </div>
@@ -37,10 +38,10 @@
                     <div class="col-9">
                         <div class="row">
                             <div class="col-3">
-                                <input type="text" class="form-control" name="zipCode" placeholder="Zip Code" aria-required="true" readonly />
+                                <input type="text" class="form-control" name="zipCode" placeholder="Zip Code" aria-="true" readonly />
                             </div>
                             <div class="col-9">
-                                <input type="text" class="form-control" name="address2" placeholder="Detail Address" required />
+                                <input type="text" class="form-control" name="address2" placeholder="Detail Address" />
                             </div>
                         </div>
                     </div>
@@ -50,11 +51,11 @@
                         <legend class="col-form-label col-3"><b class="must">*</b>Gender</legend>
                         <div class="col-9">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="M" required />
+                                <input class="form-check-input" type="radio" name="gender" value="M" />
                                 <label class="form-check-label">Male</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" value="W" required />
+                                <input class="form-check-input" type="radio" name="gender" value="W" />
                                 <label class="form-check-label">Female</label>
                             </div>
                         </div>
@@ -64,16 +65,17 @@
                     <label class="col-3 col-form-label"><b class="must">*</b>Birthday</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <select class="form-select form-select" name="birthYear" required>
+                            <select class="form-select form-select" name="birthYear">
                                 <option value="">Year</option>
                             </select>
-                            <select class="form-select form-select" name="birthMonth" required>
+                            <select class="form-select form-select" name="birthMonth">
                                 <option value="">Month</option>
                             </select>
-                            <select class="form-select form-select" name="birthDay" required>
+                            <select class="form-select form-select" name="birthDay">
                                 <option value="">Day</option>
                             </select>
                         </div>
+                        <input type="hidden" name="birthday" />
                     </div>
                 </div>
                 <fieldset>
@@ -81,11 +83,11 @@
                         <legend class="col-form-label col-3"><b class="must">*</b>Marital Status</legend>
                         <div class="col-9">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="married" value="Y" required />
+                                <input class="form-check-input" type="radio" name="married" value="Y" />
                                 <label class="form-check-label">Single</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="married" value="N" required />
+                                <input class="form-check-input" type="radio" name="married" value="N" />
                                 <label class="form-check-label">Together</label>
                             </div>
                         </div>
@@ -94,7 +96,7 @@
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Family</label>
                     <div class="col-9">
-                        <select class="form-select form-select" name="family" required>
+                        <select class="form-select form-select" name="family">
                             <option value="">...</option>
                         </select>
                     </div>
@@ -102,7 +104,7 @@
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Faith State</label>
                     <div class="col-9">
-                        <select class="form-select form-select" name="faithState" required>
+                        <select class="form-select form-select" name="faithState">
                             <option value="">...</option>
                             <option value="01">new face</option>
                             <option value="02">come from other</option>
@@ -113,13 +115,14 @@
                     <label class="col-3 col-form-label"><b class="must">*</b>Join Date</label>
                     <div class="col-9">
                         <div class="input-group">
-                            <select class="form-select form-select" name="joinYear" required>
+                            <select class="form-select form-select" name="joinYear">
                                 <option value="">Year</option>
                             </select>
-                            <select class="form-select form-select" name="joinMonth" required>
+                            <select class="form-select form-select" name="joinMonth">
                                 <option value="">Month</option>
                             </select>
                         </div>
+                        <input type="hidden" name="joinDate" />
                     </div>
                 </div>
                 <div class="row md-3">

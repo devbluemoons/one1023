@@ -7,22 +7,13 @@
 /* renderer */
 export function imageRenderer(instance, td, row, col, prop, value, cellProperties) {
     if (value) {
-        const img = document.createElement("IMG");
-        img.src = `/${value}` || "#";
-        img.style.width = "100%";
+        const img = new Image();
+
         img.style.height = "200%";
+        img.style.width = "100%";
+        img.src = "/" + value;
 
         td.appendChild(img);
-    }
-}
-
-export function contactRenderer(instance, td, row, col, prop, value, cellProperties) {
-    if (value) {
-        const contact = { ...value };
-        td.innerText = [value, value, value].join("-");
-
-        Handsontable.dom.fastInnerHTML(td, contact);
-        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     }
 }
 
@@ -32,6 +23,42 @@ export function memberDetailRenderer(instance, td, row, col, prop, value, cellPr
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, link);
+}
+
+export function contactRenderer(instance, td, row, col, prop, value, cellProperties) {
+    if (value) {
+        const contact = [value.contact1, value.contact2, value.contact3].join("-");
+
+        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+        Handsontable.dom.fastInnerHTML(td, contact);
+    }
+}
+
+export function genderRenderer(instance, td, row, col, prop, value, cellProperties) {
+    const gender = value.toUpperCase() === "M" ? "Men" : "Women";
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, gender);
+}
+
+export function birthdayRenderer(instance, td, row, col, prop, value, cellProperties) {
+    const year = value.substring(0, 4);
+    const month = value.substring(4, 6);
+    const day = value.substring(6, 8);
+
+    const birthday = `${year}/${month}/${day}`;
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, birthday);
+}
+
+export function ageRenderer(instance, td, row, col, prop, value, cellProperties) {
+    const year = value.substring(0, 4);
+
+    const thisYear = new Date().getFullYear();
+    const age = thisYear - Number(year) + 1;
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, age);
 }
 
 // set handsonTable properties

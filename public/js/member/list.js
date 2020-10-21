@@ -35,7 +35,7 @@ function setDataTable(data) {
 }
 
 function makeColHeaders() {
-    return ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Family", "Marital Status", "Faith State"];
+    return ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Age", "Family", "Marital Status", "Faith State"];
 }
 
 function makeColumns() {
@@ -44,8 +44,9 @@ function makeColumns() {
         { data: "name", renderer: expands.memberDetailRenderer },
         { data: "contact", renderer: expands.contactRenderer },
         { data: "address1" },
-        { data: "gender" },
-        { data: "birthday" },
+        { data: "gender", renderer: expands.genderRenderer },
+        { data: "birthday", renderer: expands.birthdayRenderer },
+        { data: "birthday", renderer: expands.ageRenderer },
         { data: "family" },
         { data: "married" },
         { data: "faithState" },

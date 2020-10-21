@@ -7,9 +7,9 @@ module.exports = {
         await uploadFile(req, res);
 
         if (req.file) {
-            console.log(req.file);
             req.body.imagePath = req.file.path;
         }
+
         // make form data
         const member = makeFormData(req.body);
 
