@@ -34,12 +34,32 @@ module.exports = {
                 res.send(result);
             });
     },
+    count: (req, res, next) => {
+        const options = {
+            page: 1,
+            limit: 1,
+            collation: {
+                locale: "en",
+            },
+        };
+
+        Member.paginate({}, options, function (err, result) {
+            res.json(result);
+        });
+    },
     edit: (req, res, next) => {
         console.log(req);
         console.log("mission success~");
     },
+    // count: (req, res, next) => {
+    //     Member.countDocuments()
+    //         .exec()
+    //         .then(result => {
+    //             res.json({ count: result });
+    //         });
+    // },
     redirectView: (req, res, next) => {
-        let redirectPath = res.locals.redirect;
+        const redirectPath = res.locals.redirect;
         if (redirectPath) {
             res.redirect(redirectPath);
         } else {

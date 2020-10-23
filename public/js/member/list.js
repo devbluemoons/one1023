@@ -1,8 +1,31 @@
 import * as expands from "../common.js";
+import * as pagination from "../modules/pagination.js";
 
 window.onload = function () {
     findMemberList();
+    countMemberList();
 };
+
+// get count of member list
+function countMemberList() {
+    // create member information
+    fetch("/member/count", {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            // document.getElementById("totalCount").textContent = data.count;
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
 
 // get member list
 function findMemberList() {
@@ -12,13 +35,14 @@ function findMemberList() {
     })
         .then(response => {
             if (!response.ok) {
-                new Error(response);
+                console.error(response);
             }
             return response.json();
         })
         .then(data => {
             if (data) {
                 setDataTable(data);
+                setPagination();
             }
         })
         .catch(error => {
@@ -30,14 +54,19 @@ function findMemberList() {
 function setDataTable(data) {
     const container = document.getElementById("dataTable");
     const hot = new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns(), 0.58));
-
-    // hot.selectRows(0);
 }
 
+// set pagination
+function setPagination() {
+    document.getElementById("pagination").innerHTML = pagination.makePagination();
+}
+
+// make colHeaders
 function makeColHeaders() {
     return ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Age", "Family", "Marital Status", "Faith State"];
 }
 
+// make columns
 function makeColumns() {
     return [
         { data: "imagePath", renderer: expands.imageRenderer },

@@ -1,4 +1,4 @@
-import * as daum from "../lib/daumPostCode.js";
+import * as daum from "../modules/daumPostCode.js";
 
 window.onload = function () {
     setDaumPostCode();
