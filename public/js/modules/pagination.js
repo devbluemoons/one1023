@@ -1,22 +1,15 @@
+export class Pagination {
+    constructor() {
+        this.pagination = document.getElementById("pagination");
+        this.currentPage = 1;
+        this.pages;
+    }
+}
+
 // make pagination
-export function makePagination(data) {
-    // calculated variables from [ mongoose-paginate-v2 ]
-    const { hasNextPage, hasPrevPage, limit, nextPage, page, pagingCounter, prevPage, totalDocs, totalPages } = data;
-
+Pagination.prototype.makePagination = function (paginator) {
     // make paging variables
-    const currentPage = page;
-    const rangeSize = 10;
-    const currentRange = Math.ceil(currentPage / rangeSize);
-    const rangeCount = Math.ceil(totalPages / rangeSize);
-    const startPage = (currentRange - 1) * rangeSize + 1;
-    const endPage = currentRange * rangeSize > totalPages ? totalPages : currentRange * rangeSize;
-
-    // make url path
-    const url = new URL(document.URL);
-    const pathname = url.pathname;
-    const urlPath = pathname + "?page=";
-
-    console.log(url);
+    const { rangeSize, pageLimit, totalCount, currentPage, currentRange, rangeCount, startPage, endPage } = paginator;
 
     // paging blocks
     let previous = null;
@@ -26,7 +19,7 @@ export function makePagination(data) {
     // make previous
     if (currentRange > 1) {
         previous = `<li class="page-item">
-                        <a class="page-link" href="${urlPath}${startPage - rangeSize}" aria-label="Previous">
+                        <a class="page-link" href="#" id="${startPage - rangeSize}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>`;
@@ -35,7 +28,7 @@ export function makePagination(data) {
     // make next
     if (currentRange < rangeCount) {
         next = `<li class="page-item">
-                    <a class="page-link" href="${urlPath}${startPage - rangeSize}" aria-label="Next">
+                    <a class="page-link" href="#" id="${startPage - rangeSize}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>`;
@@ -43,7 +36,7 @@ export function makePagination(data) {
 
     // pages
     for (let i = startPage; i <= endPage; i++) {
-        pages += `<li class="page-item"><a class="page-link" href="${urlPath}${i}">${i}</a></li>`;
+        pages += `<li class="page-item"><a class="page-link" href="#" id="${i}">${i}</a></li>`;
     }
 
     return `<nav>
@@ -53,4 +46,19 @@ export function makePagination(data) {
                     ${next || ""}
                 </ul>
             </nav>`;
-}
+};
+
+// insert pagination to element
+Pagination.prototype.setPagination = function (paginator) {
+    this.pagination.innerHTML = this.makePagination(paginator);
+    return this;
+};
+
+// set click event
+Pagination.prototype.setEvent = function (callback) {
+    this.pagination.querySelectorAll("li").forEach(item => {
+        item.addEventListener("click", e => {
+            callback(e);
+        });
+    });
+};

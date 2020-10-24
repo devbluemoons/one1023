@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
 
 const { Schema } = mongoose;
 
@@ -103,8 +102,5 @@ const memberSchema = new Schema(
         collection: "members",
     }
 );
-
-// binding paginate
-memberSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Member", memberSchema);

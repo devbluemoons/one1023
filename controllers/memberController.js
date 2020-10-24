@@ -1,4 +1,5 @@
 const Member = require("../models/memberSchema");
+const Paginator = require("../middlewares/paginator");
 const uploadFile = require("../middlewares/uploadFile");
 
 module.exports = {
@@ -27,33 +28,27 @@ module.exports = {
             });
     },
     find: (req, res, next) => {
-        // Member.find({})
-        //     .sort({ _id: -1 }) // descending
-        //     .exec()
-        //     .then(result => {
-        //         res.send(result);
-        //     });
-        const options = {
-            page: 1,
-            limit: 1,
-            collation: {
-                locale: "en",
-            },
-        };
+        // set parameter
+        const skip = Number((req.query.page - 1) * req.query.limit);
+        const limit = Number(req.query.limit);
 
-        Member.paginate({}, options, function (err, result) {
-            res.json(result);
-        });
+        Member.find({})
+            .sort({ _id: -1 }) // descending
+            .skip(skip) // skip data order
+            .limit(limit) // size per a page
+            .exec()
+            .then(result => {
+                res.send(result);
+            });
     },
     edit: (req, res, next) => {
-        console.log(req);
         console.log("mission success~");
     },
     count: (req, res, next) => {
         Member.countDocuments()
             .exec()
-            .then(result => {
-                res.json({ count: result });
+            .then(totalCount => {
+                res.json(new Paginator(totalCount, req.query.limit, req.query.page));
             });
     },
     redirectView: (req, res, next) => {

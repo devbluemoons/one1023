@@ -5,7 +5,7 @@
 ////////////////////
 
 /* renderer */
-export function imageRenderer(instance, td, row, col, prop, value, cellProperties) {
+export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     if (value) {
         const img = new Image();
 
@@ -17,7 +17,7 @@ export function imageRenderer(instance, td, row, col, prop, value, cellPropertie
     }
 }
 
-export function memberDetailRenderer(instance, td, row, col, prop, value, cellProperties) {
+export function memberDetailRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
     const _id = instance.getDataAtRowProp(row, "_id");
     const link = `<a href="/member/view?id=${_id}" target="_blank">${value}</a>`;
 
@@ -25,7 +25,7 @@ export function memberDetailRenderer(instance, td, row, col, prop, value, cellPr
     Handsontable.dom.fastInnerHTML(td, link);
 }
 
-export function contactRenderer(instance, td, row, col, prop, value, cellProperties) {
+export function contactRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     if (value) {
         const contact = [value.contact1, value.contact2, value.contact3].join("-");
 
@@ -34,14 +34,14 @@ export function contactRenderer(instance, td, row, col, prop, value, cellPropert
     }
 }
 
-export function genderRenderer(instance, td, row, col, prop, value, cellProperties) {
+export function genderRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     const gender = value.toUpperCase() === "M" ? "Men" : "Women";
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, gender);
 }
 
-export function birthdayRenderer(instance, td, row, col, prop, value, cellProperties) {
+export function birthdayRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     const year = value.substring(0, 4);
     const month = value.substring(4, 6);
     const day = value.substring(6, 8);
@@ -51,7 +51,7 @@ export function birthdayRenderer(instance, td, row, col, prop, value, cellProper
     Handsontable.dom.fastInnerHTML(td, birthday);
 }
 
-export function ageRenderer(instance, td, row, col, prop, value, cellProperties) {
+export function ageRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     const year = value.substring(0, 4);
 
     const thisYear = new Date().getFullYear();

@@ -1,36 +1,40 @@
+<script src="/js/member/list.js" type="module"></script>
+
 <div class="container pt-4">
     <h6>Member List</h6>
     <hr />
-    <div class="row mb-3">
-        <div class="col-2">
-            <label class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" />
+    <form id="searchForm">
+        <div class="row mb-3">
+            <div class="col-2">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" />
+            </div>
+            <div class="col-2">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-control" name="address" />
+            </div>
+            <div class="col-2">
+                <label class="form-label">Gender</label>
+                <select class="form-select form-select" name="gener" required>
+                    <option value="">...</option>
+                    <option value="M">Man</option>
+                    <option value="W">Woman</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <label class="form-label">Generation</label>
+                <input type="text" class="form-control" name="generation" />
+            </div>
+            <div class="col-2">
+                <label class="form-label">Marital Status</label>
+                <input type="text" class="form-control" name="married" />
+            </div>
+            <div class="col-2">
+                <label class="form-label">Faith State</label>
+                <input type="text" class="form-control" name="faithState" />
+            </div>
         </div>
-        <div class="col-2">
-            <label class="form-label">Address</label>
-            <input type="text" class="form-control" name="address" />
-        </div>
-        <div class="col-2">
-            <label class="form-label">Gender</label>
-            <select class="form-select form-select" name="gener" required>
-                <option value="">...</option>
-                <option value="M">Man</option>
-                <option value="W">Woman</option>
-            </select>
-        </div>
-        <div class="col-2">
-            <label class="form-label">Generation</label>
-            <input type="text" class="form-control" name="generation" />
-        </div>
-        <div class="col-2">
-            <label class="form-label">Marital Status</label>
-            <input type="text" class="form-control" name="married" />
-        </div>
-        <div class="col-2">
-            <label class="form-label">Faith State</label>
-            <input type="text" class="form-control" name="faithState" />
-        </div>
-    </div>
+    </form>
     <div class="row mb-3">
         <div class="col flex_bottom">
             <div>[ Total : <span class="bold" id="totalCount"></span> ]</div>
@@ -43,21 +47,22 @@
     <div class="row mb-3">
         <div class="col">
             <div id="dataTable" style="z-index: 9999"></div>
-            <!-- <%- include ../../partials/pagination %> -->
             <div id="pagination"></div>
+
+            <!-- <%- include ../../partials/pagination %> -->
             <!-- <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                        <a class="page-link" href="#" id="prev">
+                            <span>&laquo;</span>
                         </a>
                     </li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                        <a class="page-link" href="#" id="next">
+                            <span>&raquo;</span>
                         </a>
                     </li>
                 </ul>
@@ -66,4 +71,4 @@
     </div>
 </div>
 
-<script src="/js/member/list.js" type="module"></script>
+<!-- <script src="/js/member/list.js" type="module"></script> -->
