@@ -27,14 +27,12 @@ module.exports = {
             });
     },
     find: (req, res, next) => {
-        Member.find({})
-            .sort({ _id: -1 }) // descending
-            .exec()
-            .then(result => {
-                res.send(result);
-            });
-    },
-    count: (req, res, next) => {
+        // Member.find({})
+        //     .sort({ _id: -1 }) // descending
+        //     .exec()
+        //     .then(result => {
+        //         res.send(result);
+        //     });
         const options = {
             page: 1,
             limit: 1,
@@ -51,13 +49,13 @@ module.exports = {
         console.log(req);
         console.log("mission success~");
     },
-    // count: (req, res, next) => {
-    //     Member.countDocuments()
-    //         .exec()
-    //         .then(result => {
-    //             res.json({ count: result });
-    //         });
-    // },
+    count: (req, res, next) => {
+        Member.countDocuments()
+            .exec()
+            .then(result => {
+                res.json({ count: result });
+            });
+    },
     redirectView: (req, res, next) => {
         const redirectPath = res.locals.redirect;
         if (redirectPath) {

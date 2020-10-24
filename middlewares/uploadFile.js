@@ -12,9 +12,8 @@ const storage = multer.diskStorage({
         const name = req.body.name;
         const birthday = req.body.birthday;
         const fileType = file.mimetype.split("/")[1];
-
         const fileName = `${name}_${birthday}.${fileType}`;
-        console.log(req.body);
+
         cb(null, fileName);
     },
 });

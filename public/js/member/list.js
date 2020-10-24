@@ -1,10 +1,10 @@
-import * as expands from "../common.js";
+import * as expands from "../modules/handsonTable.js";
 import * as pagination from "../modules/pagination.js";
 
-window.onload = function () {
+window.addEventListener("DOMContentLoaded", event => {
     findMemberList();
     countMemberList();
-};
+});
 
 // get count of member list
 function countMemberList() {
@@ -19,8 +19,7 @@ function countMemberList() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-            // document.getElementById("totalCount").textContent = data.count;
+            document.getElementById("totalCount").textContent = data.count;
         })
         .catch(error => {
             new Error(error);
@@ -41,8 +40,8 @@ function findMemberList() {
         })
         .then(data => {
             if (data) {
-                setDataTable(data);
-                setPagination();
+                setDataTable(data.docs);
+                setPagination(data);
             }
         })
         .catch(error => {
@@ -57,8 +56,9 @@ function setDataTable(data) {
 }
 
 // set pagination
-function setPagination() {
-    document.getElementById("pagination").innerHTML = pagination.makePagination();
+function setPagination(data) {
+    document.getElementById("pagination").insertAdjacentHTML("afterend", pagination.makePagination(data));
+    setEvent();
 }
 
 // make colHeaders
