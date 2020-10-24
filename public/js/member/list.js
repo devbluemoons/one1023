@@ -25,6 +25,7 @@ function countMemberList() {
             return response.json();
         })
         .then(paginator => {
+            // set pagination
             document.getElementById("totalCount").textContent = paginator.totalCount;
             pagination.setPagination(paginator).setEvent(searchMember);
         })
@@ -61,7 +62,9 @@ function findMemberList() {
 // find member list
 function setDataTable(data) {
     const container = document.getElementById("dataTable");
-    new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns(), 0.58));
+    container.innerHTML = "";
+
+    new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns()));
 }
 
 // make colHeaders
@@ -72,7 +75,7 @@ function makeColHeaders() {
 // make columns
 function makeColumns() {
     return [
-        { data: "imagePath", renderer: expands.imageRenderer },
+        { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
         { data: "name", renderer: expands.memberDetailRenderer },
         { data: "contact", renderer: expands.contactRenderer },
         { data: "address1" },
@@ -86,7 +89,7 @@ function makeColumns() {
 }
 
 function searchMember(e) {
-    pagination.currentPage = e.target.id;
+    pagination.currentPage = e.target.dataset.page;
     findMemberList();
     countMemberList();
 }

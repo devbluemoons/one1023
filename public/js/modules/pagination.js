@@ -2,7 +2,6 @@ export class Pagination {
     constructor() {
         this.pagination = document.getElementById("pagination");
         this.currentPage = 1;
-        this.pages;
     }
 }
 
@@ -19,7 +18,7 @@ Pagination.prototype.makePagination = function (paginator) {
     // make previous
     if (currentRange > 1) {
         previous = `<li class="page-item">
-                        <a class="page-link" href="#" id="${startPage - rangeSize}">
+                        <a class="page-link" href="#" data-page="${startPage - rangeSize}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>`;
@@ -28,7 +27,7 @@ Pagination.prototype.makePagination = function (paginator) {
     // make next
     if (currentRange < rangeCount) {
         next = `<li class="page-item">
-                    <a class="page-link" href="#" id="${startPage - rangeSize}">
+                    <a class="page-link" href="#" data-page="${startPage + rangeSize}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>`;
@@ -36,7 +35,7 @@ Pagination.prototype.makePagination = function (paginator) {
 
     // pages
     for (let i = startPage; i <= endPage; i++) {
-        pages += `<li class="page-item"><a class="page-link" href="#" id="${i}">${i}</a></li>`;
+        pages += `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
     }
 
     return `<nav>

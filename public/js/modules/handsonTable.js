@@ -9,7 +9,7 @@ export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProp
     if (value) {
         const img = new Image();
 
-        img.style.height = "200%";
+        img.style.height = "250%";
         img.style.width = "100%";
         img.src = "/" + value;
 
@@ -62,17 +62,16 @@ export function ageRenderer(_instance, td, _row, _col, _prop, value, _cellProper
 }
 
 // set handsonTable properties
-export function defaultSettings(data, colHeaders, columns, heightPercent) {
+export function defaultSettings(data, colHeaders, columns) {
     return {
         data: data,
         columns: columns,
         colHeaders: colHeaders,
-        height: window.innerHeight * heightPercent,
         rowHeaders: index => index + 1,
         columnHeaderHeight: 30,
         rowHeights: 30,
-        maxRows: 25,
         readOnly: true,
+        height: "auto",
         stretchH: "all",
         className: "htCenter htMiddle",
         licenseKey: "non-commercial-and-evaluation",
