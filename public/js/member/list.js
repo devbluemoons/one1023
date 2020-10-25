@@ -12,7 +12,7 @@ const pagination = new Pagination();
 // get count of member list
 function countMemberList() {
     // set parameter
-    const url = new SearchParam(pagination.currentPage, 1);
+    const url = new SearchParam(pagination.currentPage, 25);
 
     // create member information
     fetch("/member/count" + url.params.search, {
@@ -25,6 +25,7 @@ function countMemberList() {
             return response.json();
         })
         .then(paginator => {
+            console.log(paginator);
             // set pagination
             document.getElementById("totalCount").textContent = paginator.totalCount;
             pagination.setPagination(paginator).setEvent(searchMember);
@@ -37,7 +38,7 @@ function countMemberList() {
 // get member list
 function findMemberList() {
     // set parameter
-    const url = new SearchParam(pagination.currentPage, 1);
+    const url = new SearchParam(pagination.currentPage, 25);
 
     // create member information
     fetch("/member/find" + url.params.search, {

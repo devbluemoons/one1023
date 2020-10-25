@@ -1,13 +1,22 @@
 module.exports = class Paginator {
     constructor(totalCount, limit, currentPage) {
-        // make paging variables
+        // range size
         this.rangeSize = 10;
-        this.pageLimit = limit || 25;
+        // size per a page
+        this.pageSize = limit || 25;
+        // total document count
         this.totalCount = totalCount;
+        // total page count
+        this.pageCount = Math.ceil(this.totalCount / this.pageSize);
+        // current page
         this.currentPage = currentPage || 1;
+        // current range
         this.currentRange = Math.ceil(this.currentPage / this.rangeSize);
+        // total range count
         this.rangeCount = Math.ceil(this.totalCount / this.rangeSize);
+        // start page in current range
         this.startPage = (this.currentRange - 1) * this.rangeSize + 1;
-        this.endPage = this.currentRange * this.rangeSize > this.totalCount ? this.totalCount : this.currentRange * this.rangeSize;
+        // end page in current range
+        this.endPage = this.startPage + this.rangeSize - 1 > this.pageCount ? this.pageCount : this.startPage + this.rangeSize - 1;
     }
 };

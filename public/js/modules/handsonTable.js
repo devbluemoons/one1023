@@ -9,7 +9,7 @@ export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProp
     if (value) {
         const img = new Image();
 
-        img.style.height = "250%";
+        img.style.height = "200%";
         img.style.width = "100%";
         img.src = "/" + value;
 
