@@ -3,16 +3,17 @@ import { Pagination } from "../modules/pagination.js";
 import { SearchParam } from "../modules/searchParam.js";
 
 window.addEventListener("DOMContentLoaded", e => {
+    setEvent();
     findMemberList();
     countMemberList();
 });
 
-const pagination = new Pagination();
+const pagination = new Pagination(document.getElementById("pagination"));
 
 // get count of member list
 function countMemberList() {
-    // set parameter
-    const url = new SearchParam(pagination.currentPage, 25);
+    // make search parameter
+    const url = makeSearchParameter();
 
     // create member information
     fetch("/member/count" + url.params.search, {
@@ -25,7 +26,6 @@ function countMemberList() {
             return response.json();
         })
         .then(paginator => {
-            console.log(paginator);
             // set pagination
             document.getElementById("totalCount").textContent = paginator.totalCount;
             pagination.setPagination(paginator).setEvent(searchMember);
@@ -37,8 +37,8 @@ function countMemberList() {
 
 // get member list
 function findMemberList() {
-    // set parameter
-    const url = new SearchParam(pagination.currentPage, 25);
+    // make search parameter
+    const url = makeSearchParameter();
 
     // create member information
     fetch("/member/find" + url.params.search, {
@@ -93,4 +93,16 @@ function searchMember(e) {
     pagination.currentPage = e.target.dataset.page;
     findMemberList();
     countMemberList();
+}
+
+function makeSearchParameter() {
+    const searchForm = document.getElementById("searchForm");
+    const formData = new FormData(searchForm);
+    const url = new SearchParam(pagination.currentPage, formData);
+
+    return url;
+}
+
+function setEvent() {
+    document.getElementById("btnSearch").addEventListener("click", searchMember);
 }

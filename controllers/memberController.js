@@ -29,13 +29,25 @@ module.exports = {
     },
     find: (req, res, next) => {
         // set parameter
-        const skip = Number((req.query.page - 1) * req.query.limit);
-        const limit = Number(req.query.limit);
 
+        const params = makeParams(req.query);
+        console.log(params);
         Member.find({})
+            //     // .where("name")
+            //     // .equals(params.name)
+            // .where("name")
+            // .equals(params.name)
+            // .where("name")
+            // .equals(params.name)
+            // .where("name")
+            // .equals(params.name)
+            // .where("name")
+            // .equals(params.name)
+            // .where("name")
+            // .equals(params.name)
             .sort({ _id: -1 }) // descending
-            .skip(skip) // skip data order
-            .limit(limit) // size per a page
+            .skip(params.skip) // skip data order
+            .limit(params.limit) // size per a page
             .exec()
             .then(result => {
                 res.send(result);
@@ -89,4 +101,27 @@ function makeFormData(data) {
         });
     }
     return new Error("data is empty!");
+}
+
+function makeParams(query) {
+    const skip = Number((query.page - 1) * query.limit);
+    const limit = Number(query.limit);
+
+    const name = Number(query.name);
+    const address = Number(query.address);
+    const gender = Number(query.gender);
+    const generation = Number(query.generation);
+    const married = Number(query.married);
+    const faithState = Number(query.faithState);
+
+    return {
+        skip,
+        limit,
+        name,
+        address,
+        gender,
+        generation,
+        married,
+        faithState,
+    };
 }

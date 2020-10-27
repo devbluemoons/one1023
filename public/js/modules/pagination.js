@@ -1,6 +1,6 @@
 export class Pagination {
-    constructor() {
-        this.pagination = document.getElementById("pagination");
+    constructor(pagination) {
+        this.pagination = pagination;
         this.currentPage = 1;
     }
 }
