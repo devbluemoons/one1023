@@ -17,39 +17,26 @@ module.exports = {
         // save data
         member
             .save()
-            .then(savedDocument => {
+            .then((savedDocument) => {
                 if (savedDocument) {
                     res.send(savedDocument);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error(error.message);
                 next(error);
             });
     },
     find: (req, res, next) => {
         // set parameter
-
         const params = makeParams(req.query);
-        console.log(params);
-        Member.find({})
-            //     // .where("name")
-            //     // .equals(params.name)
-            // .where("name")
-            // .equals(params.name)
-            // .where("name")
-            // .equals(params.name)
-            // .where("name")
-            // .equals(params.name)
-            // .where("name")
-            // .equals(params.name)
-            // .where("name")
-            // .equals(params.name)
+
+        Member.find({ ...params.searchCondition })
             .sort({ _id: -1 }) // descending
-            .skip(params.skip) // skip data order
-            .limit(params.limit) // size per a page
+            .skip(params.pagingCondition.skip) // skip data order
+            .limit(params.pagingCondition.limit) // size per a page
             .exec()
-            .then(result => {
+            .then((result) => {
                 res.send(result);
             });
     },
@@ -59,7 +46,7 @@ module.exports = {
     count: (req, res, next) => {
         Member.countDocuments()
             .exec()
-            .then(totalCount => {
+            .then((totalCount) => {
                 res.json(new Paginator(totalCount, req.query.limit, req.query.page));
             });
     },
@@ -103,25 +90,43 @@ function makeFormData(data) {
     return new Error("data is empty!");
 }
 
+// make search parameter
+// option01 : set pattern like condition
+// option01 : it's not important that value is upper case or lower case
 function makeParams(query) {
-    const skip = Number((query.page - 1) * query.limit);
-    const limit = Number(query.limit);
+    const searchCondition = {};
+    const pagingCondition = {};
 
-    const name = Number(query.name);
-    const address = Number(query.address);
-    const gender = Number(query.gender);
-    const generation = Number(query.generation);
-    const married = Number(query.married);
-    const faithState = Number(query.faithState);
+    // set only search parameter
+    if (query.name) {
+        searchCondition.name = new RegExp(query.name, "i");
+    }
+    if (query.address) {
+        searchCondition.address = new RegExp(query.address, "i");
+    }
+    if (query.gender) {
+        searchCondition.gender = new RegExp(query.gender, "i");
+    }
+    if (query.generation) {
+        searchCondition.generation = new RegExp(query.generation, "i");
+    }
+    if (query.married) {
+        searchCondition.married = new RegExp(query.married, "i");
+    }
+    if (query.faithState) {
+        searchCondition.faithState = new RegExp(query.faithState, "i");
+    }
+
+    // set only paging parameter
+    if (query.skip) {
+        pagingCondition.skip = Number((query.page - 1) * query.limit);
+    }
+    if (query.limit) {
+        pagingCondition.limit = Number(query.limit);
+    }
 
     return {
-        skip,
-        limit,
-        name,
-        address,
-        gender,
-        generation,
-        married,
-        faithState,
+        searchCondition,
+        pagingCondition,
     };
 }
