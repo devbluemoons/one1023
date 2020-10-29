@@ -4,6 +4,7 @@ import { SearchParam } from "../modules/searchParam.js";
 
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
+
     findMemberList();
     countMemberList();
 });
@@ -104,5 +105,22 @@ function makeSearchParameter() {
 }
 
 function setEvent() {
+    // set click event at search button
     document.getElementById("btnSearch").addEventListener("click", searchMember);
+
+    // dynamic search
+    document.querySelectorAll("input").forEach(item => {
+        item.addEventListener("keyup", e => {
+            searchMember(e);
+        });
+    });
+
+    // delay keyup event
+    const delayKeyup = (function () {
+        let timer = null;
+        return (func, ms) => {
+            timer ? clearTimeout(timer) : null;
+            timer = setTimeout(func, ms);
+        };
+    })();
 }

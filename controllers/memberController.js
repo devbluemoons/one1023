@@ -17,12 +17,12 @@ module.exports = {
         // save data
         member
             .save()
-            .then((savedDocument) => {
+            .then(savedDocument => {
                 if (savedDocument) {
                     res.send(savedDocument);
                 }
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error(error.message);
                 next(error);
             });
@@ -36,7 +36,7 @@ module.exports = {
             .skip(params.pagingCondition.skip) // skip data order
             .limit(params.pagingCondition.limit) // size per a page
             .exec()
-            .then((result) => {
+            .then(result => {
                 res.send(result);
             });
     },
@@ -44,9 +44,12 @@ module.exports = {
         console.log("mission success~");
     },
     count: (req, res, next) => {
-        Member.countDocuments()
+        // set parameter
+        const params = makeParams(req.query);
+
+        Member.countDocuments({ ...params.searchCondition })
             .exec()
-            .then((totalCount) => {
+            .then(totalCount => {
                 res.json(new Paginator(totalCount, req.query.limit, req.query.page));
             });
     },
@@ -102,7 +105,7 @@ function makeParams(query) {
         searchCondition.name = new RegExp(query.name, "i");
     }
     if (query.address) {
-        searchCondition.address = new RegExp(query.address, "i");
+        searchCondition.address1 = new RegExp(query.address, "i");
     }
     if (query.gender) {
         searchCondition.gender = new RegExp(query.gender, "i");
