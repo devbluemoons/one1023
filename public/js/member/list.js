@@ -4,37 +4,10 @@ import { SearchParam } from "../modules/searchParam.js";
 
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
-
     findMemberList();
-    countMemberList();
 });
 
 const pagination = new Pagination(document.getElementById("pagination"));
-
-// get count of member list
-function countMemberList() {
-    // make search parameter
-    const url = makeSearchParameter();
-
-    // create member information
-    fetch("/member/count" + url.params.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .then(paginator => {
-            // set pagination
-            document.getElementById("totalCount").textContent = paginator.totalCount;
-            pagination.setPagination(paginator).setEvent(searchMember);
-        })
-        .catch(error => {
-            new Error(error);
-        });
-}
 
 // get member list
 function findMemberList() {
@@ -53,7 +26,8 @@ function findMemberList() {
         })
         .then(data => {
             if (data) {
-                setDataTable(data);
+                setDataTable(data.result);
+                setPaging(data.paginator);
             }
         })
         .catch(error => {
@@ -93,7 +67,6 @@ function makeColumns() {
 function searchMember(e) {
     pagination.currentPage = e.target.dataset.page;
     findMemberList();
-    countMemberList();
 }
 
 function makeSearchParameter() {
@@ -114,13 +87,10 @@ function setEvent() {
             searchMember(e);
         });
     });
+}
 
-    // delay keyup event
-    const delayKeyup = (function () {
-        let timer = null;
-        return (func, ms) => {
-            timer ? clearTimeout(timer) : null;
-            timer = setTimeout(func, ms);
-        };
-    })();
+// set paging
+function setPaging(paginator) {
+    document.getElementById("totalCount").textContent = paginator.totalCount;
+    pagination.setPagination(paginator).setEvent(searchMember);
 }

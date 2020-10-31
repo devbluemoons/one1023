@@ -27,16 +27,6 @@ module.exports = {
                 next(error);
             });
     },
-    count: (req, res, next) => {
-        // set parameter
-        const query = makeQuery(req.query);
-
-        Member.countDocuments({ ...query.searchCondition })
-            .exec()
-            .then(totalCount => {
-                res.json(new Paginator(totalCount, req.query.limit, req.query.page));
-            });
-    },
     list: (req, res, next) => {
         // set parameter
         const query = makeQuery(req.query);
@@ -47,7 +37,13 @@ module.exports = {
             .limit(query.pagingCondition.limit) // size per a page
             .exec()
             .then(result => {
-                res.send(result);
+                // make paginator
+                Member.countDocuments({ ...query.searchCondition })
+                    .exec()
+                    .then(totalCount => {
+                        const paginator = new Paginator(totalCount, query.limit, query.page);
+                        res.send({ result, paginator });
+                    });
             });
     },
     view: (req, res, next) => {
@@ -59,18 +55,6 @@ module.exports = {
             .then(result => {
                 res.send(result);
             });
-    },
-    edit: (req, res, next) => {
-        console.log("mission success~");
-    },
-
-    redirectView: (req, res, next) => {
-        const redirectPath = res.locals.redirect;
-        if (redirectPath) {
-            res.redirect(redirectPath);
-        } else {
-            next();
-        }
     },
 };
 
