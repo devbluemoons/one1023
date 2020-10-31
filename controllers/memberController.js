@@ -27,14 +27,34 @@ module.exports = {
                 next(error);
             });
     },
-    find: (req, res, next) => {
+    count: (req, res, next) => {
         // set parameter
-        const params = makeParams(req.query);
+        const query = makeQuery(req.query);
 
-        Member.find({ ...params.searchCondition })
+        Member.countDocuments({ ...query.searchCondition })
+            .exec()
+            .then(totalCount => {
+                res.json(new Paginator(totalCount, req.query.limit, req.query.page));
+            });
+    },
+    list: (req, res, next) => {
+        // set parameter
+        const query = makeQuery(req.query);
+
+        Member.find({ ...query.searchCondition })
             .sort({ _id: -1 }) // descending
-            .skip(params.pagingCondition.skip) // skip data order
-            .limit(params.pagingCondition.limit) // size per a page
+            .skip(query.pagingCondition.skip) // skip data order
+            .limit(query.pagingCondition.limit) // size per a page
+            .exec()
+            .then(result => {
+                res.send(result);
+            });
+    },
+    view: (req, res, next) => {
+        // set parameter
+        const params = makeParams(req.params);
+
+        Member.findById(params)
             .exec()
             .then(result => {
                 res.send(result);
@@ -43,16 +63,7 @@ module.exports = {
     edit: (req, res, next) => {
         console.log("mission success~");
     },
-    count: (req, res, next) => {
-        // set parameter
-        const params = makeParams(req.query);
 
-        Member.countDocuments({ ...params.searchCondition })
-            .exec()
-            .then(totalCount => {
-                res.json(new Paginator(totalCount, req.query.limit, req.query.page));
-            });
-    },
     redirectView: (req, res, next) => {
         const redirectPath = res.locals.redirect;
         if (redirectPath) {
@@ -93,10 +104,10 @@ function makeFormData(data) {
     return new Error("data is empty!");
 }
 
-// make search parameter
+// make search query
 // option01 : set pattern like condition
-// option01 : it's not important that value is upper case or lower case
-function makeParams(query) {
+// option02 : it's not important that value is upper case or lower case
+function makeQuery(query) {
     const searchCondition = {};
     const pagingCondition = {};
 
@@ -132,4 +143,10 @@ function makeParams(query) {
         searchCondition,
         pagingCondition,
     };
+}
+
+function makeParams(params) {
+    if (params.id) {
+        return params.id;
+    }
 }

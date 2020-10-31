@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const multer = require("multer");
 
 const memberController = require("../controllers/memberController");
 
 router.post("/create", memberController.create);
-router.put("/edit", memberController.edit);
-router.get("/find", memberController.find);
 router.get("/count", memberController.count);
+router.get("/", memberController.list);
+router.get("/:id", memberController.view);
+router.put("/edit", memberController.edit);
 
 module.exports = router;

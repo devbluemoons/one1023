@@ -3,6 +3,11 @@ window.addEventListener("DOMContentLoaded", e => {
 });
 
 function setEvent() {
+    // verify search form
+    if (!document.getElementById("searchForm")) {
+        return false;
+    }
+
     // set [keyup] event input tag
     document
         .getElementById("searchForm")

@@ -8,7 +8,6 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         // make file name
-
         const name = req.body.name;
         const birthday = req.body.birthday;
         const fileType = file.mimetype.split("/")[1];

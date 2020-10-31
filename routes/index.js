@@ -1,8 +1,4 @@
 const router = require("express").Router();
-const multer = require("multer");
-
-// Test set multer every url
-// router.use("/", multer().any());
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

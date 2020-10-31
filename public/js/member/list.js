@@ -42,7 +42,7 @@ function findMemberList() {
     const url = makeSearchParameter();
 
     // create member information
-    fetch("/member/find" + url.params.search, {
+    fetch("/member" + url.params.search, {
         method: "GET",
     })
         .then(response => {
