@@ -69,3 +69,12 @@ tbody tr:hover td {
     position: flex;
     align-self: flex-end;
 }
+
+/* aign */
+.text_align {
+    text-align: center;
+}
+
+.vertical_align {
+    vertical-align: middle;
+}
