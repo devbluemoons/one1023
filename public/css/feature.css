@@ -3,6 +3,10 @@
     /* invert() 함수는 주어진 이미지의 색을 반전 */
     filter: invert(100%);
 }
+.invert-40 {
+    filter: invert(40%);
+}
+
 /* grey color */
 .beta {
     color: gainsboro;
@@ -56,25 +60,35 @@ tbody tr:hover td {
 }
 
 /* flex */
-.flex_container {
+.flex-container {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
-.flex_item {
+.flex-item {
     flex: 1; /* flex: 1 1 0 */
     overflow: auto;
 }
-.flex_bottom {
-    position: flex;
-    align-self: flex-end;
+.flex-between {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* aign */
-.text_align {
+.text-align {
     text-align: center;
 }
+.vertical-align {
+    vertical-align: middle;
+}
 
-.vertical_align {
+/* card */
+.card li {
+    color: #737373;
+}
+.card li img {
+    filter: invert(40%);
+}
+.card li span {
     vertical-align: middle;
 }

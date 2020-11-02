@@ -6,28 +6,74 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card" style="width: 300px">
+        <div class="col-3">
+            <div class="card">
                 <div>
                     <img src="/uploads/blank_profile.png" class="card-img-top" id="imagePath" />
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title" id="title"></h5>
+                    <p class="card-title" id="title"></p>
                     <p class="card-text">harvey wants to serve for God <br />in his all life</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <img src="/img/icons/calendar-check.svg" alt="" width="20" height="20" />
-                        <span id="birthday" class="vertical_align"></span>
+                        <span id="birthday" class="pl-1"></span>
                     </li>
-                    <li class="list-group-item" id="contact"></li>
-                    <li class="list-group-item" id="address"></li>
-                    <li class="list-group-item" id="married"></li>
-                    <li class="list-group-item" id="joinDate"></li>
+                    <li class="list-group-item">
+                        <img src="/img/icons/telephone.svg" alt="" width="20" height="20" />
+                        <span id="contact" class="pl-1"></span>
+                    </li>
+                    <li class="list-group-item">
+                        <img src="/img/icons/list-stars.svg" alt="" width="20" height="20" />
+                    </li>
+                    <li class="list-group-item">
+                        <div class="flex-between">
+                            <div>
+                                <img src="/img/icons/house-door.svg" alt="" width="20" height="20" />
+                            </div>
+                            <div class="pl-8">
+                                <span id="address"></span>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 border-light shadow-sm">
+                <div class="card-header">Family</div>
+                <div class="card-body"></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="shadow-sm p-3 rounded">
+                        <dl class="row">
+                            <dt class="col-sm-5">Gender</dt>
+                            <dd class="col-sm-7" id="gender"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-5">Join Date</dt>
+                            <dd class="col-sm-7" id="joinDate"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-5">Marital Status</dt>
+                            <dd class="col-sm-7" id="married"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-5">Faith State</dt>
+                            <dd class="col-sm-7" id="faithState"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-5">Baptism</dt>
+                            <dd class="col-sm-7" id="baptism"></dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body"></div>
+                    </div>
                 </div>
             </div>
         </div>

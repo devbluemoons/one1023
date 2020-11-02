@@ -46,20 +46,24 @@ function setMemberValue(data) {
     document.getElementById("address").innerHTML = addressFormatter(data);
     document.getElementById("married").innerHTML = data.married;
     document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
+    document.getElementById("gender").innerHTML = genderFormatter(data.gender);
+    document.getElementById("married").innerHTML = marriedFormatter(data.married);
+    document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
+    document.getElementById("baptism").innerHTML = baptismFormatter(data.baptismFormatter);
 }
 
 /* formatter */
 function titleFormater(value) {
     return `
-        <h3>${value.name}</h3>
+        <h3> ${value.name} <span>(${ageFormatter(value.birthday)})</span> </h3>
     `;
 }
 
 function ageFormatter(value) {
     const year = value.substring(0, 4);
-
     const thisYear = new Date().getFullYear();
     const age = thisYear - Number(year) + 1;
+
     return age;
 }
 
@@ -75,6 +79,7 @@ function contactFormatter(value) {
     const contact1 = value.contact1;
     const contact2 = value.contact2;
     const contact3 = value.contact3;
+
     return `${contact1}-${contact2}-${contact3}`;
 }
 
@@ -87,7 +92,15 @@ function joinDateFormatter(value) {
 
 function addressFormatter(value) {
     return `
-        <span>${value.address1}</span><br>
-        <span>${value.address2} ( ${value.zipCode})</span>
+        ${value.address1}
+        ${value.address2} (${value.zipCode})
     `;
+}
+
+function genderFormatter(value) {
+    return value === "M" ? "Man" : "Woman";
+}
+
+function marriedFormatter(value) {
+    return value === "Y" ? "Together" : "Single";
 }
