@@ -44,12 +44,13 @@ function setMemberValue(data) {
     document.getElementById("birthday").innerHTML = birthdayFormatter(data.birthday);
     document.getElementById("contact").innerHTML = contactFormatter(data.contact);
     document.getElementById("address").innerHTML = addressFormatter(data);
-    document.getElementById("married").innerHTML = data.married;
-    document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
-    document.getElementById("gender").innerHTML = genderFormatter(data.gender);
-    document.getElementById("married").innerHTML = marriedFormatter(data.married);
-    document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
-    document.getElementById("baptism").innerHTML = baptismFormatter(data.baptismFormatter);
+    document.getElementById("job").innerHTML = data.job;
+    // document.getElementById("married").innerHTML = data.married;
+    // document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
+    // document.getElementById("gender").innerHTML = genderFormatter(data.gender);
+    // document.getElementById("married").innerHTML = marriedFormatter(data.married);
+    // document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
+    // document.getElementById("baptism").innerHTML = baptismFormatter(data.baptismFormatter);
 }
 
 /* formatter */
