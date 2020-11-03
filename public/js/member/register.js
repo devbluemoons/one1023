@@ -5,8 +5,56 @@ window.onload = function () {
     setBirthDay();
     setJoinDate();
     setImagePreview();
+    setValue();
     setEvent();
 };
+
+// set value
+function setValue() {
+    // check memberId
+    const id = getId();
+
+    if (id) {
+        findOneMember(id);
+        setMemberValue(id);
+    }
+}
+
+// get member list
+function findOneMember(id) {
+    // find one member information
+    fetch(`/member/${id}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data) {
+                console.log(data);
+            }
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+function setMemberValue(id) {
+    //
+}
+
+// set event
+function setEvent() {
+    // create member
+    document.getElementById("btnSave").addEventListener("click", registerMember);
+    // number regular expression
+    document.querySelectorAll("[name^=contact]").forEach(item => {
+        item.addEventListener("keyup", numberRegExp);
+    });
+}
 
 // set Daum Post Code Api
 function setDaumPostCode() {
@@ -123,16 +171,6 @@ function setImagePreview() {
     });
 }
 
-// set all event
-function setEvent() {
-    // create member
-    document.getElementById("btnSave").addEventListener("click", registerMember);
-    // number regular expression
-    document.querySelectorAll("[name^=contact]").forEach(item => {
-        item.addEventListener("keyup", numberRegExp);
-    });
-}
-
 // register member information
 function registerMember() {
     const formData = makeFormData();
@@ -170,7 +208,7 @@ function verifyFormData(data) {
 // save form data
 // param : member information
 function saveFormData(data) {
-    fetch("/member/create", {
+    fetch("/member", {
         method: "POST",
         body: data,
     })
@@ -194,4 +232,13 @@ function saveFormData(data) {
 function numberRegExp(e) {
     e.target.value = e.target.value.replace(/[^0-9]/, "");
     e.target.value = e.target.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/, "");
+}
+
+// get id parameter
+function getId() {
+    const searchValue = location.search;
+    const params = new URLSearchParams(searchValue);
+    const id = params.get("id");
+
+    return id;
 }

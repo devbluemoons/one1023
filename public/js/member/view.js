@@ -1,11 +1,12 @@
 window.addEventListener("DOMContentLoaded", e => {
+    setEvent();
     findOneMember();
 });
 
 // get member list
 function findOneMember() {
     // get parameter
-    const id = getParam();
+    const id = getId();
 
     // find one member information
     fetch(`/member/${id}`, {
@@ -27,7 +28,7 @@ function findOneMember() {
         });
 }
 
-function getParam() {
+function getId() {
     const searchValue = location.search;
     const params = new URLSearchParams(searchValue);
     const id = params.get("id");
@@ -45,12 +46,12 @@ function setMemberValue(data) {
     document.getElementById("contact").innerHTML = contactFormatter(data.contact);
     document.getElementById("address").innerHTML = addressFormatter(data);
     document.getElementById("job").innerHTML = data.job;
-    // document.getElementById("married").innerHTML = data.married;
-    // document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
-    // document.getElementById("gender").innerHTML = genderFormatter(data.gender);
-    // document.getElementById("married").innerHTML = marriedFormatter(data.married);
-    // document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
-    // document.getElementById("baptism").innerHTML = baptismFormatter(data.baptismFormatter);
+    document.getElementById("email").innerHTML = data.email;
+    document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
+    document.getElementById("gender").innerHTML = genderFormatter(data.gender);
+    document.getElementById("married").innerHTML = marriedFormatter(data.married);
+    document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
+    document.getElementById("baptism").innerHTML = baptismFormatter(data.baptismFormatter);
 }
 
 /* formatter */
@@ -104,4 +105,11 @@ function genderFormatter(value) {
 
 function marriedFormatter(value) {
     return value === "Y" ? "Together" : "Single";
+}
+
+/* set event */
+function setEvent() {
+    document.getElementById("btnEdit").addEventListener("click", e => {
+        location.href = `/member/register?id=${getId()}`;
+    });
 }

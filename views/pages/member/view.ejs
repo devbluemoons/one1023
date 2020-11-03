@@ -7,13 +7,12 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <div class="card">
+            <div class="card mb-3">
                 <div>
                     <img src="/uploads/blank_profile.png" class="card-img-top" id="imagePath" />
                 </div>
                 <div class="card-body">
                     <p class="card-title" id="title"></p>
-                    <p class="card-text">harvey wants to serve for God <br />in his all life</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -34,11 +33,14 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item">
-                        <img src="/img/icons/briefcase.svg" alt="" width="20" height="20" />
-                        <span id="job" class="pl-1"></span>
-                    </li>
                 </ul>
+            </div>
+            <div class="card border-light mb-3">
+                <div class="card-header">Opinion</div>
+                <div class="card-body">
+                    <h5 class="card-title">Goal in Jesus</h5>
+                    <p class="card-text">I want to serve for God <br />in my all life</p>
+                </div>
             </div>
         </div>
         <div class="col">
@@ -46,37 +48,48 @@
                 <div class="col mb-3">
                     <div class="shadow-sm p-3 rounded">
                         <dl class="row">
-                            <dt class="col-sm-5">Gender</dt>
-                            <dd class="col-sm-7" id="gender"></dd>
+                            <dt class="col-3">Join Date</dt>
+                            <dd class="col-3" id="joinDate"></dd>
+                            <dt class="col-3">Gender</dt>
+                            <dd class="col-3" id="gender"></dd>
                         </dl>
                         <dl class="row">
-                            <dt class="col-sm-5">Join Date</dt>
-                            <dd class="col-sm-7" id="joinDate"></dd>
+                            <dt class="col-3">Faith State</dt>
+                            <dd class="col-3" id="faithState"></dd>
+                            <dt class="col-3">Marital Status</dt>
+                            <dd class="col-3" id="married"></dd>
                         </dl>
                         <dl class="row">
-                            <dt class="col-sm-5">Marital Status</dt>
-                            <dd class="col-sm-7" id="married"></dd>
+                            <dt class="col-3">Baptism</dt>
+                            <dd class="col-3" id="baptism"></dd>
+                            <dt class="col-3">Job</dt>
+                            <dd class="col-3" id="job"></dd>
                         </dl>
                         <dl class="row">
-                            <dt class="col-sm-5">Faith State</dt>
-                            <dd class="col-sm-7" id="faithState"></dd>
+                            <dt class="col-3">Group</dt>
+                            <dd class="col-3" id="group"></dd>
+                            <dt class="col-3">Email</dt>
+                            <dd class="col-3" id="email"></dd>
                         </dl>
                         <dl class="row">
-                            <dt class="col-sm-5">Baptism</dt>
-                            <dd class="col-sm-7" id="baptism"></dd>
+                            <dt class="col-3">Role</dt>
+                            <dd class="col-3" id="role"></dd>
+                            <dt class="col-3">Hobby / Interest</dt>
+                            <dd class="col-3" id="concern"></dd>
                         </dl>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col mb-3">
-                    <div class="shadow-sm p-3 rounded">
+                        <dl class="row">
+                            <dt class="col-3">Service</dt>
+                            <dd class="col-3" id="service"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-3">Dream</dt>
+                            <dd class="col-3" id="dream"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-3">Attendance</dt>
+                            <dd class="col-3" id="attendance"></dd>
+                        </dl>
+                        <hr class="opacity01" />
                         <div class="row">
                             <div class="col mb-3">
                                 <b>Family</b>
@@ -117,6 +130,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-right">
+                    <button type="button" class="btn btn-secondary" id="btnEdit">Edit Profile</button>
                 </div>
             </div>
         </div>

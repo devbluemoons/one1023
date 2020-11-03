@@ -3,6 +3,11 @@ window.addEventListener("DOMContentLoaded", e => {
 });
 
 function setEvent() {
+    // set autocomplete off at all input tag
+    document.querySelectorAll("input").forEach(item => {
+        item.setAttribute("autocomplete", "off");
+    });
+
     // verify search form
     if (!document.getElementById("searchForm")) {
         return false;
