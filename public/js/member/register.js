@@ -10,46 +10,21 @@ window.onload = function () {
 };
 
 // set value
-function setValue() {
+async function setValue() {
     // check memberId
     const id = getId();
 
     if (id) {
-        findOneMember(id);
-        setMemberValue(id);
+        const member = await findOneMember(id);
+        setMemberValue(member);
     }
-}
-
-// get member list
-function findOneMember(id) {
-    // find one member information
-    fetch(`/member/${id}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data) {
-                console.log(data);
-            }
-        })
-        .catch(error => {
-            new Error(error);
-        });
-}
-
-function setMemberValue(id) {
-    //
 }
 
 // set event
 function setEvent() {
     // create member
     document.getElementById("btnSave").addEventListener("click", registerMember);
+    document.getElementById("btnEdit").addEventListener("click", updateMember);
     // number regular expression
     document.querySelectorAll("[name^=contact]").forEach(item => {
         item.addEventListener("keyup", numberRegExp);
@@ -64,9 +39,88 @@ function setDaumPostCode() {
     });
 }
 
+// get member list
+function findOneMember(id) {
+    // find one member information
+    return fetch(`/member/${id}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+function setMemberValue(data) {
+    // can not modify fields
+
+    // set name
+    document.querySelector("[name=name]").value = data.name;
+    document.querySelector("[name=name]").setAttribute("readonly", true);
+
+    // set gender
+    document.querySelector("[name=gender]").checked = data.gender;
+    document.querySelector("#divGender").classList.add("hide");
+
+    document.querySelector("#viewGender input").value = data.gender === "M" ? "Male" : "Female";
+    document.querySelector("#viewGender").classList.remove("hide");
+
+    // set birthday
+    document.querySelector("[name=birthYear]").value = data.birthday.substring(0, 4);
+    document.querySelector("[name=birthMonth]").value = data.birthday.substring(4, 6);
+    document.querySelector("[name=birthDay]").value = data.birthday.substring(6, 8);
+    document.querySelector("#divBirthday").classList.add("hide");
+
+    const birthday = `${data.birthday.substring(0, 4)}/${data.birthday.substring(4, 6)}/${data.birthday.substring(6, 8)}`;
+    document.querySelector("#viewBirthday input").value = birthday;
+    document.querySelector("#viewBirthday").classList.remove("hide");
+
+    // set join date
+    document.querySelector("[name=joinYear]").value = data.joinDate.substring(0, 4);
+    document.querySelector("[name=joinMonth]").value = data.joinDate.substring(4, 6);
+    document.querySelector("#divJoinDate").classList.add("hide");
+
+    const joinDate = `${data.joinDate.substring(0, 4)}/${data.joinDate.substring(4, 6)}`;
+    document.querySelector("#viewJoinDate input").value = joinDate;
+    document.querySelector("#viewJoinDate").classList.remove("hide");
+
+    // must field
+    document.querySelector("[name=contact1]").value = data.contact.contact1;
+    document.querySelector("[name=contact2]").value = data.contact.contact2;
+    document.querySelector("[name=contact3]").value = data.contact.contact3;
+    document.querySelector("[name=address1]").value = data.address1;
+    document.querySelector("[name=address2]").value = data.address2;
+    document.querySelector("[name=zipCode]").value = data.zipCode;
+    document.querySelector("[name=married]").checked = data.married;
+
+    // option field
+    document.querySelector("[name=email]").value = data.email;
+    document.querySelector("[name=job]").value = data.job;
+    document.querySelector("[name=baptism]").checked = data.baptism;
+    document.querySelector("[name=group]").value = data.group;
+    document.querySelector("[name=role]").value = data.role;
+    document.querySelector("[name=service]").value = data.service;
+    document.querySelector("[name=attendance]").checked = data.attendance;
+
+    if (data.imagePath) {
+        document.querySelector("#imagePreview img").src = "/" + data.imagePath;
+        document.querySelector(".image-preview__real").style.display = "block";
+        document.querySelector(".image-preview__text").style.display = "none";
+    }
+
+    // set button state
+    document.querySelector("#btnSave").classList.add("hide");
+    document.querySelector("#btnEdit").classList.remove("hide");
+}
+
 // set birthday select box
 function setBirthDay() {
-    //birth year
+    // birth year
     const date = new Date();
     const thisYear = date.getFullYear();
 
@@ -80,7 +134,7 @@ function setBirthDay() {
 
         document.querySelector("[name=birthYear]").appendChild(option);
     }
-    //birth month
+    // birth month
     for (let i = 1; i <= 12; i++) {
         const option = document.createElement("option");
         option.value = i < 10 ? "0" + i : i;
@@ -88,7 +142,7 @@ function setBirthDay() {
 
         document.querySelector("[name=birthMonth]").appendChild(option);
     }
-    //birth day
+    // birth day
     for (let i = 1; i <= 31; i++) {
         const option = document.createElement("option");
         option.value = i < 10 ? "0" + i : i;
@@ -100,7 +154,7 @@ function setBirthDay() {
 
 // set join date select box
 function setJoinDate() {
-    //join year
+    // join year
     const openYear = 2015;
     const thisYear = Number(new Date().getFullYear());
 
@@ -111,7 +165,7 @@ function setJoinDate() {
 
         document.querySelector("[name=joinYear]").appendChild(option);
     }
-    //join month
+    // join month
     for (let i = 1; i <= 12; i++) {
         const option = document.createElement("option");
         option.value = i < 10 ? "0" + i : i;
@@ -159,13 +213,9 @@ function setImagePreview() {
         const imageContainer = document.getElementById("enlargeImage");
         const image = imageContainer.querySelector("img");
         const modal = new bootstrap.Modal(imageContainer);
-        const reader = new FileReader();
 
-        reader.addEventListener("load", function () {
-            image.setAttribute("src", this.result);
-            image.style.width = "100%";
-        });
-        reader.readAsDataURL(imageFile.files[0]);
+        image.src = this.src;
+        image.style.width = "100%";
 
         modal.show();
     });
@@ -174,8 +224,20 @@ function setImagePreview() {
 // register member information
 function registerMember() {
     const formData = makeFormData();
-    verifyFormData(formData);
-    saveFormData(formData);
+    const valid = verifyFormData(formData);
+
+    if (valid) {
+        saveFormData(formData);
+    }
+}
+
+function updateMember() {
+    const formData = makeFormData();
+    const valid = verifyFormData(formData);
+
+    if (valid) {
+        updateFormData(formData);
+    }
 }
 
 // make form data
@@ -203,6 +265,71 @@ function makeFormData() {
 function verifyFormData(data) {
     // check required fields
     // check variable type or specific field rule
+    if (!data.get("name")) {
+        alert(`Please, fill [Name] field`);
+        return false;
+    }
+    if (!data.get("contact1")) {
+        alert(`Please, fill [Contact] field`);
+        return false;
+    }
+    if (!data.get("contact2")) {
+        alert(`Please, fill [Contact] field`);
+        return false;
+    }
+    if (!data.get("contact3")) {
+        alert(`Please, fill [Contact] field`);
+        return false;
+    }
+    if (!data.get("address1")) {
+        alert(`Please, fill [Address] field`);
+        return false;
+    }
+    if (!data.get("address2")) {
+        alert(`Please, fill [Address] field`);
+        return false;
+    }
+    if (!data.get("zipCode")) {
+        alert(`Please, fill [Zip Code] field`);
+        return false;
+    }
+    if (!data.get("gender")) {
+        alert(`Please, fill [Gender] field`);
+        return false;
+    }
+    if (!data.get("birthYear")) {
+        alert(`Please, fill [Birthday] field`);
+        return false;
+    }
+    if (!data.get("birthMonth")) {
+        alert(`Please, fill [Birthday] field`);
+        return false;
+    }
+    if (!data.get("birthDay")) {
+        alert(`Please, fill [Birthday] field`);
+        return false;
+    }
+    if (!data.get("married")) {
+        alert(`Please, fill [Marital Status] field`);
+        return false;
+    }
+    if (!data.get("family")) {
+        alert(`Please, fill [Family] field`);
+        return false;
+    }
+    if (!data.get("faithState")) {
+        alert(`Please, fill [Faith State] field`);
+        return false;
+    }
+    if (!data.get("joinYear")) {
+        alert(`Please, fill [Join Date] field`);
+        return false;
+    }
+    if (!data.get("joinMonth")) {
+        alert(`Please, fill [Join Date] field`);
+        return false;
+    }
+    return true;
 }
 
 // save form data
@@ -210,6 +337,29 @@ function verifyFormData(data) {
 function saveFormData(data) {
     fetch("/member", {
         method: "POST",
+        body: data,
+    })
+        .then(response => {
+            if (!response.ok) {
+                new Error(response);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data) {
+                location.href = "/member/list";
+            }
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+// update form data
+// param : member information
+function updateFormData(data) {
+    fetch("/member", {
+        method: "PUT",
         body: data,
     })
         .then(response => {

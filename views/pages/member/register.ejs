@@ -49,7 +49,7 @@
                 <fieldset>
                     <div class="row mb-3">
                         <legend class="col-form-label col-3"><b class="must">*</b>Gender</legend>
-                        <div class="col-9">
+                        <div class="col-9" id="divGender">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" value="M" />
                                 <label class="form-check-label">Male</label>
@@ -59,11 +59,14 @@
                                 <label class="form-check-label">Female</label>
                             </div>
                         </div>
+                        <div class="col-9 hide" id="viewGender">
+                            <input type="text" class="form-control" readonly />
+                        </div>
                     </div>
                 </fieldset>
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Birthday</label>
-                    <div class="col-9">
+                    <div class="col-9" id="divBirthday">
                         <div class="input-group">
                             <select class="form-select form-select" name="birthYear">
                                 <option value="">Year</option>
@@ -76,6 +79,9 @@
                             </select>
                         </div>
                         <input type="hidden" name="birthday" />
+                    </div>
+                    <div class="col-9 hide" id="viewBirthday">
+                        <input type="text" class="form-control" readonly />
                     </div>
                 </div>
                 <fieldset>
@@ -97,7 +103,7 @@
                     <label class="col-3 col-form-label"><b class="must">*</b>Family</label>
                     <div class="col-9">
                         <select class="form-select form-select" name="family">
-                            <option value="">...</option>
+                            <option value="temp value">...</option>
                         </select>
                     </div>
                 </div>
@@ -105,7 +111,7 @@
                     <label class="col-3 col-form-label"><b class="must">*</b>Faith State</label>
                     <div class="col-9">
                         <select class="form-select form-select" name="faithState">
-                            <option value="">...</option>
+                            <option value="temp value">...</option>
                             <option value="01">new face</option>
                             <option value="02">come from other</option>
                         </select>
@@ -113,7 +119,7 @@
                 </div>
                 <div class="row mb-3">
                     <label class="col-3 col-form-label"><b class="must">*</b>Join Date</label>
-                    <div class="col-9">
+                    <div class="col-9" id="divJoinDate">
                         <div class="input-group">
                             <select class="form-select form-select" name="joinYear">
                                 <option value="">Year</option>
@@ -122,12 +128,15 @@
                                 <option value="">Month</option>
                             </select>
                         </div>
-                        <input type="hidden" name="joinDate" />
+                    </div>
+                    <div class="col-9 hide" id="viewJoinDate">
+                        <input type="text" class="form-control" readonly />
                     </div>
                 </div>
                 <div class="row md-3">
                     <div class="col text-right">
                         <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                        <button type="button" class="btn btn-primary hide" id="btnEdit">Edit</button>
                     </div>
                 </div>
             </div>

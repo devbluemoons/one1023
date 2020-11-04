@@ -92,3 +92,8 @@ tbody tr:hover td {
 .card li span {
     vertical-align: middle;
 }
+
+/* display */
+.hide {
+    display: none;
+}

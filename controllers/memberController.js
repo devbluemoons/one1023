@@ -56,6 +56,28 @@ module.exports = {
                 res.send(result);
             });
     },
+    update: async (req, res, next) => {
+        // upload File
+        await uploadFile(req, res);
+
+        if (req.file) {
+            req.body.imagePath = req.file.path;
+        }
+
+        console.log(req.body);
+
+        // update data
+        Member.findByIdAndUpdate(req.body.id, req.body)
+            .then(updatedDocument => {
+                if (updatedDocument) {
+                    res.send(updatedDocument);
+                }
+            })
+            .catch(error => {
+                console.error(error.message);
+                next(error);
+            });
+    },
 };
 
 function makeFormData(data) {
