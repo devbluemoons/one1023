@@ -73,6 +73,9 @@ tbody tr:hover td {
     display: flex;
     justify-content: space-between;
 }
+.flex_bottom {
+    align-self: flex-end;
+}
 
 /* aign */
 .text-align {

@@ -12,10 +12,10 @@ module.exports = {
         }
 
         // make form data
-        const member = makeFormData(req.body);
+        const formData = makeFormData(req.body);
 
         // save data
-        member
+        Member(formData)
             .save()
             .then(savedDocument => {
                 if (savedDocument) {
@@ -64,10 +64,10 @@ module.exports = {
             req.body.imagePath = req.file.path;
         }
 
-        console.log(req.body);
-
+        // make form data
+        const formData = makeFormData(req.body);
         // update data
-        Member.findByIdAndUpdate(req.body.id, req.body)
+        Member.findByIdAndUpdate(formData.id, formData)
             .then(updatedDocument => {
                 if (updatedDocument) {
                     res.send(updatedDocument);
@@ -82,7 +82,7 @@ module.exports = {
 
 function makeFormData(data) {
     if (data) {
-        return new Member({
+        const result = {
             name: data.name,
             contact: {
                 contact1: data.contact1,
@@ -104,10 +104,17 @@ function makeFormData(data) {
             role: data.role,
             service: data.service,
             attendance: data.attendance,
-            imagePath: data.imagePath,
-        });
+        };
+
+        if (data.id) {
+            result.id = data.id;
+        }
+        if (data.imagePath) {
+            result.imagePath = data.imagePath;
+        }
+
+        return result;
     }
-    return new Error("data is empty!");
 }
 
 // make search query

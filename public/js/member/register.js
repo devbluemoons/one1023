@@ -58,6 +58,10 @@ function findOneMember(id) {
 
 function setMemberValue(data) {
     // can not modify fields
+    document.querySelector("[name=id]").value = getId();
+
+    // set id (hidden value)
+    document.querySelector("[name=name]").value = data.name;
 
     // set name
     document.querySelector("[name=name]").value = data.name;
@@ -234,7 +238,7 @@ function registerMember() {
 function updateMember() {
     const formData = makeFormData();
     const valid = verifyFormData(formData);
-
+    console.log([...formData]);
     if (valid) {
         updateFormData(formData);
     }
@@ -341,7 +345,7 @@ function saveFormData(data) {
     })
         .then(response => {
             if (!response.ok) {
-                new Error(response);
+                console.error(response);
             }
             return response.json();
         })
@@ -364,7 +368,7 @@ function updateFormData(data) {
     })
         .then(response => {
             if (!response.ok) {
-                new Error(response);
+                console.error(response);
             }
             return response.json();
         })

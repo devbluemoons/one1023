@@ -96,7 +96,7 @@ const memberSchema = new Schema(
         ],
     },
     {
-        timestamps: true,
+        timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
     },
     {
         collection: "members",
