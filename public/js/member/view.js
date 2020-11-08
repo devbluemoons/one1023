@@ -104,7 +104,7 @@ function genderFormatter(value) {
 }
 
 function marriedFormatter(value) {
-    return value === "Y" ? "Together" : "Single";
+    return value === "Y" ? "Married" : "Single";
 }
 
 /* set event */
