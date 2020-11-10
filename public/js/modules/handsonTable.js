@@ -7,13 +7,8 @@
 /* renderer */
 export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     if (value) {
-        const img = new Image();
-
-        img.style.height = "200%";
-        img.style.width = "100%";
-        img.src = "/" + value;
-
-        td.appendChild(img);
+        Handsontable.renderers.cellDecorator.apply(this, arguments);
+        Handsontable.dom.fastInnerHTML(td, `<img class="img" src="/${value}" style="width:100%; height:200%;">`);
     }
 }
 
@@ -98,4 +93,13 @@ export function defaultSettings(data, colHeaders, columns) {
         },
         // blueboxElem.className += ' expanded'
     };
+}
+
+// get family information from selected [id]
+export function familyRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+    const _id = instance.getDataAtRowProp(row, "_id");
+    const link = `<a href="#" target="_blank" data-id="${_id}">${value}</a>`;
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, link);
 }
