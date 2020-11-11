@@ -8,7 +8,7 @@
 export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     if (value) {
         Handsontable.renderers.cellDecorator.apply(this, arguments);
-        Handsontable.dom.fastInnerHTML(td, `<img class="img" src="/${value}" style="width:100%; height:200%;">`);
+        Handsontable.dom.fastInnerHTML(td, `<img src="/${value}" style="width:100%; height:200%;">`);
     }
 }
 
@@ -56,6 +56,23 @@ export function ageRenderer(_instance, td, _row, _col, _prop, value, _cellProper
     Handsontable.dom.fastInnerHTML(td, age);
 }
 
+// get family information from selected [id]
+export function familyRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+    const _id = instance.getDataAtRowProp(row, "_id");
+    const link = `<a href="#" data-id="${_id}" class="family">${value}</a>`;
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, link);
+}
+
+export function buttonRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+    const _id = instance.getDataAtRowProp(row, "_id");
+    const button = `<button type="button" class="btn btn-outline-secondary btn-sm" data-id="${_id}" >Add</button>`;
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, button);
+}
+
 // set handsonTable properties
 export function defaultSettings(data, colHeaders, columns) {
     return {
@@ -76,30 +93,22 @@ export function defaultSettings(data, colHeaders, columns) {
         afterGetColHeader: function (col, TH) {
             TH.className = "htMiddle";
         },
-        afterRenderer: function (TD) {},
-        afterOnCellMouseDown: function (event, current, el) {
-            // get imagePath
-            if (el.querySelector("img")) {
-                console.log(el.querySelector("img").src);
-            }
-        },
-        afterInit: function () {
-            // const tbody = document.querySelector("#dataTable tbody");
-            // tbody.addEventListener("click", e => {
-            // const currentRow = e.target.parentElement.querySelector(".rowHeader").textContent;
-            // self.selectRows(currentRow);
-            // console.log(Handsontable.selectRows(currentRow));
-            // });
-        },
+
+        // afterRenderer: function (TD) {},
+        // afterOnCellMouseDown: function (event, current, el) {
+        //     // get imagePath
+        //     if (el.querySelector("img")) {
+        //         console.log(el.querySelector("img").src);
+        //     }
+        // },
+        // afterInit: function () {
+        //     const tbody = document.querySelector("#dataTable tbody");
+        //     tbody.addEventListener("click", e => {
+        //     const currentRow = e.target.parentElement.querySelector(".rowHeader").textContent;
+        //     self.selectRows(currentRow);
+        //     console.log(Handsontable.selectRows(currentRow));
+        //     });
+        // },
         // blueboxElem.className += ' expanded'
     };
-}
-
-// get family information from selected [id]
-export function familyRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
-    const _id = instance.getDataAtRowProp(row, "_id");
-    const link = `<a href="#" target="_blank" data-id="${_id}">${value}</a>`;
-
-    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
-    Handsontable.dom.fastInnerHTML(td, link);
 }

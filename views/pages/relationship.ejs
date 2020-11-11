@@ -11,14 +11,57 @@
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-family" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="col">
+                <div class="row mb-3 pt-3">
+                    <div class="col flex_bottom">
+                        <div>[ Total : <span class="bold" id="totalCount"></span> ]</div>
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <div id="dataTable" style="z-index: 9999"></div>
+                        <div id="memberTable"></div>
                         <div id="pagination"></div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card mb-3">
+                            <div class="card-header">Family Information</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="card">
+                                            <img src="/uploads/blank_profile.png" class="card-img-top" id="" />
+                                            <div class="card-body">
+                                                <span>Sample (35)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <nav class="padding-TB__5em bg-light">
+                                            <div class="container">
+                                                <form class="d-flex">
+                                                    <input class="form-control mr-2" type="search" placeholder="Please, fill name to search" aria-label="Search" />
+                                                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                                                </form>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <hr class="opacity01" />
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="card">
+                                            <img src="/uploads/blank_profile.png" class="card-img-top" id="" />
+                                            <div class="card-body">
+                                                <span>Sample (35)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col"></div>
         </div>
         <div class="tab-pane fade" id="nav-position" role="tabpanel" aria-labelledby="nav-position-tab">Position</div>
         <div class="tab-pane fade" id="nav-service" role="tabpanel" aria-labelledby="nav-service-tab">Service</div>

@@ -54,7 +54,7 @@ function makeColumns() {
         { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
         { data: "name", renderer: expands.memberDetailRenderer },
         { data: "contact", renderer: expands.contactRenderer },
-        { data: "address1" },
+        { data: "address1", className: "htLeft htMiddle" },
         { data: "gender", renderer: expands.genderRenderer },
         { data: "birthday", renderer: expands.birthdayRenderer },
         { data: "birthday", renderer: expands.ageRenderer },

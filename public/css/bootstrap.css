@@ -4,8 +4,14 @@
     background-color: #1976d2 !important;
     border-color: #1976d2;
 }
+.btn-outline-primary {
+    border-color: #1976d2;
+    color: #1976d2;
+}
 .btn-primary:hover,
-.btn-primary:active {
+.btn-outline-primary:hover,
+.btn-primary:active,
+.btn-outline-primary:active {
     background-color: #1566b7 !important;
     border-color: #1566b7;
 }
