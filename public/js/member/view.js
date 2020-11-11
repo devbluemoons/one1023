@@ -37,7 +37,6 @@ function getId() {
 }
 
 function setMemberValue(data) {
-    console.log(data);
     if (data.imagePath) {
         document.getElementById("imagePath").src = "/".concat(data.imagePath);
     }

@@ -29,9 +29,11 @@
                                 <div class="row">
                                     <div class="col-3">
                                         <div class="card">
-                                            <img src="/uploads/blank_profile.png" class="card-img-top" id="" />
+                                            <div>
+                                                <img src="/uploads/blank_profile.png" class="card-img-top" id="imagePath" />
+                                            </div>
                                             <div class="card-body">
-                                                <span>Sample (35)</span>
+                                                <span id="title">...</span>
                                             </div>
                                         </div>
                                     </div>
@@ -39,11 +41,12 @@
                                         <nav class="padding-TB__5em bg-light">
                                             <div class="container">
                                                 <form class="d-flex">
-                                                    <input class="form-control mr-2" type="search" placeholder="Please, fill name to search" aria-label="Search" />
-                                                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                                                    <input class="form-control mr-2" type="text" name="name" placeholder="Please, fill name to relate" />
+                                                    <button class="btn btn-outline-primary" type="button">Search</button>
                                                 </form>
                                             </div>
                                         </nav>
+                                        <div id="familyTable"></div>
                                     </div>
                                 </div>
                                 <hr class="opacity01" />

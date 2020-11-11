@@ -83,9 +83,7 @@ function setEvent() {
 
     // dynamic search
     document.querySelectorAll("input").forEach(item => {
-        item.addEventListener("keyup", e => {
-            searchMember(e);
-        });
+        item.addEventListener("keyup", searchMember);
     });
 }
 

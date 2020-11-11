@@ -56,8 +56,6 @@ Pagination.prototype.setPagination = function (paginator) {
 // set click event
 Pagination.prototype.setEvent = function (callback) {
     this.pagination.querySelectorAll("li").forEach(item => {
-        item.addEventListener("click", e => {
-            callback(e);
-        });
+        item.addEventListener("click", e => callback(e));
     });
 };

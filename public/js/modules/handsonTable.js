@@ -7,9 +7,11 @@
 /* renderer */
 export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     if (value) {
-        Handsontable.renderers.cellDecorator.apply(this, arguments);
         Handsontable.dom.fastInnerHTML(td, `<img src="/${value}" style="width:100%; height:200%;">`);
+    } else {
+        Handsontable.dom.fastInnerHTML(td, `<img src="/uploads/blank_profile.png" style="width:100%; height:200%;">`);
     }
+    Handsontable.renderers.cellDecorator.apply(this, arguments);
 }
 
 export function memberDetailRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
@@ -56,8 +58,8 @@ export function ageRenderer(_instance, td, _row, _col, _prop, value, _cellProper
     Handsontable.dom.fastInnerHTML(td, age);
 }
 
-// get family information from selected [id]
-export function familyRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+// get [id] and [name] information
+export function identityRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
     const _id = instance.getDataAtRowProp(row, "_id");
     const link = `<a href="#" data-id="${_id}" class="family">${value}</a>`;
 
@@ -65,9 +67,9 @@ export function familyRenderer(instance, td, row, _col, _prop, value, _cellPrope
     Handsontable.dom.fastInnerHTML(td, link);
 }
 
-export function buttonRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+export function relateRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
     const _id = instance.getDataAtRowProp(row, "_id");
-    const button = `<button type="button" class="btn btn-outline-secondary btn-sm" data-id="${_id}" >Add</button>`;
+    const button = `<button type="button" class="btn btn-outline-secondary" data-id="${_id}" >Add</button>`;
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, button);
