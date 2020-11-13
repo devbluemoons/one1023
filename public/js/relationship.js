@@ -49,25 +49,7 @@ function setMemberTable(data) {
         { data: "family", renderer: expands.familyRenderer },
     ];
     // initialize container
-    const container = document.getElementById("memberTable");
-    container.innerHTML = "";
-
-    new Handsontable(container, expands.defaultSettings(data, colHeaders, columns));
-}
-
-// set family list
-function setFamilyTable(data) {
-    // make colHeaders
-    const colHeaders = ["Image", "Name", "Age", ""];
-    // make columns
-    const columns = [
-        { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
-        { data: "name" },
-        { data: "birthday", renderer: expands.ageRenderer },
-        { data: "_id", renderer: expands.relateRenderer },
-    ];
-    // initialize container
-    const container = document.getElementById("familyTable");
+    const container = document.getElementById("dataTable");
     container.innerHTML = "";
 
     new Handsontable(container, expands.defaultSettings(data, colHeaders, columns));
@@ -122,7 +104,7 @@ function findMemberByName() {
         })
         .then(data => {
             if (data) {
-                setFamilyTable(data.result);
+                setSearchResult(data.result);
             }
         })
         .catch(error => {
@@ -137,6 +119,28 @@ function setMemberValue(data) {
         document.getElementById("imagePath").src = "/uploads/blank_profile.png";
     }
     document.getElementById("title").innerHTML = titleFormater(data);
+}
+
+function setSearchResult(data) {
+    const defaultImage = "uploads/blank_profile.png";
+    const searchResult = document.getElementById("searchResult");
+    searchResult.innerHTML = "";
+
+    data.forEach(item => {
+        searchResult.innerHTML += `
+            <div class="col-3 pt-3">
+                <div class="card text-center">
+                    <div>
+                        <img src="/${item.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>${item.name}</b></li>
+                    </ul>
+                    <button class="btn btn-outline-secondary btn-sm" id="${item.id}" >Add</button>
+                </div>
+            </div>
+        `;
+    });
 }
 
 /* formatter */
