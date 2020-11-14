@@ -4,10 +4,11 @@ import { Pagination } from "./modules/pagination.js";
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
     findMemberList();
+    test();
 });
 
 function setEvent() {
-    document.addEventListener("click", getCellId);
+    document.addEventListener("click", setMemberInfo);
     document.querySelector("[name=name]").addEventListener("keyup", findMemberByName);
 }
 
@@ -61,17 +62,17 @@ function setPaging(paginator) {
     pagination.setPagination(paginator).setEvent(searchMember);
 }
 
-// get cell id on handsonTable
-function getCellId(e) {
+async function setMemberInfo(e) {
     if (!e.target.dataset.id) {
         return false;
     }
-    const id = e.target.dataset.id;
-    findMemberById(id);
+    const selectedId = e.target.dataset.id;
+    const memberInfo = await findMemberById(selectedId);
+    setMemberValue(memberInfo);
 }
 
 function findMemberById(id) {
-    fetch(`/member/${id}`, {
+    return fetch(`/member/${id}`, {
         method: "GET",
     })
         .then(response => {
@@ -79,11 +80,6 @@ function findMemberById(id) {
                 console.error(response);
             }
             return response.json();
-        })
-        .then(data => {
-            if (data) {
-                setMemberValue(data);
-            }
         })
         .catch(error => {
             new Error(error);
@@ -119,6 +115,7 @@ function setMemberValue(data) {
         document.getElementById("imagePath").src = "/uploads/blank_profile.png";
     }
     document.getElementById("title").innerHTML = titleFormater(data);
+    document.getElementById("title").dataset.id = data._id;
 }
 
 function setSearchResult(data) {
@@ -136,11 +133,22 @@ function setSearchResult(data) {
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><b>${item.name}</b></li>
                     </ul>
-                    <button class="btn btn-outline-secondary btn-sm" id="${item.id}" >Add</button>
+                    <button class="btn btn-outline-secondary btn-sm" id="${item._id}" >Add</button>
                 </div>
             </div>
         `;
+        // binding add event
+        searchResult.addEventListener("click", addFamily);
     });
+}
+
+function addFamily(e) {
+    const selectedId = document.getElementById("title").dataset.id;
+    const addId = e.target.id;
+
+    if (!selectedId || !addId) {
+        return false;
+    }
 }
 
 /* formatter */

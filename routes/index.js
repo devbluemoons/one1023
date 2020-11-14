@@ -20,5 +20,6 @@ router.get("/relationship", function (req, res, next) {
 /* Controller Router */
 router.use("/file", require("./fileRoute"));
 router.use("/member", require("./memberRoute"));
+router.use("/family", require("./familyRoute"));
 
 module.exports = router;
