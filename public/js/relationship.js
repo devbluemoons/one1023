@@ -96,6 +96,54 @@ function findMemberById(id) {
         });
 }
 
+function findFamilyByMemberId(memberId) {
+    return fetch(`/family/${memberId}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+function createFamily(data) {
+    return fetch("/family", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+function updateFamily(data) {
+    return fetch("/family", {
+        method: "PUT",
+        body: data,
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
 function findMemberByName() {
     const name = document.querySelector("[name=name]").value || null;
 
@@ -148,11 +196,11 @@ function setSearchResult(data) {
             </div>
         `;
         // binding add event
-        searchResult.addEventListener("click", addFamily);
+        searchResult.querySelectorAll("button").forEach(item => item.addEventListener("click", addFamily));
     });
 }
 
-function addFamily(e) {
+async function addFamily(e) {
     const selectedId = document.getElementById("title").dataset.id;
     const addId = e.target.id;
 
@@ -160,7 +208,17 @@ function addFamily(e) {
         alert("Please, select a standard member");
         return false;
     }
-    console.log(selectedId, addId);
+
+    const family = await findFamilyByMemberId(selectedId);
+
+    console.log(family);
+
+    if (family) {
+        // updateFamily(addId);
+    } else {
+        // const data = { memberId: addId };
+        // createFamily(data);
+    }
 }
 
 /* formatter */

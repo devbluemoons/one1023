@@ -238,7 +238,7 @@ function registerMember() {
 function updateMember() {
     const formData = makeFormData();
     const valid = verifyFormData(formData);
-    console.log([...formData]);
+
     if (valid) {
         updateFormData(formData);
     }
