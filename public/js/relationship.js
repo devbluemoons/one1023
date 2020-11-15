@@ -3,13 +3,29 @@ import { Pagination } from "./modules/pagination.js";
 
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
-    findMemberList();
-    test();
+    setValue();
 });
 
 function setEvent() {
-    document.addEventListener("click", setMemberInfo);
-    document.querySelector("[name=name]").addEventListener("keyup", findMemberByName);
+    document.querySelector("#dataTable").addEventListener("click", setMemberInfo);
+    document.querySelector("[name=name]").addEventListener("keyup", setSelectedMemeber);
+}
+
+async function setValue() {
+    const memberList = await findMemberList();
+
+    if (memberList) {
+        setMemberTable(memberList.result);
+        setPaging(memberList.paginator);
+    }
+}
+
+async function setSelectedMemeber() {
+    const member = await findMemberByName();
+
+    if (member) {
+        setSearchResult(member.result);
+    }
 }
 
 const pagination = new Pagination(document.getElementById("pagination"));
@@ -17,7 +33,7 @@ const pagination = new Pagination(document.getElementById("pagination"));
 // get member list
 function findMemberList() {
     // create member information
-    fetch("/member", {
+    return fetch("/member", {
         method: "GET",
     })
         .then(response => {
@@ -25,12 +41,6 @@ function findMemberList() {
                 console.error(response);
             }
             return response.json();
-        })
-        .then(data => {
-            if (data) {
-                setMemberTable(data.result);
-                setPaging(data.paginator);
-            }
         })
         .catch(error => {
             new Error(error);
@@ -89,7 +99,7 @@ function findMemberById(id) {
 function findMemberByName() {
     const name = document.querySelector("[name=name]").value || null;
 
-    fetch(`/member?name=${name}`, {
+    return fetch(`/member?name=${name}`, {
         method: "GET",
     })
         .then(response => {
@@ -98,14 +108,14 @@ function findMemberByName() {
             }
             return response.json();
         })
-        .then(data => {
-            if (data) {
-                setSearchResult(data.result);
-            }
-        })
         .catch(error => {
             new Error(error);
         });
+}
+
+function searchMember(e) {
+    pagination.currentPage = e.target.dataset.page;
+    findMemberList();
 }
 
 function setMemberValue(data) {
@@ -147,8 +157,10 @@ function addFamily(e) {
     const addId = e.target.id;
 
     if (!selectedId || !addId) {
+        alert("Please, select a standard member");
         return false;
     }
+    console.log(selectedId, addId);
 }
 
 /* formatter */

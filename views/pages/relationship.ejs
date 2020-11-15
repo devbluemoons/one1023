@@ -4,6 +4,7 @@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-link active" id="nav-family-tab" data-toggle="tab" href="#nav-family" role="tab" aria-controls="nav-family" aria-selected="true">Family</a>
+            <a class="nav-link" id="nav-group-tab" data-toggle="tab" href="#nav-group" role="tab" aria-controls="nav-group" aria-selected="false">Group</a>
             <a class="nav-link" id="nav-position-tab" data-toggle="tab" href="#nav-position" role="tab" aria-controls="nav-position" aria-selected="false">Position</a>
             <a class="nav-link" id="nav-service-tab" data-toggle="tab" href="#nav-service" role="tab" aria-controls="nav-service" aria-selected="false">Service</a>
         </div>
@@ -50,13 +51,17 @@
                                     </div>
                                 </div>
                                 <hr class="opacity01" />
-                                <div class="row" id="relation"></div>
+                                <div class="row">
+                                    <p>Related</p>
+                                    <div id="relation"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="tab-pane fade" id="nav-group" role="tabpanel" aria-labelledby="nav-group-tab">Group</div>
         <div class="tab-pane fade" id="nav-position" role="tabpanel" aria-labelledby="nav-position-tab">Position</div>
         <div class="tab-pane fade" id="nav-service" role="tabpanel" aria-labelledby="nav-service-tab">Service</div>
     </div>

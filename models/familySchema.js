@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const familySchema = new Schema(
     {
         name: {
-            type: [memberSchema],
+            type: Array,
             required: true,
         },
     },
