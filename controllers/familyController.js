@@ -15,16 +15,15 @@ module.exports = {
                 next(error);
             });
     },
+    findById: (req, res, next) => {
+        Family.findOne(req.params).then(result => res.send(result));
+    },
     findByMemberId: (req, res, next) => {
-        Family.findOne(req.params)
-            .exec()
-            .then(result => {
-                res.send(result);
-            });
+        Family.findOne(req.params).then(result => res.send(result));
     },
     update: (req, res, next) => {
         // update data
-        Family.findByIdAndUpdate(req.body._id, req.body)
+        Family.findByIdAndUpdate(req.body._id, req.body, { new: true })
             .then(updatedDocument => {
                 if (updatedDocument) {
                     res.send(updatedDocument);

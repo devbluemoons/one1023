@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", e => {
 });
 
 function setEvent() {
-    document.querySelector("#dataTable").addEventListener("click", setMemberInfo);
+    document.querySelector("#dataTable").addEventListener("click", setFamilyInfo);
     document.querySelector("[name=name]").addEventListener("keyup", setSelectedMemeber);
 }
 
@@ -67,14 +67,14 @@ function findMemberOne(id) {
 // set member list
 function setMemberTable(data) {
     // make colHeaders
-    const colHeaders = ["Image", "Name", "Address", "Age", "Family"];
+    const colHeaders = ["Image", "Name", "Age", "Address", "Family"];
     // make columns
     const columns = [
         { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
         { data: "name", renderer: expands.identityRenderer },
-        { data: "address1", className: "htLeft htMiddle" },
         { data: "birthday", renderer: expands.ageRenderer },
-        { data: "family", renderer: expands.familyRenderer },
+        { data: "address1", className: "htLeft htMiddle" },
+        { data: "familyGroup", renderer: expands.familyGroupRenderer },
     ];
     // initialize container
     const container = document.getElementById("dataTable");
@@ -89,13 +89,16 @@ function setPaging(paginator) {
     pagination.setPagination(paginator).setEvent(searchMember);
 }
 
-async function setMemberInfo(e) {
+async function setFamilyInfo(e) {
     if (!e.target.dataset.id) {
         return false;
     }
     const selectedId = e.target.dataset.id;
-    const memberInfo = await findMemberById(selectedId);
-    setMemberValue(memberInfo);
+    const member = await findMemberById(selectedId);
+
+    if (member) {
+        setFamilyValue(member);
+    }
 }
 
 function findMemberById(id) {
@@ -131,8 +134,23 @@ function updateMember(data) {
         });
 }
 
-export function findFamilyByMemberId(memberId) {
-    return fetch(`/family/${memberId}`, {
+function findFamilyById(_id) {
+    return fetch(`/family/${_id}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+function findFamilyByMemberId(memberId) {
+    return fetch(`/family/member/${memberId}`, {
         method: "GET",
     })
         .then(response => {
@@ -202,7 +220,7 @@ function searchMember(e) {
     findMemberList();
 }
 
-function setMemberValue(data) {
+async function setFamilyValue(data) {
     if (data.imagePath) {
         document.getElementById("imagePath").src = "/".concat(data.imagePath);
     } else {
@@ -210,6 +228,42 @@ function setMemberValue(data) {
     }
     document.getElementById("title").innerHTML = titleFormatter(data);
     document.getElementById("title").dataset.id = data._id;
+
+    if (!data.family) {
+        return false;
+    }
+
+    const family = await findFamilyById(data.family);
+
+    if (!family && !family.memberId) {
+        return false;
+    }
+
+    const defaultImage = "uploads/blank_profile.png";
+    const related = document.getElementById("related");
+    related.innerHTML = "";
+
+    for (const memberId of family.memberId) {
+        // except myself family info
+        if (data._id === memberId) {
+            continue;
+        }
+
+        const member = await findMemberById(memberId);
+
+        related.innerHTML += `
+            <div class="col-3 pt-3">
+                <div class="card text-center">
+                    <div>
+                        <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>${member.name}</b></li>
+                    </ul>
+                </div>
+            </div>
+        `;
+    }
 }
 
 function setSearchResult(data) {
@@ -262,11 +316,28 @@ async function addFamily(e) {
 
         // add member id to family group
         family.memberId = [...family.memberId, addId];
-        const updateInfo = await updateFamily(family);
+        const result = await updateFamily(family);
 
-        // refresh
-        if (updateInfo) {
-            location.href = document.URL;
+        // set family after saving family group
+        if (!result && !result._id && !result.memberId) {
+            return false;
+        }
+
+        for (const memberId of result.memberId) {
+            // get member one by member id
+            const member = await findMemberOne(memberId);
+
+            // update family info to standard member
+            if (!member) {
+                return false;
+            }
+            member.family = result._id;
+            const updateInfo = await updateMember(member);
+
+            // re-render data table
+            if (updateInfo) {
+                setValue();
+            }
         }
     } else {
         // set data of member id
@@ -276,22 +347,25 @@ async function addFamily(e) {
         const result = await createFamily(data);
 
         // set family after saving family group
-        if (!result && !result._id) {
+        if (!result && !result._id && !result.memberId) {
             return false;
         }
-        // get member one by selected id
-        const member = await findMemberOne(selectedId);
 
-        // update family info to standard member
-        if (!member) {
-            return false;
-        }
-        member.family = result._id;
-        const updateInfo = await updateMember(member);
+        for (const memberId of result.memberId) {
+            // get member one by member id
+            const member = await findMemberOne(memberId);
 
-        // refresh
-        if (updateInfo) {
-            setValue();
+            // update family info to standard member
+            if (!member) {
+                return false;
+            }
+            member.family = result._id;
+            const updateInfo = await updateMember(member);
+
+            // re-render data table
+            if (updateInfo) {
+                setValue();
+            }
         }
     }
 }
