@@ -4,10 +4,29 @@ import { SearchParam } from "../modules/searchParam.js";
 
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
-    findMemberList();
+    setValue();
 });
 
 const pagination = new Pagination(document.getElementById("pagination"));
+
+async function setValue() {
+    const memberList = await findMemberList();
+
+    if (memberList) {
+        setDataTable(memberList.result);
+        setPaging(memberList.paginator);
+    }
+}
+
+function setEvent() {
+    // set click event at search button
+    document.getElementById("btnSearch").addEventListener("click", searchMember);
+
+    // dynamic search
+    document.querySelectorAll("input").forEach(item => {
+        item.addEventListener("keyup", searchMember);
+    });
+}
 
 // get member list
 function findMemberList() {
@@ -15,7 +34,7 @@ function findMemberList() {
     const url = makeSearchParameter();
 
     // create member information
-    fetch("/member" + url.params.search, {
+    return fetch("/member" + url.params.search, {
         method: "GET",
     })
         .then(response => {
@@ -23,12 +42,6 @@ function findMemberList() {
                 console.error(response);
             }
             return response.json();
-        })
-        .then(data => {
-            if (data) {
-                setDataTable(data.result);
-                setPaging(data.paginator);
-            }
         })
         .catch(error => {
             new Error(error);
@@ -58,7 +71,7 @@ function makeColumns() {
         { data: "gender", renderer: expands.genderRenderer },
         { data: "birthday", renderer: expands.birthdayRenderer },
         { data: "birthday", renderer: expands.ageRenderer },
-        { data: "family" },
+        { data: "familyGroup", renderer: expands.familyGroupRenderer },
         { data: "married" },
         { data: "faithState" },
     ];
@@ -75,16 +88,6 @@ function makeSearchParameter() {
     const url = new SearchParam(pagination.currentPage, formData);
 
     return url;
-}
-
-function setEvent() {
-    // set click event at search button
-    document.getElementById("btnSearch").addEventListener("click", searchMember);
-
-    // dynamic search
-    document.querySelectorAll("input").forEach(item => {
-        item.addEventListener("keyup", searchMember);
-    });
 }
 
 // set paging

@@ -6,6 +6,7 @@ const familySchema = new Schema(
     {
         memberId: {
             type: Array,
+            unique: true,
             required: true,
         },
         updatedId: String,

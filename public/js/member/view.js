@@ -1,10 +1,10 @@
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
-    findOneMember();
+    findMemberOne();
 });
 
-// get member list
-function findOneMember() {
+// get member one
+function findMemberOne() {
     // get parameter
     const id = getId();
 

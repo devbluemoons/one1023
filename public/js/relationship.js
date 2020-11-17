@@ -47,6 +47,23 @@ function findMemberList() {
         });
 }
 
+// get member one
+function findMemberOne(id) {
+    // find one member information
+    return fetch(`/member/${id}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
 // set member list
 function setMemberTable(data) {
     // make colHeaders
@@ -96,7 +113,25 @@ function findMemberById(id) {
         });
 }
 
-function findFamilyByMemberId(memberId) {
+// update family field of member
+function updateMember(data) {
+    return fetch("/member", {
+        headers: { "Content-Type": "application/json" },
+        method: "PUT",
+        body: JSON.stringify(data),
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+export function findFamilyByMemberId(memberId) {
     return fetch(`/family/${memberId}`, {
         method: "GET",
     })
@@ -113,8 +148,8 @@ function findFamilyByMemberId(memberId) {
 
 function createFamily(data) {
     return fetch("/family", {
-        method: "POST",
         headers: { "Content-Type": "application/json" },
+        method: "POST",
         body: JSON.stringify(data),
     })
         .then(response => {
@@ -130,8 +165,9 @@ function createFamily(data) {
 
 function updateFamily(data) {
     return fetch("/family", {
+        headers: { "Content-Type": "application/json" },
         method: "PUT",
-        body: data,
+        body: JSON.stringify(data),
     })
         .then(response => {
             if (!response.ok) {
@@ -172,7 +208,7 @@ function setMemberValue(data) {
     } else {
         document.getElementById("imagePath").src = "/uploads/blank_profile.png";
     }
-    document.getElementById("title").innerHTML = titleFormater(data);
+    document.getElementById("title").innerHTML = titleFormatter(data);
     document.getElementById("title").dataset.id = data._id;
 }
 
@@ -201,7 +237,9 @@ function setSearchResult(data) {
 }
 
 async function addFamily(e) {
+    // standard member id
     const selectedId = document.getElementById("title").dataset.id;
+    // to add member id
     const addId = e.target.id;
 
     if (!selectedId || !addId) {
@@ -209,20 +247,57 @@ async function addFamily(e) {
         return false;
     }
 
+    // get family info by standard member id
     const family = await findFamilyByMemberId(selectedId);
 
-    console.log(family);
-
     if (family) {
-        // updateFamily(addId);
+        // check duplication member id
+        const hasMemberId = family.memberId.indexOf(addId);
+
+        // return when duplication member id is exist
+        if (hasMemberId > -1) {
+            alert("There is a same member in this family");
+            return false;
+        }
+
+        // add member id to family group
+        family.memberId = [...family.memberId, addId];
+        const updateInfo = await updateFamily(family);
+
+        // refresh
+        if (updateInfo) {
+            location.href = document.URL;
+        }
     } else {
-        // const data = { memberId: addId };
-        // createFamily(data);
+        // set data of member id
+        const data = { memberId: [selectedId, addId] };
+
+        // create family group
+        const result = await createFamily(data);
+
+        // set family after saving family group
+        if (!result && !result._id) {
+            return false;
+        }
+        // get member one by selected id
+        const member = await findMemberOne(selectedId);
+
+        // update family info to standard member
+        if (!member) {
+            return false;
+        }
+        member.family = result._id;
+        const updateInfo = await updateMember(member);
+
+        // refresh
+        if (updateInfo) {
+            setValue();
+        }
     }
 }
 
 /* formatter */
-function titleFormater(value) {
+function titleFormatter(value) {
     return `
         ${value.name} (${ageFormatter(value.birthday)})
     `;

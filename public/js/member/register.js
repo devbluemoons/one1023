@@ -15,7 +15,7 @@ async function setValue() {
     const id = getId();
 
     if (id) {
-        const member = await findOneMember(id);
+        const member = await findMemberOne(id);
         setMemberValue(member);
     }
 }
@@ -40,7 +40,7 @@ function setDaumPostCode() {
 }
 
 // get member list
-function findOneMember(id) {
+function findMemberOne(id) {
     // find one member information
     return fetch(`/member/${id}`, {
         method: "GET",
@@ -58,7 +58,7 @@ function findOneMember(id) {
 
 function setMemberValue(data) {
     // can not modify fields
-    document.querySelector("[name=id]").value = getId();
+    document.querySelector("[name=_id]").value = getId();
 
     // set id (hidden value)
     document.querySelector("[name=name]").value = data.name;

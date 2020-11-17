@@ -75,6 +75,15 @@ export function relateRenderer(instance, td, row, _col, _prop, value, _cellPrope
     Handsontable.dom.fastInnerHTML(td, button);
 }
 
+export function familyGroupRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+    if (value && value.length > 0) {
+        const familyGroup = value.length - 1;
+
+        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+        Handsontable.dom.fastInnerHTML(td, familyGroup);
+    }
+}
+
 // set handsonTable properties
 export function defaultSettings(data, colHeaders, columns) {
     return {

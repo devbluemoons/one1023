@@ -62,6 +62,12 @@ const memberSchema = new Schema(
             required: true,
             trim: true,
         },
+        family: {
+            type: String,
+        },
+        familyGroup: {
+            type: Array,
+        },
         email: {
             type: String,
         },

@@ -16,17 +16,15 @@ module.exports = {
             });
     },
     findByMemberId: (req, res, next) => {
-        Family.find(req.params)
+        Family.findOne(req.params)
             .exec()
             .then(result => {
                 res.send(result);
             });
     },
     update: (req, res, next) => {
-        // make form data
-        const formData = makeFormData(req.body);
         // update data
-        Family.findByIdAndUpdate(formData.id, formData)
+        Family.findByIdAndUpdate(req.body._id, req.body)
             .then(updatedDocument => {
                 if (updatedDocument) {
                     res.send(updatedDocument);

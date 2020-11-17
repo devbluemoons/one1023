@@ -1,4 +1,5 @@
 const Member = require("../models/memberSchema");
+const Family = require("../models/familySchema");
 const Paginator = require("../middlewares/paginator");
 const uploadFile = require("../middlewares/uploadFile");
 
@@ -35,8 +36,10 @@ module.exports = {
             .sort({ _id: -1 }) // descending
             .skip(query.pagingCondition.skip) // skip data order
             .limit(query.pagingCondition.limit) // size per a page
-            .exec()
-            .then(result => {
+            .then(async data => {
+                // make family group
+                const result = await makeFamilyGroup(data);
+
                 // make paginator
                 Member.countDocuments({ ...query.searchCondition })
                     .exec()
@@ -49,12 +52,7 @@ module.exports = {
     view: (req, res, next) => {
         // set parameter
         const params = makeParams(req.params);
-
-        Member.findById(params)
-            .exec()
-            .then(result => {
-                res.send(result);
-            });
+        Member.findById(params).then(result => res.send(result));
     },
     update: async (req, res, next) => {
         // upload File
@@ -66,8 +64,9 @@ module.exports = {
 
         // make form data
         const formData = makeFormData(req.body);
+
         // update data
-        Member.findByIdAndUpdate(formData.id, formData)
+        Member.findByIdAndUpdate(formData._id, formData, { new: true })
             .then(updatedDocument => {
                 if (updatedDocument) {
                     res.send(updatedDocument);
@@ -104,10 +103,11 @@ function makeFormData(data) {
             role: data.role,
             service: data.service,
             attendance: data.attendance,
+            family: data.family,
         };
 
-        if (data.id) {
-            result.id = data.id;
+        if (data._id) {
+            result._id = data._id;
         }
         if (data.imagePath) {
             result.imagePath = data.imagePath;
@@ -115,6 +115,22 @@ function makeFormData(data) {
 
         return result;
     }
+}
+
+// make family group
+async function makeFamilyGroup(data) {
+    const result = [];
+
+    for (const item of data) {
+        if (item.family) {
+            const family = await Family.findById(item.family);
+            if (family) {
+                item.familyGroup = family.memberId;
+            }
+        }
+        result.push(item);
+    }
+    return result;
 }
 
 // make search query
