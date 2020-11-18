@@ -16,7 +16,7 @@ export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProp
 
 export function memberDetailRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
     const _id = instance.getDataAtRowProp(row, "_id");
-    const link = `<a href="/member/view?id=${_id}" target="_blank">${value}</a>`;
+    const link = `<a href="/member/view?id=${_id}">${value}</a>`;
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, link);

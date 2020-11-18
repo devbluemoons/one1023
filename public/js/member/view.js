@@ -1,15 +1,35 @@
+import * as common from "./common.js";
+
 window.addEventListener("DOMContentLoaded", e => {
+    setValue();
     setEvent();
-    findMemberOne();
 });
 
-// get member one
-function findMemberOne() {
+async function setValue() {
     // get parameter
-    const id = getId();
+    const memberId = getMemberId();
 
-    // find one member information
-    fetch(`/member/${id}`, {
+    if (!memberId) {
+        return false;
+    }
+    const member = await findMemberOne(memberId);
+
+    if (!member) {
+        return false;
+    }
+    setMemberValue(member);
+}
+
+/* set event */
+function setEvent() {
+    document.getElementById("btnEdit").addEventListener("click", e => {
+        location.href = `/member/register?id=${getId()}`;
+    });
+}
+
+// get member by member id
+function findMemberById(id) {
+    return fetch(`/member/${id}`, {
         method: "GET",
     })
         .then(response => {
@@ -18,17 +38,29 @@ function findMemberOne() {
             }
             return response.json();
         })
-        .then(data => {
-            if (data) {
-                setMemberValue(data);
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+// get member one
+function findMemberOne(id) {
+    // find one member information
+    return fetch(`/member/${id}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
             }
+            return response.json();
         })
         .catch(error => {
             new Error(error);
         });
 }
 
-function getId() {
+function getMemberId() {
     const searchValue = location.search;
     const params = new URLSearchParams(searchValue);
     const id = params.get("id");
@@ -36,7 +68,7 @@ function getId() {
     return id;
 }
 
-function setMemberValue(data) {
+async function setMemberValue(data) {
     if (data.imagePath) {
         document.getElementById("imagePath").src = "/".concat(data.imagePath);
     }
@@ -49,8 +81,40 @@ function setMemberValue(data) {
     document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
     document.getElementById("gender").innerHTML = genderFormatter(data.gender);
     document.getElementById("married").innerHTML = marriedFormatter(data.married);
-    document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
-    document.getElementById("baptism").innerHTML = baptismFormatter(data.baptismFormatter);
+    // document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
+    // document.getElementById("baptism").innerHTML = baptismFormatter(data.baptism);
+
+    if (data.familyGroup) {
+        const defaultImage = "uploads/blank_profile.png";
+        const related = document.getElementById("family");
+        related.innerHTML = "";
+
+        for (const memberId of data.familyGroup) {
+            // except myself family info
+            if (data._id === memberId) {
+                continue;
+            }
+
+            const member = await findMemberById(memberId);
+
+            related.innerHTML += `
+                <div class="col-2 pt-3">
+                    <div class="card text-center">
+                        <div class="frame">
+                            <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>${member.name}</b></li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        // set to same height and width
+        // set vertical-align : middle
+        common.setVerticalImage();
+    }
 }
 
 /* formatter */
@@ -104,11 +168,4 @@ function genderFormatter(value) {
 
 function marriedFormatter(value) {
     return value === "Y" ? "Married" : "Single";
-}
-
-/* set event */
-function setEvent() {
-    document.getElementById("btnEdit").addEventListener("click", e => {
-        location.href = `/member/register?id=${getId()}`;
-    });
 }

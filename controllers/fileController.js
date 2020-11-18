@@ -6,11 +6,9 @@ module.exports = {
         res.send(req.file); // object를 리턴함
     },
     find: (req, res, next) => {
-        File.findById({ id: req.body.id })
-            .exec()
-            .then(result => {
-                res.send(result);
-            });
+        File.findById({ id: req.body.id }).then(result => {
+            res.send(result);
+        });
     },
     replace: (req, res, next) => {
         console.log(req);

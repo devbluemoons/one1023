@@ -1,5 +1,6 @@
 import * as expands from "./modules/handsonTable.js";
 import { Pagination } from "./modules/pagination.js";
+import * as common from "./common.js";
 
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
@@ -252,9 +253,9 @@ async function setFamilyValue(data) {
         const member = await findMemberById(memberId);
 
         related.innerHTML += `
-            <div class="col-3 pt-3">
+            <div class="col-3">
                 <div class="card text-center">
-                    <div>
+                    <div class="frame">
                         <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                     </div>
                     <ul class="list-group list-group-flush">
@@ -263,6 +264,10 @@ async function setFamilyValue(data) {
                 </div>
             </div>
         `;
+
+        // set to same height and width
+        // set vertical-align : middle
+        common.setVerticalImage();
     }
 }
 
@@ -275,7 +280,7 @@ function setSearchResult(data) {
         searchResult.innerHTML += `
             <div class="col-3 pt-3">
                 <div class="card text-center">
-                    <div>
+                    <div class="frame">
                         <img src="/${item.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                     </div>
                     <ul class="list-group list-group-flush">
@@ -285,6 +290,11 @@ function setSearchResult(data) {
                 </div>
             </div>
         `;
+
+        // set to same height and width
+        // set vertical-align : middle
+        common.setVerticalImage();
+
         // binding add event
         searchResult.querySelectorAll("button").forEach(item => item.addEventListener("click", addFamily));
     });

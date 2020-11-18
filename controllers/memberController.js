@@ -38,21 +38,23 @@ module.exports = {
             .limit(query.pagingCondition.limit) // size per a page
             .then(async data => {
                 // make family group
-                const result = await makeFamilyGroup(data);
+                const result = await makeFamilyGroupList(data);
 
                 // make paginator
-                Member.countDocuments({ ...query.searchCondition })
-                    .exec()
-                    .then(totalCount => {
-                        const paginator = new Paginator(totalCount, query.limit, query.page);
-                        res.send({ result, paginator });
-                    });
+                Member.countDocuments({ ...query.searchCondition }).then(totalCount => {
+                    const paginator = new Paginator(totalCount, query.limit, query.page);
+                    res.send({ result, paginator });
+                });
             });
     },
     view: (req, res, next) => {
         // set parameter
         const params = makeParams(req.params);
-        Member.findById(params).then(result => res.send(result));
+        Member.findById(params).then(async data => {
+            // make family group
+            const result = await makeFamilyGroup(data);
+            res.send(result);
+        });
     },
     update: async (req, res, next) => {
         // upload File
@@ -119,17 +121,37 @@ function makeFormData(data) {
 
 // make family group
 async function makeFamilyGroup(data) {
+    if (!data.family) {
+        return data;
+    }
+
+    const family = await Family.findById(data.family);
+
+    if (family) {
+        data.familyGroup = family.memberId;
+    }
+
+    return data;
+}
+
+// make family group list
+async function makeFamilyGroupList(data) {
     const result = [];
 
     for (const item of data) {
-        if (item.family) {
-            const family = await Family.findById(item.family);
-            if (family) {
-                item.familyGroup = family.memberId;
-            }
+        if (!item.family) {
+            continue;
         }
+
+        const family = await Family.findById(item.family);
+
+        if (family) {
+            item.familyGroup = family.memberId;
+        }
+
         result.push(item);
     }
+
     return result;
 }
 

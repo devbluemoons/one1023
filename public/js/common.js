@@ -35,3 +35,13 @@ function setEvent() {
             });
         });
 }
+
+// set to same height and width
+// set vertical-align : middle
+function setVerticalImage() {
+    document.querySelectorAll(".frame img").forEach(item => {
+        item.parentElement.style.height = item.offsetWidth + "px";
+    });
+}
+
+export { setVerticalImage };
