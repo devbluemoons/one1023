@@ -276,7 +276,7 @@ async function setFamilyValue(data) {
                 <div class="card text-center">
                     <div class="frame">
                         <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
-                        <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" aria-label="Close" data-id="${member._id}"></button>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><b>${member.name} (${ageFormatter(member.birthday)})</b></li>
@@ -289,6 +289,11 @@ async function setFamilyValue(data) {
     // set to same height and width
     // set vertical-align : middle
     common.setVerticalImage();
+
+    // set delete member in family group
+    document.querySelectorAll(".btn-close").forEach(member => {
+        member.addEventListener("click", deleteFamily);
+    });
 }
 
 function setSearchResult(data) {
@@ -341,6 +346,15 @@ async function addFamily(e) {
         // return when duplication member id is exist
         if (hasMemberId > -1) {
             alert("There is a same member in this family");
+            return false;
+        }
+
+        // check duplicaation member id in another family group
+        const anotherGroup = await findFamilyByMemberId(addId);
+
+        // return when duplication member id is already another group
+        if (anotherGroup.memberId.length > 0) {
+            alert("There is already same member in another group");
             return false;
         }
 
@@ -400,11 +414,40 @@ async function addFamily(e) {
     }
 }
 
+async function deleteFamily(e) {
+    const memberId = e.target.dataset.id;
+
+    if (!memberId) {
+        return false;
+    }
+
+    if (confirm("Are you sure to delete this member from family group?")) {
+        const family = await findFamilyByMemberId(memberId);
+
+        if (family) {
+            // set to delete memberid from family group
+            const idx = family.memberId.findIndex(item => item === memberId);
+            family.memberId.splice(idx, 1);
+
+            // delete member id from family group
+            await updateFamily(family);
+
+            // delete family id from family field of member Schema
+            const member = await findMemberById(memberId);
+            member.family = null;
+
+            await updateMember(member);
+
+            // re-render table, family group
+            setValue();
+            setFamilyValue(member);
+        }
+    }
+}
+
 /* formatter */
 function titleFormatter(value) {
-    return `
-        ${value.name} (${ageFormatter(value.birthday)})
-    `;
+    return `${value.name} (${ageFormatter(value.birthday)})`;
 }
 
 function ageFormatter(value) {

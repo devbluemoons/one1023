@@ -23,7 +23,7 @@ async function setValue() {
 /* set event */
 function setEvent() {
     document.getElementById("btnEdit").addEventListener("click", e => {
-        location.href = `/member/register?id=${getId()}`;
+        location.href = `/member/register?id=${getMemberId()}`;
     });
 }
 
@@ -113,7 +113,7 @@ async function setMemberValue(data) {
         // set simple member info in family group
         const defaultImage = "uploads/blank_profile.png";
         const family = document.getElementById("family");
-        related.innerHTML = "";
+        family.innerHTML = "";
 
         familyGroup.forEach(member => {
             family.innerHTML += `
