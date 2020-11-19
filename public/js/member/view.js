@@ -1,4 +1,4 @@
-import * as common from "./common.js";
+import * as common from "./../common.js";
 
 window.addEventListener("DOMContentLoaded", e => {
     setValue();
@@ -85,9 +85,8 @@ async function setMemberValue(data) {
     // document.getElementById("baptism").innerHTML = baptismFormatter(data.baptism);
 
     if (data.familyGroup) {
-        const defaultImage = "uploads/blank_profile.png";
-        const related = document.getElementById("family");
-        related.innerHTML = "";
+        // get family group member info
+        const familyGroup = [];
 
         for (const memberId of data.familyGroup) {
             // except myself family info
@@ -96,20 +95,40 @@ async function setMemberValue(data) {
             }
 
             const member = await findMemberById(memberId);
+            familyGroup.push(member);
+        }
 
-            related.innerHTML += `
+        // sort by birthday
+        familyGroup.sort(function (a, b) {
+            if (a.birthday > b.birthday) {
+                return 1;
+            }
+            if (a.birthday < b.birthday) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
+
+        // set simple member info in family group
+        const defaultImage = "uploads/blank_profile.png";
+        const family = document.getElementById("family");
+        related.innerHTML = "";
+
+        familyGroup.forEach(member => {
+            family.innerHTML += `
                 <div class="col-2 pt-3">
                     <div class="card text-center">
                         <div class="frame">
                             <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><b>${member.name}</b></li>
+                            <li class="list-group-item"><b>${member.name} (${ageFormatter(member.birthday)})</b></li>
                         </ul>
                     </div>
                 </div>
             `;
-        }
+        });
 
         // set to same height and width
         // set vertical-align : middle

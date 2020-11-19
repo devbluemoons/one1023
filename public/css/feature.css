@@ -118,6 +118,7 @@ tbody tr:hover td {
 
 /* card image : vertical-align */
 .card .frame {
+    display: inline-block;
     position: relative;
 }
 .card .frame img {

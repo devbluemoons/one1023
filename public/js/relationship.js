@@ -240,35 +240,55 @@ async function setFamilyValue(data) {
         return false;
     }
 
-    const defaultImage = "uploads/blank_profile.png";
-    const related = document.getElementById("related");
-    related.innerHTML = "";
+    // get family group member info
+    const familyGroup = [];
 
-    for (const memberId of family.memberId) {
+    for (const memberId of data.familyGroup) {
         // except myself family info
         if (data._id === memberId) {
             continue;
         }
 
         const member = await findMemberById(memberId);
+        familyGroup.push(member);
+    }
 
+    // sort by birthday
+    familyGroup.sort(function (a, b) {
+        if (a.birthday > b.birthday) {
+            return 1;
+        }
+        if (a.birthday < b.birthday) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
+    // set simple member info in family group
+    const defaultImage = "uploads/blank_profile.png";
+    const related = document.getElementById("related");
+    related.innerHTML = "";
+
+    familyGroup.forEach(member => {
         related.innerHTML += `
-            <div class="col-3">
+            <div class="col-3 pt-3">
                 <div class="card text-center">
                     <div class="frame">
                         <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
+                        <button type="button" class="btn-close btn-close-white" aria-label="Close"></button>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>${member.name}</b></li>
+                        <li class="list-group-item"><b>${member.name} (${ageFormatter(member.birthday)})</b></li>
                     </ul>
                 </div>
             </div>
         `;
+    });
 
-        // set to same height and width
-        // set vertical-align : middle
-        common.setVerticalImage();
-    }
+    // set to same height and width
+    // set vertical-align : middle
+    common.setVerticalImage();
 }
 
 function setSearchResult(data) {

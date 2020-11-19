@@ -15,3 +15,13 @@
     background-color: #1566b7 !important;
     border-color: #1566b7;
 }
+
+.btn-close {
+    padding: 3px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    border-radius: 1em;
+    background-color: darkgrey;
+}
