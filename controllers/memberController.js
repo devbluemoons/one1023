@@ -105,8 +105,11 @@ function makeFormData(data) {
             role: data.role,
             service: data.service,
             attendance: data.attendance,
-            family: data.family,
         };
+
+        if (data.family) {
+            result.family = data.family;
+        }
 
         if (data._id) {
             result._id = data._id;
@@ -139,16 +142,17 @@ async function makeFamilyGroupList(data) {
     const result = [];
 
     for (const item of data) {
+        // has no family
         if (!item.family) {
+            result.push(item);
             continue;
         }
-
+        // has family
         const family = await Family.findById(item.family);
 
         if (family) {
             item.familyGroup = family.memberId;
         }
-
         result.push(item);
     }
 

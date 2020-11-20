@@ -199,6 +199,64 @@ function updateFamily(data) {
         });
 }
 
+async function deleteFamily(e) {
+    const memberId = e.target.dataset.id;
+
+    if (!memberId) {
+        return false;
+    }
+
+    if (confirm("Are you sure to delete this member from family group?")) {
+        const family = await findFamilyByMemberId(memberId);
+
+        if (family) {
+            // set to delete memberid from family group
+            const idx = family.memberId.findIndex(item => item === memberId);
+            family.memberId.splice(idx, 1);
+
+            // delete member id from family group
+            const updatedFamily = await updateFamily(family);
+
+            // delete family group when there is one member in family group
+            if (updatedFamily && updatedFamily.memberId.length === 1) {
+                deleteFamilyGroup(updatedFamily);
+            }
+            // delete family id from family field of member Schema
+            const member = await findMemberById(memberId);
+            member.family = null;
+
+            await updateMember(member);
+
+            // re-render table
+            setValue();
+
+            // refresh family group
+            {
+                const selectedId = document.getElementById("title").dataset.id;
+                const member = await findMemberById(selectedId);
+                setFamilyValue(member);
+            }
+        }
+    }
+}
+
+function deleteFamilyGroup(data) {
+    return fetch("/family", {
+        headers: { "Content-Type": "application/json" },
+        method: "DELETE",
+        body: JSON.stringify(data),
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
 function findMemberByName() {
     const name = document.querySelector("[name=name]").value || null;
 
@@ -229,16 +287,6 @@ async function setFamilyValue(data) {
     }
     document.getElementById("title").innerHTML = titleFormatter(data);
     document.getElementById("title").dataset.id = data._id;
-
-    if (!data.family) {
-        return false;
-    }
-
-    const family = await findFamilyById(data.family);
-
-    if (!family && !family.memberId) {
-        return false;
-    }
 
     // get family group member info
     const familyGroup = [];
@@ -272,14 +320,14 @@ async function setFamilyValue(data) {
 
     familyGroup.forEach(member => {
         related.innerHTML += `
-            <div class="col-3 pt-3">
+            <div class="col-3">
                 <div class="card text-center">
                     <div class="frame">
                         <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                         <button type="button" class="btn-close btn-close-white" aria-label="Close" data-id="${member._id}"></button>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>${member.name} (${ageFormatter(member.birthday)})</b></li>
+                        <li class="list-group-item">${member.name} (${ageFormatter(member.birthday)})</li>
                     </ul>
                 </div>
             </div>
@@ -309,7 +357,7 @@ function setSearchResult(data) {
                         <img src="/${item.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>${item.name}</b></li>
+                        <li class="list-group-item">${item.name}</li>
                     </ul>
                     <button class="btn btn-outline-secondary btn-sm" id="${item._id}" >Add</button>
                 </div>
@@ -331,8 +379,12 @@ async function addFamily(e) {
     // to add member id
     const addId = e.target.id;
 
-    if (!selectedId || !addId) {
+    if (!selectedId) {
         alert("Please, select a standard member");
+        return false;
+    }
+    if (!addId) {
+        alert("Please, select member to add");
         return false;
     }
 
@@ -353,7 +405,7 @@ async function addFamily(e) {
         const anotherGroup = await findFamilyByMemberId(addId);
 
         // return when duplication member id is already another group
-        if (anotherGroup.memberId.length > 0) {
+        if (anotherGroup && anotherGroup.memberId.length > 0) {
             alert("There is already same member in another group");
             return false;
         }
@@ -363,7 +415,7 @@ async function addFamily(e) {
         const result = await updateFamily(family);
 
         // set family after saving family group
-        if (!result && !result._id && !result.memberId) {
+        if (!result) {
             return false;
         }
 
@@ -376,13 +428,15 @@ async function addFamily(e) {
                 return false;
             }
             member.family = result._id;
-            const updateInfo = await updateMember(member);
-
-            // re-render data table
-            if (updateInfo) {
-                setValue();
-            }
+            await updateMember(member);
         }
+        // re-render data table
+        setValue();
+
+        // refresh family group
+        const standardId = document.getElementById("title").dataset.id;
+        const member = await findMemberById(standardId);
+        setFamilyValue(member);
     } else {
         // set data of member id
         const data = { memberId: [selectedId, addId] };
@@ -391,7 +445,7 @@ async function addFamily(e) {
         const result = await createFamily(data);
 
         // set family after saving family group
-        if (!result && !result._id && !result.memberId) {
+        if (!result) {
             return false;
         }
 
@@ -404,44 +458,15 @@ async function addFamily(e) {
                 return false;
             }
             member.family = result._id;
-            const updateInfo = await updateMember(member);
-
-            // re-render data table
-            if (updateInfo) {
-                setValue();
-            }
-        }
-    }
-}
-
-async function deleteFamily(e) {
-    const memberId = e.target.dataset.id;
-
-    if (!memberId) {
-        return false;
-    }
-
-    if (confirm("Are you sure to delete this member from family group?")) {
-        const family = await findFamilyByMemberId(memberId);
-
-        if (family) {
-            // set to delete memberid from family group
-            const idx = family.memberId.findIndex(item => item === memberId);
-            family.memberId.splice(idx, 1);
-
-            // delete member id from family group
-            await updateFamily(family);
-
-            // delete family id from family field of member Schema
-            const member = await findMemberById(memberId);
-            member.family = null;
-
             await updateMember(member);
-
-            // re-render table, family group
-            setValue();
-            setFamilyValue(member);
         }
+        // re-render data table
+        setValue();
+
+        // refresh family group
+        const standardId = document.getElementById("title").dataset.id;
+        const member = await findMemberById(standardId);
+        setFamilyValue(member);
     }
 }
 

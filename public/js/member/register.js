@@ -317,10 +317,6 @@ function verifyFormData(data) {
         alert(`Please, fill [Marital Status] field`);
         return false;
     }
-    if (!data.get("family")) {
-        alert(`Please, fill [Family] field`);
-        return false;
-    }
     if (!data.get("faithState")) {
         alert(`Please, fill [Faith State] field`);
         return false;
