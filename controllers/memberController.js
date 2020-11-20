@@ -63,7 +63,6 @@ module.exports = {
         if (req.file) {
             req.body.imagePath = req.file.path;
         }
-
         // make form data
         const formData = makeFormData(req.body);
 
@@ -85,11 +84,9 @@ function makeFormData(data) {
     if (data) {
         const result = {
             name: data.name,
-            contact: {
-                contact1: data.contact1,
-                contact2: data.contact2,
-                contact3: data.contact3,
-            },
+            contact1: data.contact1,
+            contact2: data.contact2,
+            contact3: data.contact3,
             address1: data.address1,
             address2: data.address2,
             zipCode: data.zipCode,

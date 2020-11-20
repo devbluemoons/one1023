@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
+    setValue();
 });
 
 function setEvent() {
@@ -34,6 +35,13 @@ function setEvent() {
                 document.getElementById("btnSearch").dispatchEvent(new Event("click"));
             });
         });
+}
+
+function setValue() {
+    // set autocomplete off
+    document.querySelectorAll("input").forEach(el => {
+        el.setAttribute("autocomplete", "off");
+    });
 }
 
 // set to same height and width

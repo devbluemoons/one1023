@@ -9,19 +9,17 @@ const memberSchema = new Schema(
             required: true,
             trim: true,
         },
-        contact: {
-            contact1: {
-                type: String,
-                required: true,
-            },
-            contact2: {
-                type: String,
-                required: true,
-            },
-            contact3: {
-                type: String,
-                required: true,
-            },
+        contact1: {
+            type: String,
+            required: true,
+        },
+        contact2: {
+            type: String,
+            required: true,
+        },
+        contact3: {
+            type: String,
+            required: true,
         },
         address1: {
             type: String,

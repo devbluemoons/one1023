@@ -115,17 +115,3 @@ tbody tr:hover td {
 .hide {
     display: none;
 }
-
-/* card image : vertical-align */
-.card .frame {
-    display: inline-block;
-    position: relative;
-}
-.card .frame img {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}

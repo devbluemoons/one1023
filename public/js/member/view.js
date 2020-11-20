@@ -74,7 +74,7 @@ async function setMemberValue(data) {
     }
     document.getElementById("title").innerHTML = titleFormater(data);
     document.getElementById("birthday").innerHTML = birthdayFormatter(data.birthday);
-    document.getElementById("contact").innerHTML = contactFormatter(data.contact);
+    document.getElementById("contact").innerHTML = contactFormatter(data);
     document.getElementById("address").innerHTML = addressFormatter(data);
     document.getElementById("job").innerHTML = data.job;
     document.getElementById("email").innerHTML = data.email;
@@ -160,6 +160,7 @@ function birthdayFormatter(value) {
 }
 
 function contactFormatter(value) {
+    console.log(value);
     const contact1 = value.contact1;
     const contact2 = value.contact2;
     const contact3 = value.contact3;

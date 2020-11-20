@@ -66,7 +66,7 @@ function makeColumns() {
     return [
         { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
         { data: "name", renderer: expands.memberDetailRenderer },
-        { data: "contact", renderer: expands.contactRenderer },
+        { data: this, renderer: expands.contactRenderer },
         { data: "address1", className: "htLeft htMiddle" },
         { data: "gender", renderer: expands.genderRenderer },
         { data: "birthday", renderer: expands.birthdayRenderer },
@@ -79,7 +79,7 @@ function makeColumns() {
 
 function searchMember(e) {
     pagination.currentPage = e.target.dataset.page;
-    findMemberList();
+    setValue();
 }
 
 function makeSearchParameter() {

@@ -5,7 +5,7 @@ export class SearchParam {
         this.params.searchParams.append("limit", limit || 25);
 
         // set formData
-        for (var pair of formData.entries()) {
+        for (const pair of formData.entries()) {
             this.params.searchParams.append(pair[0], pair[1]);
         }
     }

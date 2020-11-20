@@ -23,12 +23,14 @@ export function memberDetailRenderer(instance, td, row, _col, _prop, value, _cel
 }
 
 export function contactRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
-    if (value) {
-        const contact = [value.contact1, value.contact2, value.contact3].join("-");
+    const contact1 = _instance.getDataAtRowProp(_row, "contact1");
+    const contact2 = _instance.getDataAtRowProp(_row, "contact2");
+    const contact3 = _instance.getDataAtRowProp(_row, "contact3");
 
-        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
-        Handsontable.dom.fastInnerHTML(td, contact);
-    }
+    const contact = [contact1, contact2, contact3].join("-");
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, contact);
 }
 
 export function genderRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {

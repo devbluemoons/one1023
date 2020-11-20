@@ -135,21 +135,6 @@ function updateMember(data) {
         });
 }
 
-function findFamilyById(_id) {
-    return fetch(`/family/${_id}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            new Error(error);
-        });
-}
-
 function findFamilyByMemberId(memberId) {
     return fetch(`/family/member/${memberId}`, {
         method: "GET",
@@ -280,11 +265,13 @@ function searchMember(e) {
 }
 
 async function setFamilyValue(data) {
+    // set image
     if (data.imagePath) {
         document.getElementById("imagePath").src = "/".concat(data.imagePath);
     } else {
         document.getElementById("imagePath").src = "/uploads/blank_profile.png";
     }
+
     document.getElementById("title").innerHTML = titleFormatter(data);
     document.getElementById("title").dataset.id = data._id;
 
@@ -326,9 +313,9 @@ async function setFamilyValue(data) {
                         <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                         <button type="button" class="btn-close btn-close-white" aria-label="Close" data-id="${member._id}"></button>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">${member.name} (${ageFormatter(member.birthday)})</li>
-                    </ul>
+                    <div class="card-body border-top">
+                        ${member.name} (${ageFormatter(member.birthday)})
+                    </div>
                 </div>
             </div>
         `;
@@ -356,9 +343,7 @@ function setSearchResult(data) {
                     <div class="frame">
                         <img src="/${item.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">${item.name}</li>
-                    </ul>
+                    <div class="card-body border-top p-2">${item.name}</div>
                     <button class="btn btn-outline-secondary btn-sm" id="${item._id}" >Add</button>
                 </div>
             </div>
@@ -391,6 +376,7 @@ async function addFamily(e) {
     // get family info by standard member id
     const family = await findFamilyByMemberId(selectedId);
 
+    // create new family group
     if (family) {
         // check duplication member id
         const hasMemberId = family.memberId.indexOf(addId);
@@ -437,6 +423,8 @@ async function addFamily(e) {
         const standardId = document.getElementById("title").dataset.id;
         const member = await findMemberById(standardId);
         setFamilyValue(member);
+
+        // update exist family group
     } else {
         // set data of member id
         const data = { memberId: [selectedId, addId] };

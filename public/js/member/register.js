@@ -94,9 +94,9 @@ function setMemberValue(data) {
     document.querySelector("#viewJoinDate").classList.remove("hide");
 
     // must field
-    document.querySelector("[name=contact1]").value = data.contact.contact1;
-    document.querySelector("[name=contact2]").value = data.contact.contact2;
-    document.querySelector("[name=contact3]").value = data.contact.contact3;
+    document.querySelector("[name=contact1]").value = data.contact1;
+    document.querySelector("[name=contact2]").value = data.contact2;
+    document.querySelector("[name=contact3]").value = data.contact3;
     document.querySelector("[name=address1]").value = data.address1;
     document.querySelector("[name=address2]").value = data.address2;
     document.querySelector("[name=zipCode]").value = data.zipCode;
