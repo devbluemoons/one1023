@@ -34,6 +34,19 @@ module.exports = {
                 next(error);
             });
     },
+    delete: (req, res, next) => {
+        // update data
+        Family.findByIdAndDelete({ _id: req.body._id })
+            .then(result => {
+                if (result) {
+                    res.send(result);
+                }
+            })
+            .catch(error => {
+                console.error(error.message);
+                next(error);
+            });
+    },
 };
 
 function makeFormData(data) {
