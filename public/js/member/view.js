@@ -160,7 +160,6 @@ function birthdayFormatter(value) {
 }
 
 function contactFormatter(value) {
-    console.log(value);
     const contact1 = value.contact1;
     const contact2 = value.contact2;
     const contact3 = value.contact3;
