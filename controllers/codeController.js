@@ -15,8 +15,11 @@ module.exports = {
                 next(error);
             });
     },
-    findById: (req, res, next) => {
-        Code.findOne(req.params).then(result => res.send(result));
+    findByDivision: (req, res, next) => {
+        Code.find(req.params).then(result => res.send(result));
+    },
+    findByDivisionAndName: (req, res, next) => {
+        Code.find(req.params).then(result => res.send(result));
     },
     update: (req, res, next) => {
         // update data

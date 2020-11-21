@@ -4,15 +4,32 @@ import * as common from "./common.js";
 
 window.addEventListener("DOMContentLoaded", e => {
     setEvent();
-    setValue();
 });
 
 function setEvent() {
-    document.querySelector("#dataTable").addEventListener("click", setFamilyInfo);
+    document.getElementById("nav-family-tab").addEventListener("shown.bs.tab", setFamily);
+    document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
+    document.getElementById("nav-position-tab").addEventListener("shown.bs.tab", setPosition);
+    document.getElementById("nav-service-tab").addEventListener("shown.bs.tab", setService);
+}
+
+//////////////////
+//              //
+//  Family Tab  //
+//              //
+//////////////////
+
+function setFamily() {
+    setFamilyEvent();
+    setFamilyValue();
+}
+
+function setFamilyEvent() {
+    document.querySelector("#familyTable").addEventListener("click", setFamilyInfo);
     document.querySelector("[name=name]").addEventListener("keyup", setSelectedMemeber);
 }
 
-async function setValue() {
+async function setFamilyValue() {
     const memberList = await findMemberList();
 
     if (memberList) {
@@ -33,7 +50,6 @@ const pagination = new Pagination(document.getElementById("pagination"));
 
 // get member list
 function findMemberList() {
-    // create member information
     return fetch("/member", {
         method: "GET",
     })
@@ -50,7 +66,6 @@ function findMemberList() {
 
 // get member one
 function findMemberOne(id) {
-    // find one member information
     return fetch(`/member/${id}`, {
         method: "GET",
     })
@@ -78,7 +93,7 @@ function setMemberTable(data) {
         { data: "familyGroup", renderer: expands.familyGroupRenderer },
     ];
     // initialize container
-    const container = document.getElementById("dataTable");
+    const container = document.getElementById("familyTable");
     container.innerHTML = "";
 
     new Handsontable(container, expands.defaultSettings(data, colHeaders, columns));
@@ -98,7 +113,7 @@ async function setFamilyInfo(e) {
     const member = await findMemberById(selectedId);
 
     if (member) {
-        setFamilyValue(member);
+        setFamilyGroup(member);
     }
 }
 
@@ -213,13 +228,13 @@ async function deleteFamily(e) {
             await updateMember(member);
 
             // re-render table
-            setValue();
+            setFamilyGroup();
 
             // refresh family group
             {
                 const selectedId = document.getElementById("title").dataset.id;
                 const member = await findMemberById(selectedId);
-                setFamilyValue(member);
+                setFamilyGroup(member);
             }
         }
     }
@@ -264,7 +279,7 @@ function searchMember(e) {
     findMemberList();
 }
 
-async function setFamilyValue(data) {
+async function setFamilyGroup(data) {
     // set image
     if (data.imagePath) {
         document.getElementById("imagePath").src = "/".concat(data.imagePath);
@@ -417,12 +432,12 @@ async function addFamily(e) {
             await updateMember(member);
         }
         // re-render data table
-        setValue();
+        setFamilyGroup();
 
         // refresh family group
         const standardId = document.getElementById("title").dataset.id;
         const member = await findMemberById(standardId);
-        setFamilyValue(member);
+        setFamilyGroup(member);
 
         // update exist family group
     } else {
@@ -449,12 +464,12 @@ async function addFamily(e) {
             await updateMember(member);
         }
         // re-render data table
-        setValue();
+        setFamilyGroup();
 
         // refresh family group
         const standardId = document.getElementById("title").dataset.id;
         const member = await findMemberById(standardId);
-        setFamilyValue(member);
+        setFamilyGroup(member);
     }
 }
 
@@ -469,4 +484,91 @@ function ageFormatter(value) {
     const age = thisYear - Number(year) + 1;
 
     return age;
+}
+
+/////////////////
+//             //
+//  Group Tab  //
+//             //
+/////////////////
+
+function setGroup() {
+    setGroupValue();
+    setGroupEvent();
+}
+
+async function setGroupValue() {
+    const groupList = await findGroupList();
+    setGroupTable(groupList.result);
+}
+
+function setGroupEvent() {}
+
+// get group list
+function findGroupList() {
+    return fetch("/code/group", {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+// create group
+function createGroup(data) {
+    return fetch("/group", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(data),
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+// set group list
+function setGroupTable(data) {
+    // make colHeaders
+    const colHeaders = ["Name", "Valid"];
+    // make columns
+    const columns = [{ data: "name", renderer: expands.identityRenderer }, { data: "valid" }];
+    // initialize container
+    const container = document.getElementById("groupTable");
+    container.innerHTML = "";
+
+    new Handsontable(container, expands.defaultSettings(data, colHeaders, columns));
+}
+
+////////////////////
+//                //
+//  Position Tab  //
+//                //
+////////////////////
+
+function setPosition() {
+    console.clear();
+    console.log(this);
+}
+
+///////////////////
+//               //
+//  Service Tab  //
+//               //
+///////////////////
+
+function setService() {
+    console.clear();
+    console.log(this);
 }

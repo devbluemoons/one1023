@@ -66,11 +66,13 @@ export function ageRenderer(_instance, td, _row, _col, _prop, value, _cellProper
 
 // get [id] and [name] information
 export function identityRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
-    const _id = instance.getDataAtRowProp(row, "_id");
-    const link = `<a href="#" data-id="${_id}" class="family">${value}</a>`;
+    if (value) {
+        const _id = instance.getDataAtRowProp(row, "_id");
+        const link = `<a href="#" data-id="${_id}" class="family">${value}</a>`;
 
-    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
-    Handsontable.dom.fastInnerHTML(td, link);
+        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+        Handsontable.dom.fastInnerHTML(td, link);
+    }
 }
 
 export function relateRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
