@@ -83,6 +83,21 @@ export function relateRenderer(instance, td, row, _col, _prop, value, _cellPrope
     Handsontable.dom.fastInnerHTML(td, button);
 }
 
+export function editRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+    const _id = instance.getDataAtRowProp(row, "_id");
+    const button = `<button type="button" class="btn btn-outline-secondary" data-id="${_id}" >Edit</button>`;
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, button);
+}
+
+export function validRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+    const valid = value === "01" ? "Available" : "Invalid";
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, valid);
+}
+
 export function familyGroupRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
     if (value && value.length > 0) {
         const familyGroup = value.length - 1;

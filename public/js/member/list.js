@@ -10,7 +10,10 @@ window.addEventListener("DOMContentLoaded", e => {
 const pagination = new Pagination(document.getElementById("pagination"));
 
 async function setValue() {
-    const memberList = await findMemberList();
+    // make search parameter
+    const url = makeSearchParameter("searchForm");
+    // get member list
+    const memberList = await findMemberList(url);
 
     if (memberList) {
         setDataTable(memberList.result);
@@ -29,10 +32,7 @@ function setEvent() {
 }
 
 // get member list
-function findMemberList() {
-    // make search parameter
-    const url = makeSearchParameter();
-
+function findMemberList(url) {
     // create member information
     return fetch("/member" + url.params.search, {
         method: "GET",
@@ -82,8 +82,8 @@ function searchMember(e) {
     setValue();
 }
 
-function makeSearchParameter() {
-    const searchForm = document.getElementById("searchForm");
+function makeSearchParameter(form) {
+    const searchForm = document.getElementById(form);
     const formData = new FormData(searchForm);
     const url = new SearchParam(pagination.currentPage, formData);
 

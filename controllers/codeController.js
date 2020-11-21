@@ -2,6 +2,7 @@ const Code = require("../models/codeSchema");
 
 module.exports = {
     create: (req, res, next) => {
+        console.log(req.body);
         // save data
         Code(req.body)
             .save()
@@ -19,7 +20,7 @@ module.exports = {
         Code.find(req.params).then(result => res.send(result));
     },
     findByDivisionAndName: (req, res, next) => {
-        Code.find(req.params).then(result => res.send(result));
+        Code.findOne(req.query).then(result => res.send(result));
     },
     update: (req, res, next) => {
         // update data
@@ -48,23 +49,3 @@ module.exports = {
             });
     },
 };
-
-function makeFormData(data) {
-    if (data && data.memberId) {
-        return data.memberId;
-    }
-}
-
-// make search query
-function makeQuery(query) {
-    if (query) {
-        return query;
-    }
-}
-
-// make search param
-function makeParams(params) {
-    if (params.memberId) {
-        return { memberId: params.memberId };
-    }
-}

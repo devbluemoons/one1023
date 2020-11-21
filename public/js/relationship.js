@@ -1,5 +1,6 @@
 import * as expands from "./modules/handsonTable.js";
 import { Pagination } from "./modules/pagination.js";
+import { SearchParam } from "./modules/searchParam.js";
 import * as common from "./common.js";
 
 window.addEventListener("DOMContentLoaded", e => {
@@ -15,6 +16,14 @@ function setEvent() {
     document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
     document.getElementById("nav-position-tab").addEventListener("shown.bs.tab", setPosition);
     document.getElementById("nav-service-tab").addEventListener("shown.bs.tab", setService);
+}
+
+function makeSearchParameter(form) {
+    const searchForm = document.getElementById(form);
+    const formData = new FormData(searchForm);
+
+    const url = new SearchParam(pagination.currentPage, formData);
+    return url;
 }
 
 //////////////////
@@ -500,7 +509,7 @@ function setGroup() {
 
 async function setGroupValue() {
     const groupList = await findGroupList();
-    setGroupTable(groupList.result);
+    setGroupTable(groupList);
 }
 
 function setGroupEvent() {
@@ -523,9 +532,24 @@ function findGroupList() {
         });
 }
 
+function findGroupByDivisionAndName(url) {
+    return fetch("/code/division/name" + url.search, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
 // create group
 function createGroup(data) {
-    return fetch("/group", {
+    return fetch("/code", {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify(data),
@@ -544,9 +568,13 @@ function createGroup(data) {
 // set group list
 function setGroupTable(data) {
     // make colHeaders
-    const colHeaders = ["Name", "Valid"];
+    const colHeaders = ["Name", "Valid", ""];
     // make columns
-    const columns = [{ data: "name", renderer: expands.identityRenderer }, { data: "valid" }];
+    const columns = [
+        { data: "name", renderer: expands.identityRenderer, width: 150 },
+        { data: "valid", renderer: expands.validRenderer },
+        { data: this, renderer: expands.editRenderer },
+    ];
     // initialize container
     const container = document.getElementById("groupTable");
     container.innerHTML = "";
@@ -558,13 +586,30 @@ function setGroupTable(data) {
 async function registerGroup() {
     // set form data
     const groupForm = document.getElementById("groupForm");
-    const formData = new FormData(groupForm);
-    formData.append("division", "group");
+    const name = groupForm.querySelector("[name=name]").value;
+    const param = {
+        name: name,
+        division: "group",
+    };
+
+    // verify duplication group
+
+    // make search parameter
+    const url = new URL(document.URL);
+    url.searchParams.append("division", "group");
+    url.searchParams.append("name", document.querySelector("#groupForm [name=name]").value);
+
+    const group = await findGroupByDivisionAndName(url);
+
+    if (group) {
+        alert("The same group exists!");
+        return false;
+    }
 
     // create group
-    const groupList = await createGroup(formData);
+    await createGroup(param);
     // set group table
-    setGroupTable(groupList);
+    setGroupValue();
 }
 
 ////////////////////
