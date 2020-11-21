@@ -24,7 +24,7 @@ const codeSchema = new Schema(
         timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
     },
     {
-        collection: "code",
+        collection: "codes",
     }
 );
 

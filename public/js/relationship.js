@@ -7,6 +7,10 @@ window.addEventListener("DOMContentLoaded", e => {
 });
 
 function setEvent() {
+    // default Active Tab
+    setFamily();
+
+    // each tab event
     document.getElementById("nav-family-tab").addEventListener("shown.bs.tab", setFamily);
     document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
     document.getElementById("nav-position-tab").addEventListener("shown.bs.tab", setPosition);
@@ -226,17 +230,14 @@ async function deleteFamily(e) {
             member.family = null;
 
             await updateMember(member);
-
-            // re-render table
-            setFamilyGroup();
-
-            // refresh family group
-            {
-                const selectedId = document.getElementById("title").dataset.id;
-                const member = await findMemberById(selectedId);
-                setFamilyGroup(member);
-            }
         }
+        // re-render table
+        setFamilyValue();
+
+        // refresh family group
+        const selectedId = document.getElementById("title").dataset.id;
+        const member = await findMemberById(selectedId);
+        setFamilyGroup(member);
     }
 }
 
@@ -432,7 +433,7 @@ async function addFamily(e) {
             await updateMember(member);
         }
         // re-render data table
-        setFamilyGroup();
+        setFamilyValue();
 
         // refresh family group
         const standardId = document.getElementById("title").dataset.id;
@@ -464,7 +465,7 @@ async function addFamily(e) {
             await updateMember(member);
         }
         // re-render data table
-        setFamilyGroup();
+        setFamilyValue();
 
         // refresh family group
         const standardId = document.getElementById("title").dataset.id;
@@ -502,7 +503,9 @@ async function setGroupValue() {
     setGroupTable(groupList.result);
 }
 
-function setGroupEvent() {}
+function setGroupEvent() {
+    document.querySelector("#groupForm #btnSave").addEventListener("click", registerGroup);
+}
 
 // get group list
 function findGroupList() {
@@ -549,6 +552,19 @@ function setGroupTable(data) {
     container.innerHTML = "";
 
     new Handsontable(container, expands.defaultSettings(data, colHeaders, columns));
+}
+
+// register group
+async function registerGroup() {
+    // set form data
+    const groupForm = document.getElementById("groupForm");
+    const formData = new FormData(groupForm);
+    formData.append("division", "group");
+
+    // create group
+    const groupList = await createGroup(formData);
+    // set group table
+    setGroupTable(groupList);
 }
 
 ////////////////////
