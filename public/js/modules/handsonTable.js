@@ -91,8 +91,8 @@ export function editRenderer(instance, td, row, _col, _prop, value, _cellPropert
     Handsontable.dom.fastInnerHTML(td, button);
 }
 
-export function validRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
-    const valid = value === "01" ? "Available" : "Invalid";
+export function conditionRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+    const valid = value === "01" ? "Use" : "Unsued";
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, valid);

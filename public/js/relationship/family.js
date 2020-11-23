@@ -1,22 +1,9 @@
-import * as expands from "./modules/handsonTable.js";
-import { Pagination } from "./modules/pagination.js";
-import { SearchParam } from "./modules/searchParam.js";
-import * as common from "./common.js";
+import * as expands from "../modules/handsonTable.js";
+import { Pagination } from "../modules/pagination.js";
+import { SearchParam } from "../modules/searchParam.js";
+import * as common from "../common.js";
 
-window.addEventListener("DOMContentLoaded", e => {
-    setEvent();
-});
-
-function setEvent() {
-    // default Active Tab
-    setFamily();
-
-    // each tab event
-    document.getElementById("nav-family-tab").addEventListener("shown.bs.tab", setFamily);
-    document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
-    document.getElementById("nav-position-tab").addEventListener("shown.bs.tab", setPosition);
-    document.getElementById("nav-service-tab").addEventListener("shown.bs.tab", setService);
-}
+document.getElementById("nav-family-tab").addEventListener("shown.bs.tab", setFamily);
 
 function makeSearchParameter(form) {
     const searchForm = document.getElementById(form);
@@ -25,12 +12,6 @@ function makeSearchParameter(form) {
     const url = new SearchParam(pagination.currentPage, formData);
     return url;
 }
-
-//////////////////
-//              //
-//  Family Tab  //
-//              //
-//////////////////
 
 function setFamily() {
     setFamilyEvent();
@@ -494,142 +475,4 @@ function ageFormatter(value) {
     const age = thisYear - Number(year) + 1;
 
     return age;
-}
-
-/////////////////
-//             //
-//  Group Tab  //
-//             //
-/////////////////
-
-function setGroup() {
-    setGroupValue();
-    setGroupEvent();
-}
-
-async function setGroupValue() {
-    const groupList = await findGroupList();
-    setGroupTable(groupList);
-}
-
-function setGroupEvent() {
-    document.querySelector("#groupForm #btnSave").addEventListener("click", registerGroup);
-}
-
-// get group list
-function findGroupList() {
-    return fetch("/code/group", {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            new Error(error);
-        });
-}
-
-function findGroupByDivisionAndName(url) {
-    return fetch("/code/division/name" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            new Error(error);
-        });
-}
-
-// create group
-function createGroup(data) {
-    return fetch("/code", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            new Error(error);
-        });
-}
-
-// set group list
-function setGroupTable(data) {
-    // make colHeaders
-    const colHeaders = ["Name", "Valid", ""];
-    // make columns
-    const columns = [
-        { data: "name", renderer: expands.identityRenderer, width: 150 },
-        { data: "valid", renderer: expands.validRenderer },
-        { data: this, renderer: expands.editRenderer },
-    ];
-    // initialize container
-    const container = document.getElementById("groupTable");
-    container.innerHTML = "";
-
-    new Handsontable(container, expands.defaultSettings(data, colHeaders, columns));
-}
-
-// register group
-async function registerGroup() {
-    // set form data
-    const groupForm = document.getElementById("groupForm");
-    const name = groupForm.querySelector("[name=name]").value;
-    const param = {
-        name: name,
-        division: "group",
-    };
-
-    // verify duplication group
-
-    // make search parameter
-    const url = new URL(document.URL);
-    url.searchParams.append("division", "group");
-    url.searchParams.append("name", document.querySelector("#groupForm [name=name]").value);
-
-    const group = await findGroupByDivisionAndName(url);
-
-    if (group) {
-        alert("The same group exists!");
-        return false;
-    }
-
-    // create group
-    await createGroup(param);
-    // set group table
-    setGroupValue();
-}
-
-////////////////////
-//                //
-//  Position Tab  //
-//                //
-////////////////////
-
-function setPosition() {
-    console.clear();
-    console.log(this);
-}
-
-///////////////////
-//               //
-//  Service Tab  //
-//               //
-///////////////////
-
-function setService() {
-    console.clear();
-    console.log(this);
 }

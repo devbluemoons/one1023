@@ -1,0 +1,47 @@
+<div class="row mb-3 pt-3">
+    <div class="col flex_bottom">
+        <div>[ Total : <span class="bold" id="totalCount"></span> ]</div>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col">
+        <div id="familyTable"></div>
+        <div id="pagination"></div>
+    </div>
+
+    <div class="col">
+        <div class="card mb-3">
+            <div class="card-header">Family Information</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="card text-center">
+                            <div id="imageWrap">
+                                <img src="/uploads/blank_profile.png" class="card-img-top" id="imagePath" />
+                            </div>
+                            <div class="card-body border-top">
+                                <span id="title" data-id="">...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <nav class="padding-TB__5em bg-light">
+                            <div class="container">
+                                <form class="d-flex">
+                                    <input class="form-control mr-2" type="text" name="name" placeholder="Please, fill name to relate" />
+                                    <button class="btn btn-outline-primary" type="button">Search</button>
+                                </form>
+                            </div>
+                        </nav>
+                        <div class="row" id="searchResult"></div>
+                    </div>
+                </div>
+                <hr class="opacity01" />
+                <p>Related</p>
+                <div class="row" id="related"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/relationship/family.js" type="module"></script>

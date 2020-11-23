@@ -13,8 +13,8 @@ router.get("/member/list", function (req, res, next) {
 router.get("/member/view", function (req, res, next) {
     res.render("pages/member/view");
 });
-router.get("/relationship", function (req, res, next) {
-    res.render("pages/relationship");
+router.get("/relationship/view", function (req, res, next) {
+    res.render("pages/relationship/view");
 });
 
 /* Controller Router */
