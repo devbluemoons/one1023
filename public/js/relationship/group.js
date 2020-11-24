@@ -1,3 +1,5 @@
+import * as expands from "../modules/handsonTable.js";
+
 document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
 
 function setGroup() {

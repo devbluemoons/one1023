@@ -18,6 +18,21 @@ async function setValue() {
         const member = await findMemberOne(id);
         setMemberValue(member);
     }
+
+    const groupList = await findGroupList();
+
+    if (!groupList) {
+        return false;
+    }
+    const select = document.querySelector("[name=group]");
+
+    groupList.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item._id;
+        option.textContent = item.name;
+
+        select.appendChild(option);
+    });
 }
 
 // set event
@@ -391,4 +406,21 @@ function getId() {
     const id = params.get("id");
 
     return id;
+}
+
+// get group list
+function findGroupList() {
+    // create member information
+    return fetch("/code/group", {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
 }
