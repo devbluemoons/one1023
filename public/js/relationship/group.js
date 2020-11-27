@@ -8,7 +8,10 @@ function setGroup() {
 }
 
 async function setGroupValue() {
-    const groupList = await findGroupList();
+    const url = new URL(document.URL);
+    url.searchParams.append("division", "group");
+
+    const groupList = await findGroupList(url);
     setGroupTable(groupList);
 }
 
@@ -19,8 +22,8 @@ function setGroupEvent() {
 }
 
 // get group list
-function findGroupList() {
-    return fetch("/code/group", {
+function findGroupList(url) {
+    return fetch("/code/division" + url.search, {
         method: "GET",
     })
         .then(response => {
