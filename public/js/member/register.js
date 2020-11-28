@@ -19,7 +19,11 @@ async function setValue() {
         setMemberValue(member);
     }
 
-    const groupList = await findGroupList();
+    const url = new URL(document.URL);
+    url.searchParams.append("division", "group");
+    url.searchParams.append("valid", "01");
+
+    const groupList = await findGroupList(url);
 
     if (!groupList) {
         return false;
@@ -409,9 +413,9 @@ function getId() {
 }
 
 // get group list
-function findGroupList() {
+function findGroupList(url) {
     // create member information
-    return fetch("/code/group", {
+    return fetch("/code/division" + url.search, {
         method: "GET",
     })
         .then(response => {

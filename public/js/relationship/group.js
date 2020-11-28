@@ -10,6 +10,7 @@ function setGroup() {
 async function setGroupValue() {
     const url = new URL(document.URL);
     url.searchParams.append("division", "group");
+    url.searchParams.append("valid", "01");
 
     const groupList = await findGroupList(url);
     setGroupTable(groupList);

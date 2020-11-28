@@ -17,7 +17,7 @@ module.exports = {
             });
     },
     findByDivision: (req, res, next) => {
-        Code.find(req.params).then(result => res.send(result));
+        Code.find(req.query).then(result => res.send(result));
     },
     findByDivisionAndName: (req, res, next) => {
         Code.findOne(req.query).then(result => res.send(result));
