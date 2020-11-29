@@ -19,6 +19,10 @@ async function setValue() {
         setMemberValue(member);
     }
 
+    setGroupList();
+}
+
+async function setGroupList() {
     const url = new URL(document.URL);
     url.searchParams.append("division", "group");
     url.searchParams.append("valid", "01");
