@@ -11,6 +11,8 @@ window.onload = function () {
 
 // set value
 async function setValue() {
+    await setGroupList();
+
     // check memberId
     const id = getId();
 
@@ -18,8 +20,6 @@ async function setValue() {
         const member = await findMemberOne(id);
         setMemberValue(member);
     }
-
-    setGroupList();
 }
 
 async function setGroupList() {

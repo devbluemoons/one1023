@@ -13,7 +13,7 @@ module.exports = class Paginator {
         // current range
         this.currentRange = Math.ceil(this.currentPage / this.rangeSize);
         // total range count
-        this.rangeCount = Math.ceil(this.totalCount / this.rangeSize);
+        this.rangeCount = Math.ceil(this.totalCount / this.pageSize);
         // start page in current range
         this.startPage = (this.currentRange - 1) * this.rangeSize + 1;
         // end page in current range
