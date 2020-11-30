@@ -12,6 +12,7 @@ const pagination = new Pagination(document.getElementById("pagination"));
 async function setValue() {
     // make search parameter
     const url = makeSearchParameter("searchForm");
+
     // get member list
     const memberList = await findMemberList(url);
 
@@ -78,6 +79,7 @@ function makeColumns() {
 }
 
 function searchMember(e) {
+    console.log(e.target);
     pagination.currentPage = e.target.dataset.page;
     setValue();
 }
@@ -85,7 +87,7 @@ function searchMember(e) {
 function makeSearchParameter(form) {
     const searchForm = document.getElementById(form);
     const formData = new FormData(searchForm);
-    const url = new SearchParam(pagination.currentPage, formData);
+    const url = new SearchParam(pagination.currentPage, formData, null);
 
     return url;
 }

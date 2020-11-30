@@ -9,7 +9,7 @@ export class Pagination {
 Pagination.prototype.makePagination = function (paginator) {
     // make paging variables
     const { rangeSize, pageLimit, totalCount, currentPage, currentRange, rangeCount, startPage, endPage } = paginator;
-    console.log(paginator);
+
     // paging blocks
     let previous = null;
     let next = null;
@@ -18,18 +18,14 @@ Pagination.prototype.makePagination = function (paginator) {
     // make previous
     if (currentRange > 1) {
         previous = `<li class="page-item">
-                        <a class="page-link" href="#" data-page="${startPage - rangeSize}">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
+                        <a class="page-link" href="#" data-page="${startPage - rangeSize}">&laquo;</a>
                     </li>`;
     }
 
     // make next
-    if (currentRange > rangeSize) {
+    if (rangeCount > currentRange * rangeSize) {
         next = `<li class="page-item">
-                    <a class="page-link" href="#" data-page="${startPage + rangeSize}">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
+                    <a class="page-link" href="#" data-page="${startPage + rangeSize}">&raquo;</a>
                 </li>`;
     }
 

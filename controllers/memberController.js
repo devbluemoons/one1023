@@ -42,7 +42,7 @@ module.exports = {
 
                 // make paginator
                 Member.countDocuments({ ...query.searchCondition }).then(totalCount => {
-                    const paginator = new Paginator(totalCount, query.limit, query.page);
+                    const paginator = new Paginator(totalCount, req.query.limit, req.query.page);
                     res.send({ result, paginator });
                 });
             });
@@ -184,7 +184,7 @@ function makeQuery(query) {
     }
 
     // set only paging parameter
-    if (query.skip) {
+    if (query.page) {
         pagingCondition.skip = Number((query.page - 1) * query.limit);
     }
     if (query.limit) {
