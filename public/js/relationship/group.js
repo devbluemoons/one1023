@@ -18,8 +18,8 @@ async function setGroupValue() {
 
 function setGroupEvent() {
     document.querySelector("#groupForm #btnSave").addEventListener("click", registerGroup);
-    document.querySelector("#groupTable").addEventListener("click", setGroupInfo);
-    document.querySelector("[name=name]").addEventListener("keyup", setSelectedGroupMemeber);
+    // document.querySelector("#groupTable").addEventListener("click", setGroupInfo);
+    // document.querySelector("[name=name]").addEventListener("keyup", setSelectedGroupMemeber);
 }
 
 // get group list

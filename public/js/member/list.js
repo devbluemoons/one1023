@@ -19,6 +19,11 @@ async function setValue() {
     if (memberList) {
         setDataTable(memberList.result);
         setPaging(memberList.paginator);
+
+        // const divTable = document.querySelector(".divTable");
+        // const maxHeight = window.innerHeight - divTable.offsetTop - 132;
+
+        // divTable.style.maxHeight = maxHeight + "px";
     }
 }
 
@@ -79,7 +84,6 @@ function makeColumns() {
 }
 
 function searchMember(e) {
-    console.log(e.target);
     pagination.currentPage = e.target.dataset.page;
     setValue();
 }

@@ -118,6 +118,7 @@ export function defaultSettings(data, colHeaders, columns) {
         rowHeights: 30,
         readOnly: true,
         height: "auto",
+        // height: window.innerHeight - document.querySelector(".divTable").offsetTop - 132,
         stretchH: "all",
         className: "htCenter htMiddle",
         licenseKey: "non-commercial-and-evaluation",
