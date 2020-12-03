@@ -16,7 +16,7 @@ export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProp
 
 export function memberDetailRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
     const _id = instance.getDataAtRowProp(row, "_id");
-    const link = `<a href="/member/view?id=${_id}">${value}</a>`;
+    const link = `<a href="/member/view?id=${_id}" target="_blank">${value}</a>`;
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, link);
@@ -28,8 +28,6 @@ export function contactRenderer(_instance, td, _row, _col, _prop, value, _cellPr
     const contact3 = _instance.getDataAtRowProp(_row, "contact3");
 
     if (contact1 && contact2 && contact2) {
-        // const contact =  [contact1, contact2, contact3].join("-");
-
         const contact = [contact1, contact2, contact3].join("-");
 
         Handsontable.renderers.HtmlRenderer.apply(this, arguments);
@@ -108,17 +106,16 @@ export function familyGroupRenderer(instance, td, row, _col, _prop, value, _cell
 }
 
 // set handsonTable properties
-export function defaultSettings(data, colHeaders, columns) {
+export function defaultSettings(data, paginator, colHeaders, columns) {
     return {
         data: data,
         columns: columns,
         colHeaders: colHeaders,
         columnHeaderHeight: 30,
-        rowHeaders: index => index + 1,
+        rowHeaders: index => getPageInfo(paginator) + (index + 1),
         rowHeights: 30,
         readOnly: true,
         height: "auto",
-        // height: window.innerHeight - document.querySelector(".divTable").offsetTop - 132,
         stretchH: "all",
         className: "htCenter htMiddle",
         licenseKey: "non-commercial-and-evaluation",
@@ -128,22 +125,11 @@ export function defaultSettings(data, colHeaders, columns) {
         afterGetColHeader: function (col, TH) {
             TH.className = "htMiddle";
         },
-
-        // afterRenderer: function (TD) {},
-        // afterOnCellMouseDown: function (event, current, el) {
-        //     // get imagePath
-        //     if (el.querySelector("img")) {
-        //         console.log(el.querySelector("img").src);
-        //     }
-        // },
-        // afterInit: function () {
-        //     const tbody = document.querySelector("#dataTable tbody");
-        //     tbody.addEventListener("click", e => {
-        //     const currentRow = e.target.parentElement.querySelector(".rowHeader").textContent;
-        //     self.selectRows(currentRow);
-        //     console.log(Handsontable.selectRows(currentRow));
-        //     });
-        // },
-        // blueboxElem.className += ' expanded'
     };
+}
+
+function getPageInfo(paginator) {
+    const currentPage = Number(paginator.currentPage);
+    const pageSize = Number(paginator.pageSize);
+    return (currentPage - 1) * pageSize;
 }

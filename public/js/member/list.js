@@ -17,13 +17,8 @@ async function setValue() {
     const memberList = await findMemberList(url);
 
     if (memberList) {
-        setDataTable(memberList.result);
+        setDataTable(memberList);
         setPaging(memberList.paginator);
-
-        // const divTable = document.querySelector(".divTable");
-        // const maxHeight = window.innerHeight - divTable.offsetTop - 132;
-
-        // divTable.style.maxHeight = maxHeight + "px";
     }
 }
 
@@ -59,7 +54,13 @@ function setDataTable(data) {
     const container = document.getElementById("dataTable");
     container.innerHTML = "";
 
-    new Handsontable(container, expands.defaultSettings(data, makeColHeaders(), makeColumns()));
+    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, makeColHeaders(), makeColumns()));
+
+    // set table max-height
+    const divTable = document.querySelector(".divTable");
+    const maxHeight = window.innerHeight - divTable.offsetTop - 132;
+
+    divTable.style.maxHeight = maxHeight + "px";
 }
 
 // make colHeaders

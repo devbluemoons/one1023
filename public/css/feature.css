@@ -70,6 +70,9 @@
 tbody tr:hover td {
     background-color: #fafafa;
 }
+.divTable {
+    overflow: scroll;
+}
 
 /* flex */
 .flex-container {
