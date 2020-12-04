@@ -115,7 +115,11 @@ export function defaultSettings(data, paginator, colHeaders, columns) {
         rowHeaders: index => getPageInfo(paginator) + (index + 1),
         rowHeights: 30,
         readOnly: true,
-        height: "auto",
+        height: function () {
+            // must fix the column header
+            // to be continue..
+            return "auto";
+        },
         stretchH: "all",
         className: "htCenter htMiddle",
         licenseKey: "non-commercial-and-evaluation",

@@ -92,7 +92,6 @@ function setGroupTable(data) {
     const maxHeight = window.innerHeight - divTable.offsetTop - 132;
 
     divTable.style.maxHeight = maxHeight + "px";
-    console.log(divTable.style.maxHeight);
 }
 
 // register group
@@ -104,8 +103,6 @@ async function registerGroup() {
         name: name,
         division: "group",
     };
-
-    // verify duplication group
 
     // make search parameter
     const url = new URL(document.URL);
