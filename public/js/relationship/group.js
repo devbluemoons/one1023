@@ -85,13 +85,7 @@ function setGroupTable(data) {
     const container = document.getElementById("groupTable");
     container.innerHTML = "";
 
-    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, colHeaders, columns));
-
-    // set table max-height
-    const divTable = document.querySelector(".divTable");
-    const maxHeight = window.innerHeight - divTable.offsetTop - 132;
-
-    divTable.style.maxHeight = maxHeight + "px";
+    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, container.offsetTop, colHeaders, columns));
 }
 
 // register group

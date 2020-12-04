@@ -51,26 +51,10 @@ function findMemberList(url) {
 
 // find member list
 function setDataTable(data) {
-    const container = document.getElementById("dataTable");
-    container.innerHTML = "";
-
-    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, makeColHeaders(), makeColumns()));
-
-    // set table max-height
-    const divTable = document.querySelector(".divTable");
-    const maxHeight = window.innerHeight - divTable.offsetTop - 132;
-
-    divTable.style.maxHeight = maxHeight + "px";
-}
-
-// make colHeaders
-function makeColHeaders() {
-    return ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Age", "Family", "Marital Status", "Faith State"];
-}
-
-// make columns
-function makeColumns() {
-    return [
+    // make colHeaders
+    const colHeaders = ["Image", "Name", "Contact", "Address", "Gender", "Birthday", "Age", "Family", "Marital Status", "Faith State"];
+    // make columns
+    const columns = [
         { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
         { data: "name", renderer: expands.memberDetailRenderer },
         { data: this, renderer: expands.contactRenderer },
@@ -82,6 +66,11 @@ function makeColumns() {
         { data: "married" },
         { data: "faithState" },
     ];
+
+    const container = document.getElementById("dataTable");
+    container.innerHTML = "";
+
+    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, container.offsetTop, colHeaders, columns));
 }
 
 function searchMember(e) {

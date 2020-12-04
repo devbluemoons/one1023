@@ -106,7 +106,7 @@ export function familyGroupRenderer(instance, td, row, _col, _prop, value, _cell
 }
 
 // set handsonTable properties
-export function defaultSettings(data, paginator, colHeaders, columns) {
+export function defaultSettings(data, paginator, offsetTop, colHeaders, columns) {
     return {
         data: data,
         columns: columns,
@@ -116,9 +116,28 @@ export function defaultSettings(data, paginator, colHeaders, columns) {
         rowHeights: 30,
         readOnly: true,
         height: function () {
-            // must fix the column header
-            // to be continue..
-            return "auto";
+            // handsonTable doesn't provide max-height property
+            // therefore must define fixed pixcel at height property
+            // but there is a problem
+            // pagination area is always placed after fixed height
+            // so I should set height property dynamically to suit each case
+
+            // set browser max-height without scrolling
+            const maxHeight = window.innerHeight - offsetTop - 135;
+
+            const totalCount = Number(paginator.totalCount);
+            const currentPage = Number(paginator.currentPage);
+            const pageSize = Number(paginator.pageSize);
+
+            const currentPageRows = currentPage * pageSize;
+            // set current rows size
+            const currentRowsSize = currentPageRows < totalCount ? currentPageRows : totalCount - (currentPageRows - pageSize);
+            // set total row Height => each row height is 46px
+            const totalRowHeight = currentRowsSize * 46;
+            // set table height
+            const tableHeight = totalRowHeight > maxHeight ? maxHeight : "auto";
+
+            return tableHeight;
         },
         stretchH: "all",
         className: "htCenter htMiddle",
