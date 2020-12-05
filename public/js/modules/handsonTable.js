@@ -14,8 +14,8 @@ export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProp
     Handsontable.renderers.cellDecorator.apply(this, arguments);
 }
 
-export function memberDetailRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
-    const _id = instance.getDataAtRowProp(row, "_id");
+export function memberDetailRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
+    const _id = _instance.getDataAtRowProp(_row, "_id");
     const link = `<a href="/member/view?id=${_id}" target="_blank">${value}</a>`;
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
@@ -63,9 +63,9 @@ export function ageRenderer(_instance, td, _row, _col, _prop, value, _cellProper
 }
 
 // get [id] and [name] information
-export function identityRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+export function identityRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     if (value) {
-        const _id = instance.getDataAtRowProp(row, "_id");
+        const _id = _instance.getDataAtRowProp(_row, "_id");
         const link = `<a href="#" data-id="${_id}" class="family">${value}</a>`;
 
         Handsontable.renderers.HtmlRenderer.apply(this, arguments);
@@ -73,35 +73,37 @@ export function identityRenderer(instance, td, row, _col, _prop, value, _cellPro
     }
 }
 
-export function relateRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
-    const _id = instance.getDataAtRowProp(row, "_id");
+export function relateRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
+    const _id = _instance.getDataAtRowProp(_row, "_id");
     const button = `<button type="button" class="btn btn-outline-secondary" data-id="${_id}" >Add</button>`;
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, button);
 }
 
-export function editRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
-    const _id = instance.getDataAtRowProp(row, "_id");
+export function editRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
+    const _id = _instance.getDataAtRowProp(_row, "_id");
     const button = `<button type="button" class="btn btn-outline-secondary" data-id="${_id}" >Edit</button>`;
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, button);
 }
 
-export function conditionRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
+export function conditionRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     const valid = value === "01" ? "Use" : "Unsued";
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, valid);
 }
 
-export function familyGroupRenderer(instance, td, row, _col, _prop, value, _cellProperties) {
-    if (value && value.length > 0) {
-        const familyGroup = value.length - 1;
-
+export function familyGroupRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
+    if (value) {
+        // when each cell has not any value
+        // cell value will be filled random value
+        // so must fill empty string value in each cell if value is empty
+        const count = value.length > 0 ? value.length - 1 : "";
         Handsontable.renderers.HtmlRenderer.apply(this, arguments);
-        Handsontable.dom.fastInnerHTML(td, familyGroup);
+        Handsontable.dom.fastInnerHTML(td, count);
     }
 }
 
@@ -131,9 +133,9 @@ export function defaultSettings(data, paginator, offsetTop, colHeaders, columns)
 
             const currentPageRows = currentPage * pageSize;
             // set current rows size
-            const currentRowsSize = currentPageRows < totalCount ? currentPageRows : totalCount - (currentPageRows - pageSize);
-            // set total row Height => each row height is 46px
-            const totalRowHeight = currentRowsSize * 46;
+            const currentRowsCount = currentPageRows < totalCount ? currentPageRows : totalCount - (currentPageRows - pageSize);
+            // set total row Height => when row contains imagePath, hight is 45 nor 30
+            const totalRowHeight = currentRowsCount * (data.filter(item => item.imagePath).length > 0 ? 45 : 30);
             // set table height
             const tableHeight = totalRowHeight > maxHeight ? maxHeight : "auto";
 

@@ -378,6 +378,10 @@ async function addFamily(e) {
         alert("Please, select member to add");
         return false;
     }
+    if (selectedId === addId) {
+        alert("Do not add myself");
+        return false;
+    }
 
     // get family info by standard member id
     const family = await findFamilyByMemberId(selectedId);
