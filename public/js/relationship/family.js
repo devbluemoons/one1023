@@ -4,14 +4,7 @@ import { SearchParam } from "../modules/searchParam.js";
 import * as common from "../common.js";
 
 document.getElementById("nav-family-tab").addEventListener("shown.bs.tab", setFamily);
-
-function makeSearchParameter(form) {
-    const searchForm = document.getElementById(form);
-    const formData = new FormData(searchForm);
-
-    const url = new SearchParam(pagination.currentPage, formData);
-    return url;
-}
+const pagination = new Pagination(document.getElementById("pagination"));
 
 function setFamily() {
     setFamilyEvent();
@@ -24,7 +17,8 @@ function setFamilyEvent() {
 }
 
 async function setFamilyValue() {
-    const memberList = await findMemberList();
+    const url = makeSearchParameter();
+    const memberList = await findMemberList(url);
 
     if (memberList) {
         setMemberTable(memberList);
@@ -40,11 +34,9 @@ async function setSelectedMemeber() {
     }
 }
 
-const pagination = new Pagination(document.getElementById("pagination"));
-
 // get member list
-function findMemberList() {
-    return fetch("/member", {
+function findMemberList(url) {
+    return fetch("/member" + url.params.search, {
         method: "GET",
     })
         .then(response => {
@@ -56,6 +48,11 @@ function findMemberList() {
         .catch(error => {
             new Error(error);
         });
+}
+
+// get searh param
+function makeSearchParameter() {
+    return new SearchParam(pagination.currentPage, null);
 }
 
 // get member one
@@ -267,7 +264,7 @@ function findMemberByName() {
 
 function searchMember(e) {
     pagination.currentPage = e.target.dataset.page;
-    findMemberList();
+    setFamilyValue();
 }
 
 async function setFamilyGroup(data) {
