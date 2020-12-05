@@ -10,7 +10,7 @@
         </nav>
         <div class="row mb-3 pt-3">
             <div class="col flex_bottom">
-                <div>[ Total : <span class="bold" id="GroupCount"></span> ]</div>
+                <div>[ Total : <span class="bold" id="groupCount"></span> ]</div>
             </div>
         </div>
         <div class="row mb-3">
@@ -22,6 +22,43 @@
     </div>
     <div class="col-8">
         <hr />
+    </div>
+</div>
+
+<div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="groupModalLabel">Group Information</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="groupModalForm">
+                    <input type="hidden" name="_id" />
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="col-form-label">Name</label>
+                                <input type="text" class="form-control" name="name" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="col-form-label">Condition</label>
+                                <select class="form-select form-select" name="valid">
+                                    <option value="01">Use</option>
+                                    <option value="02">Not used</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnEdit">Edit</button>
+            </div>
+        </div>
     </div>
 </div>
 

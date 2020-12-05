@@ -4,7 +4,7 @@ import { SearchParam } from "../modules/searchParam.js";
 import * as common from "../common.js";
 
 document.getElementById("nav-family-tab").addEventListener("shown.bs.tab", setFamily);
-const pagination = new Pagination(document.getElementById("pagination"));
+const pagination = new Pagination(document.getElementById("familyPagination"));
 
 function setFamily() {
     setFamilyEvent();
@@ -92,7 +92,7 @@ function setMemberTable(data) {
 
 // set paging
 function setPaging(paginator) {
-    document.getElementById("totalCount").textContent = paginator.totalCount;
+    document.getElementById("familyCount").textContent = paginator.totalCount;
     pagination.setPagination(paginator).setEvent(searchMember);
 }
 
