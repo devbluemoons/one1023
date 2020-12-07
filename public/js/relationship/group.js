@@ -79,11 +79,12 @@ function createGroup(data) {
 // set group list
 function setGroupTable(data) {
     // make colHeaders
-    const colHeaders = ["Name", "Condition", ""];
+    const colHeaders = ["Name", "Condition", "Count", ""];
     // make columns
     const columns = [
-        { data: "name", renderer: expands.identityRenderer, width: 150 },
+        { data: "name", renderer: expands.identityRenderer },
         { data: "valid", renderer: expands.conditionRenderer },
+        { data: "this", renderer: expands.countRenderer },
         { data: this, renderer: expands.editRenderer },
     ];
     // initialize container
