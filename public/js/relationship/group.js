@@ -3,6 +3,8 @@ import { Pagination } from "../modules/pagination.js";
 
 document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
 const pagination = new Pagination(document.getElementById("groupPagination"));
+const modalEl = document.getElementById("groupModal");
+const modal = new bootstrap.Modal(modalEl);
 
 function setGroup() {
     setGroupValue();
@@ -117,12 +119,10 @@ async function showGroupInfo(e) {
     const group = await findGroupByDivisionAndId(url);
 
     if (group) {
-        const container = document.getElementById("groupModal");
-        container.querySelector("[name=_id]").value = group._id;
-        container.querySelector("[name=name]").value = group.name;
-        container.querySelector("[name=valid]").value = group.valid;
+        modalEl.querySelector("[name=_id]").value = group._id;
+        modalEl.querySelector("[name=name]").value = group.name;
+        modalEl.querySelector("[name=valid]").value = group.valid;
 
-        const modal = new bootstrap.Modal(container);
         modal.show();
     }
 }
@@ -145,6 +145,7 @@ async function editGroupInfo() {
 
     if (group) {
         setGroupValue();
+        modal.hide();
     }
 }
 
