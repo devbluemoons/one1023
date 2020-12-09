@@ -1,5 +1,6 @@
 import * as expands from "../modules/handsonTable.js";
 import { Pagination } from "../modules/pagination.js";
+import * as common from "../common.js";
 
 document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
 const pagination = new Pagination(document.getElementById("groupPagination"));
@@ -26,7 +27,64 @@ function setGroupEvent() {
     document.querySelector("#btnEdit").addEventListener("click", editGroupInfo);
 
     // document.querySelector("#groupTable").addEventListener("click", setGroupInfo);
-    // document.querySelector("[name=name]").addEventListener("keyup", setSelectedGroupMemeber);
+    document.querySelector("#groupDetailForm [name=name]").addEventListener("keyup", setSelectedMemeber);
+}
+
+async function setSelectedMemeber() {
+    const member = await findMemberByName();
+
+    if (member) {
+        setSearchResult(member.result);
+    }
+}
+
+function setSearchResult(data) {
+    const defaultImage = "uploads/blank_profile.png";
+    const searchResult = document.getElementById("groupSearchResult");
+    searchResult.innerHTML = "";
+
+    data.forEach(item => {
+        searchResult.innerHTML += `
+            <div class="col-2 pt-3">
+                <div class="card text-center">
+                    <div class="frame">
+                        <img src="/${item.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
+                    </div>
+                    <div class="card-body border-top p-2">${item.name}</div>
+                    <button class="btn btn-outline-secondary btn-sm" id="${item._id}" >Add</button>
+                </div>
+            </div>
+        `;
+
+        // set to same height and width
+        // set vertical-align : middle
+        common.setVerticalImage();
+
+        // binding add event
+        searchResult.querySelectorAll("button").forEach(item => item.addEventListener("click", addGroup));
+        console.log(searchResult);
+    });
+}
+
+async function addGroup(e) {
+    // to be continue..
+}
+
+function findMemberByName() {
+    const name = document.querySelector("#groupDetailForm [name=name]").value || null;
+
+    return fetch(`/member?name=${name}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
 }
 
 // get group list

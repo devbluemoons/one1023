@@ -13,7 +13,7 @@ function setFamily() {
 
 function setFamilyEvent() {
     document.querySelector("#familyTable").addEventListener("click", setFamilyInfo);
-    document.querySelector("[name=name]").addEventListener("keyup", setSelectedMemeber);
+    document.querySelector("#familyForm [name=name]").addEventListener("keyup", setSelectedMemeber);
 }
 
 async function setFamilyValue() {
@@ -246,7 +246,7 @@ function deleteFamilyGroup(data) {
 }
 
 function findMemberByName() {
-    const name = document.querySelector("[name=name]").value || null;
+    const name = document.querySelector("#familyForm [name=name]").value || null;
 
     return fetch(`/member?name=${name}`, {
         method: "GET",
@@ -336,7 +336,7 @@ async function setFamilyGroup(data) {
 
 function setSearchResult(data) {
     const defaultImage = "uploads/blank_profile.png";
-    const searchResult = document.getElementById("searchResult");
+    const searchResult = document.getElementById("familySearchResult");
     searchResult.innerHTML = "";
 
     data.forEach(item => {

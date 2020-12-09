@@ -21,7 +21,29 @@
         </div>
     </div>
     <div class="col-8">
-        <hr />
+        <div class="card mb-3">
+            <div class="card-header">Group Detail</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <nav class="padding-TB__5em bg-light">
+                            <div class="container">
+                                <form class="d-flex" id="groupDetailForm">
+                                    <input class="form-control mr-2" type="text" name="name" placeholder="Please, fill name to relate" />
+                                    <button class="btn btn-outline-primary" type="button">Search</button>
+                                </form>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-12">
+                        <div class="row" id="groupSearchResult"></div>
+                    </div>
+                </div>
+                <hr class="opacity01" />
+                <p>Related</p>
+                <div class="row" id="related"></div>
+            </div>
+        </div>
     </div>
 </div>
 
