@@ -66,7 +66,7 @@ export function ageRenderer(_instance, td, _row, _col, _prop, value, _cellProper
 export function identityRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     if (value) {
         const _id = _instance.getDataAtRowProp(_row, "_id");
-        const link = `<a href="#" data-id="${_id}" class="family">${value}</a>`;
+        const link = `<a href="#" data-id="${_id}" name="name">${value}</a>`;
 
         Handsontable.renderers.HtmlRenderer.apply(this, arguments);
         Handsontable.dom.fastInnerHTML(td, link);

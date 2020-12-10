@@ -1,5 +1,5 @@
-import * as expands from "../modules/handsonTable.js";
 import { Pagination } from "../modules/pagination.js";
+import * as expands from "../modules/handsonTable.js";
 import * as common from "../common.js";
 
 document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
@@ -26,8 +26,15 @@ function setGroupEvent() {
     document.querySelector("#groupTable").addEventListener("click", showGroupInfo);
     document.querySelector("#btnEdit").addEventListener("click", editGroupInfo);
 
-    // document.querySelector("#groupTable").addEventListener("click", setGroupInfo);
+    document.querySelector("#groupTable").addEventListener("click", setGroupInfo);
     document.querySelector("#groupDetailForm [name=name]").addEventListener("keyup", setSelectedMemeber);
+}
+
+async function setGroupInfo(e) {
+    if (e.target.name === "name") {
+        document.getElementById("selectedGroup").innerText = e.target.textContent;
+        document.getElementById("selectedGroupId").value = e.target.dataset.id;
+    }
 }
 
 async function setSelectedMemeber() {
@@ -62,12 +69,69 @@ function setSearchResult(data) {
 
         // binding add event
         searchResult.querySelectorAll("button").forEach(item => item.addEventListener("click", addGroup));
-        console.log(searchResult);
     });
 }
 
 async function addGroup(e) {
-    // to be continue..
+    // standard group id
+    const selectedGroupId = document.getElementById("selectedGroupId").value;
+    // to add member id
+    const memberId = e.target.id;
+
+    if (!selectedGroupId) {
+        alert("Please, select a standard group");
+        return false;
+    }
+    if (!memberId) {
+        alert("Please, select member to add");
+        return false;
+    }
+
+    const member = await findMemberById(memberId);
+
+    if (member) {
+        member.group = selectedGroupId;
+        await updateMember(member);
+
+        // re-render table
+        setGroupValue();
+
+        // refresh group detail
+        const groupList = await findMemberByGroup(selectedGroupId);
+        setGroupDetail(groupList);
+    }
+}
+
+// get member by member id
+function findMemberById(id) {
+    return fetch(`/member/${id}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+// get member by member group
+function findMemberByGroup(group) {
+    return fetch(`/member?group=${group}`, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
 }
 
 function findMemberByName() {
@@ -118,6 +182,24 @@ function findGroupByDivisionAndName(url) {
         });
 }
 
+// update family field of member
+function updateMember(data) {
+    return fetch("/member", {
+        headers: { "Content-Type": "application/json" },
+        method: "PUT",
+        body: JSON.stringify(data),
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
 // create group
 function createGroup(data) {
     return fetch("/code", {
@@ -134,6 +216,76 @@ function createGroup(data) {
         .catch(error => {
             new Error(error);
         });
+}
+
+async function setGroupDetail(data) {
+    console.log(data);
+    return;
+
+    // set image
+    if (data.imagePath) {
+        document.getElementById("imagePath").src = "/".concat(data.imagePath);
+    } else {
+        document.getElementById("imagePath").src = "/uploads/blank_profile.png";
+    }
+
+    document.getElementById("title").innerHTML = titleFormatter(data);
+    document.getElementById("title").dataset.id = data._id;
+
+    // get family group member info
+    const familyGroup = [];
+
+    for (const memberId of data.familyGroup) {
+        // except myself family info
+        if (data._id === memberId) {
+            continue;
+        }
+
+        const member = await findMemberById(memberId);
+        familyGroup.push(member);
+    }
+
+    // sort by birthday
+    familyGroup.sort(function (a, b) {
+        if (a.birthday > b.birthday) {
+            return 1;
+        }
+        if (a.birthday < b.birthday) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+
+    // set simple member info in family group
+    const defaultImage = "uploads/blank_profile.png";
+    const related = document.getElementById("related");
+    related.innerHTML = "";
+
+    familyGroup.forEach(member => {
+        related.innerHTML += `
+            <div class="col-3">
+                <div class="card text-center">
+                    <div class="frame">
+                        <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
+                        <button type="button" class="btn-close btn-close-white" aria-label="Close" data-id="${member._id}"></button>
+                    </div>
+                    <div class="card-body border-top">
+                        ${member.name} (${ageFormatter(member.birthday)})
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    // set to same height and width
+    // set vertical-align : middle
+    common.setVerticalImage();
+
+    // set delete member in family group
+    document.querySelectorAll(".btn-close").forEach(member => {
+        member.addEventListener("click", deleteFamily);
+    });
 }
 
 // set group list

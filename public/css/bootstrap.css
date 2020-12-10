@@ -4,6 +4,7 @@
     background-color: #1976d2 !important;
     border-color: #1976d2;
 }
+
 .btn-outline-primary {
     border-color: #1976d2;
     color: #1976d2;
@@ -14,6 +15,13 @@
 .btn-outline-primary:active {
     background-color: #1566b7 !important;
     border-color: #1566b7;
+}
+
+.badge,
+.bg-primary {
+    background-color: #1976d2 !important;
+    border-color: #1976d2;
+    color: #ffffff;
 }
 
 /* card image : vertical-align */
