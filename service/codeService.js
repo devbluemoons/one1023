@@ -3,15 +3,32 @@ const Member = require("../models/memberSchema");
 const Paginator = require("../middlewares/paginator");
 
 module.exports = {
+    save(param) {
+        return Code(param).save();
+    },
+
+    findOne(param) {
+        return Code.findOne(param);
+    },
+
+    findByIdAndUpdate(param) {
+        return Code.findByIdAndUpdate(param._id, param, { new: true });
+    },
+
+    findByIdAndDelete(param) {
+        return Code.findByIdAndDelete({ _id: param._id });
+    },
+
     async findByDivision(param) {
         const codeRecord = await Code.find(param);
         const result = await this.makeRelatedCodeCount(codeRecord);
 
-        const codeTotalCount = await Code.countDocuments();
-        const paginator = new Paginator(codeTotalCount, param.limit, param.page);
+        const totalCount = await Code.countDocuments();
+        const paginator = new Paginator(totalCount, param.limit, param.page);
 
         return { result, paginator };
     },
+
     async makeRelatedCodeCount(data) {
         const result = [];
 
