@@ -12,7 +12,7 @@ async function setValue() {
     if (!memberId) {
         return false;
     }
-    const member = await findMemberOne(memberId);
+    const member = await findMemberById(memberId);
 
     if (!member) {
         return false;
@@ -43,23 +43,6 @@ function findMemberById(id) {
         });
 }
 
-// get member one
-function findMemberOne(id) {
-    // find one member information
-    return fetch(`/member/${id}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            new Error(error);
-        });
-}
-
 function getMemberId() {
     const searchValue = location.search;
     const params = new URLSearchParams(searchValue);
@@ -76,13 +59,18 @@ async function setMemberValue(data) {
     document.getElementById("birthday").innerHTML = birthdayFormatter(data.birthday);
     document.getElementById("contact").innerHTML = contactFormatter(data);
     document.getElementById("address").innerHTML = addressFormatter(data);
-    document.getElementById("job").innerHTML = data.job;
-    document.getElementById("email").innerHTML = data.email;
+
     document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
-    document.getElementById("gender").innerHTML = genderFormatter(data.gender);
-    document.getElementById("married").innerHTML = marriedFormatter(data.married);
     // document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
     // document.getElementById("baptism").innerHTML = baptismFormatter(data.baptism);
+    document.getElementById("group").innerHTML = data.group;
+    document.getElementById("position").innerHTML = data.position;
+    document.getElementById("service").innerHTML = data.service;
+
+    document.getElementById("job").innerHTML = data.job;
+    document.getElementById("email").innerHTML = data.email;
+    document.getElementById("gender").innerHTML = genderFormatter(data.gender);
+    document.getElementById("married").innerHTML = marriedFormatter(data.married);
 
     if (data.familyGroup) {
         // get family group member info

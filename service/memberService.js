@@ -1,5 +1,6 @@
 const Member = require("../models/memberSchema");
 const Family = require("../models/familySchema");
+const Code = require("../models/codeSchema");
 const Paginator = require("../middlewares/paginator");
 
 module.exports = {
@@ -25,15 +26,15 @@ module.exports = {
     async findById(param) {
         const id = param.id;
         const memberRecord = await Member.findById(id);
-        const result = await this.makeFamilyGroup(memberRecord);
+        const result = await this.makeMemberData(memberRecord);
 
         return result;
     },
 
     async findByIdAndUpdate(param) {
-        const formData = makeFormData(param);
+        const formData = this.makeFormData(param);
         const memberRecord = await Member.findByIdAndUpdate(formData._id, formData, { new: true });
-        return { result: memberRecord };
+        return memberRecord;
     },
 
     makeFormData(data) {
@@ -77,15 +78,34 @@ module.exports = {
     },
 
     // make family group
-    async makeFamilyGroup(data) {
-        if (!data.family) {
-            return data;
+    async makeMemberData(data) {
+        if (data.family) {
+            const familyRecord = await Family.findById(data.family);
+
+            if (familyRecord) {
+                data.familyGroup = familyRecord.memberId;
+            }
         }
+        if (data.group) {
+            const codeRecord = await Code.findById(data.group);
 
-        const family = await Family.findById(data.family);
+            if (codeRecord) {
+                data.group = codeRecord.name;
+            }
+        }
+        if (data.position) {
+            const codeRecord = await Code.findById(data.position);
 
-        if (family) {
-            data.familyGroup = family.memberId;
+            if (codeRecord) {
+                data.position = codeRecord.name;
+            }
+        }
+        if (data.service) {
+            const codeRecord = await Code.findById(data.service);
+
+            if (codeRecord) {
+                data.service = codeRecord.name;
+            }
         }
 
         return data;

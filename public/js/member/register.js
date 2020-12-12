@@ -1,17 +1,20 @@
 import * as daum from "../modules/daumPostCode.js";
 
 window.onload = function () {
-    setDaumPostCode();
-    setBirthDay();
-    setJoinDate();
-    setImagePreview();
     setValue();
     setEvent();
 };
 
 // set value
 async function setValue() {
-    await setGroupList();
+    setDaumPostCode();
+    setBirthDay();
+    setJoinDate();
+    setImagePreview();
+
+    await setCodeList("group");
+    await setCodeList("position");
+    await setCodeList("service");
 
     // check memberId
     const id = getId();
@@ -22,19 +25,17 @@ async function setValue() {
     }
 }
 
-async function setGroupList() {
-    const url = new URL(document.URL);
-    url.searchParams.append("division", "group");
-    url.searchParams.append("valid", "01");
-
-    const groupList = await findGroupList(url);
+async function setCodeList(division) {
+    const param = `division=${division}&valid=01`;
+    const groupList = await findGroupList(param);
 
     if (!groupList) {
         return false;
     }
-    const select = document.querySelector("[name=group]");
+    const select = document.querySelector(`[name=${division}]`);
+    const list = groupList.result;
 
-    groupList.forEach(item => {
+    list.forEach(item => {
         const option = document.createElement("option");
         option.value = item._id;
         option.textContent = item.name;
@@ -130,7 +131,7 @@ function setMemberValue(data) {
     document.querySelector("[name=job]").value = data.job;
     document.querySelector("[name=baptism]").checked = data.baptism;
     document.querySelector("[name=group]").value = data.group;
-    document.querySelector("[name=role]").value = data.role;
+    document.querySelector("[name=position]").value = data.position;
     document.querySelector("[name=service]").value = data.service;
     document.querySelector("[name=attendance]").checked = data.attendance;
 
@@ -417,9 +418,9 @@ function getId() {
 }
 
 // get group list
-function findGroupList(url) {
+function findGroupList(param) {
     // create member information
-    return fetch("/code/division" + url.search, {
+    return fetch("/code/division?" + param, {
         method: "GET",
     })
         .then(response => {

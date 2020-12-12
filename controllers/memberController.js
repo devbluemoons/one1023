@@ -1,6 +1,3 @@
-const Member = require("../models/memberSchema");
-const Family = require("../models/familySchema");
-const Paginator = require("../middlewares/paginator");
 const MemberService = require("../service/memberService");
 const uploadFile = require("../middlewares/uploadFile");
 
