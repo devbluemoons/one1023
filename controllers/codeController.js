@@ -1,5 +1,4 @@
 const CodeService = require("../service/codeService");
-const Code = require("../models/codeSchema");
 
 module.exports = {
     create: async (req, res, next) => {

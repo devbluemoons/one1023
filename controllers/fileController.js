@@ -19,14 +19,3 @@ module.exports = {
         console.log("delete success~");
     },
 };
-
-function makeFormData(data) {
-    if (data) {
-        return new File({
-            name: data.name,
-            size: data.size,
-            uploader: data.uploader,
-        });
-    }
-    return new Error("data is empty!");
-}

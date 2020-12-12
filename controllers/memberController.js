@@ -31,7 +31,7 @@ module.exports = {
     list: (req, res, next) => {
         // set parameter
         const query = makeQuery(req.query);
-
+        console.log(query);
         Member.find({ ...query.searchCondition })
             .sort({ _id: -1 }) // descending
             .skip(query.pagingCondition.skip) // skip data order
@@ -163,7 +163,7 @@ function makeQuery(query) {
     const searchCondition = {};
     const pagingCondition = {};
 
-    // set only search parameter
+    // set search parameter
     if (query.name) {
         searchCondition.name = new RegExp(query.name, "i");
     }
@@ -182,8 +182,11 @@ function makeQuery(query) {
     if (query.faithState) {
         searchCondition.faithState = new RegExp(query.faithState, "i");
     }
+    if (query.group) {
+        searchCondition.group = new RegExp(query.group, "i");
+    }
 
-    // set only paging parameter
+    // set paging parameter
     if (query.page) {
         pagingCondition.skip = Number((query.page - 1) * query.limit);
     }

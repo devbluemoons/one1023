@@ -48,23 +48,3 @@ module.exports = {
             });
     },
 };
-
-function makeFormData(data) {
-    if (data && data.memberId) {
-        return data.memberId;
-    }
-}
-
-// make search query
-function makeQuery(query) {
-    if (query) {
-        return query;
-    }
-}
-
-// make search param
-function makeParams(params) {
-    if (params.memberId) {
-        return { memberId: params.memberId };
-    }
-}

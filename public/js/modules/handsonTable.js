@@ -90,7 +90,7 @@ export function editRenderer(_instance, td, _row, _col, _prop, value, _cellPrope
 }
 
 export function conditionRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
-    const valid = value === "01" ? "Use" : "Unsued";
+    const valid = value === "01" ? "Use" : "Unused";
 
     Handsontable.renderers.HtmlRenderer.apply(this, arguments);
     Handsontable.dom.fastInnerHTML(td, valid);

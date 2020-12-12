@@ -35,6 +35,10 @@ async function setGroupInfo(e) {
     if (e.target.name === "name") {
         document.getElementById("selectedGroup").innerText = e.target.textContent;
         document.getElementById("selectedGroupId").value = e.target.dataset.id;
+
+        // refresh group detail
+        const groupList = await findMemberByGroup(e.target.dataset.id);
+        setGroupDetail(groupList);
     }
 }
 
@@ -168,6 +172,23 @@ function findGroupList(url) {
         });
 }
 
+// get group by id
+function findGroupByDivisionAndId(url) {
+    return fetch("/code/division/id" + url.search, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            new Error(error);
+        });
+}
+
+// get group by name
 function findGroupByDivisionAndName(url) {
     return fetch("/code/division/name" + url.search, {
         method: "GET",
@@ -220,34 +241,9 @@ function createGroup(data) {
 }
 
 async function setGroupDetail(data) {
-    console.log(data);
-    return;
-
-    // set image
-    if (data.imagePath) {
-        document.getElementById("imagePath").src = "/".concat(data.imagePath);
-    } else {
-        document.getElementById("imagePath").src = "/uploads/blank_profile.png";
-    }
-
-    document.getElementById("title").innerHTML = titleFormatter(data);
-    document.getElementById("title").dataset.id = data._id;
-
-    // get family group member info
-    const familyGroup = [];
-
-    for (const memberId of data.familyGroup) {
-        // except myself family info
-        if (data._id === memberId) {
-            continue;
-        }
-
-        const member = await findMemberById(memberId);
-        familyGroup.push(member);
-    }
-
+    const groupList = data.result;
     // sort by birthday
-    familyGroup.sort(function (a, b) {
+    groupList.sort(function (a, b) {
         if (a.birthday > b.birthday) {
             return 1;
         }
@@ -260,12 +256,12 @@ async function setGroupDetail(data) {
 
     // set simple member info in family group
     const defaultImage = "uploads/blank_profile.png";
-    const related = document.getElementById("related");
+    const related = document.getElementById("relatedGroup");
     related.innerHTML = "";
 
-    familyGroup.forEach(member => {
+    groupList.forEach(member => {
         related.innerHTML += `
-            <div class="col-3">
+            <div class="col-2">
                 <div class="card text-center">
                     <div class="frame">
                         <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
@@ -285,7 +281,7 @@ async function setGroupDetail(data) {
 
     // set delete member in family group
     document.querySelectorAll(".btn-close").forEach(member => {
-        member.addEventListener("click", deleteFamily);
+        member.addEventListener("click", deleteGroupMember);
     });
 }
 
@@ -373,20 +369,32 @@ function updateGroup(data) {
         });
 }
 
-// get group by id
-function findGroupByDivisionAndId(url) {
-    return fetch("/code/division/id" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.error(response);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            new Error(error);
-        });
+async function deleteGroupMember(e) {
+    const memberId = e.target.dataset.id;
+
+    if (!memberId) {
+        return false;
+    }
+
+    if (!confirm("Are you sure to delete this member from group?")) {
+        return false;
+    }
+
+    const member = await findMemberById(memberId);
+
+    if (member) {
+        member.group = null;
+
+        await updateMember(member);
+
+        // re-render table
+        setGroupValue();
+
+        // refresh group detail
+        const groupId = document.getElementById("selectedGroupId").value;
+        const groupList = await findMemberByGroup(groupId);
+        setGroupDetail(groupList);
+    }
 }
 
 // search group per page
@@ -422,4 +430,12 @@ async function registerGroup() {
     await createGroup(param);
     // set group table
     setGroupValue();
+}
+
+function ageFormatter(value) {
+    const year = value.substring(0, 4);
+    const thisYear = new Date().getFullYear();
+    const age = thisYear - Number(year) + 1;
+
+    return age;
 }
