@@ -18,6 +18,7 @@ const codeSchema = new Schema(
             required: true,
             default: "01", // means: use
         },
+        count: Number,
         updatedId: String,
     },
     {

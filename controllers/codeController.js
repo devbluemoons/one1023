@@ -1,9 +1,9 @@
+const CodeService = require("../service/codeService");
 const Code = require("../models/codeSchema");
 const Paginator = require("../middlewares/paginator");
 
 module.exports = {
     create: (req, res, next) => {
-        console.log(req.body);
         // save data
         Code(req.body)
             .save()
@@ -17,14 +17,11 @@ module.exports = {
                 next(error);
             });
     },
-    findByDivision: (req, res, next) => {
-        Code.find(req.query).then(result => {
-            // make paginator
-            Code.countDocuments().then(totalCount => {
-                const paginator = new Paginator(totalCount, req.query.limit, req.query.page);
-                res.send({ result, paginator });
-            });
-        });
+    findByDivision: async (req, res, next) => {
+        const param = req.query;
+        const codeRecord = await CodeService.findByDivision(param);
+
+        res.send(codeRecord);
     },
     findByDivisionAndId: (req, res, next) => {
         Code.findOne(req.query).then(result => res.send(result));

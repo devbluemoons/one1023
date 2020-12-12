@@ -17,6 +17,7 @@ async function setGroupValue() {
     url.searchParams.append("division", "group");
 
     const groupList = await findGroupList(url);
+
     setGroupTable(groupList);
     setPaging(groupList.paginator);
 }
@@ -293,12 +294,7 @@ function setGroupTable(data) {
     // make colHeaders
     const colHeaders = ["Name", "Condition", "Count", ""];
     // make columns
-    const columns = [
-        { data: "name", renderer: expands.identityRenderer },
-        { data: "valid", renderer: expands.conditionRenderer },
-        { data: "this", renderer: expands.countRenderer },
-        { data: this, renderer: expands.editRenderer },
-    ];
+    const columns = [{ data: "name", renderer: expands.identityRenderer }, { data: "valid", renderer: expands.conditionRenderer }, { data: "count" }, { data: this, renderer: expands.editRenderer }];
     // initialize container
     const container = document.getElementById("groupTable");
     container.innerHTML = "";
