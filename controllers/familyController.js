@@ -1,50 +1,29 @@
-const Family = require("../models/familySchema");
+const FamilyService = require("../service/familyService");
 
 module.exports = {
-    create: (req, res, next) => {
-        // save data
-        Family(req.body)
-            .save()
-            .then(savedDocument => {
-                if (savedDocument) {
-                    res.send(savedDocument);
-                }
-            })
-            .catch(error => {
-                console.error(error.message);
-                next(error);
-            });
+    create: async (req, res, next) => {
+        const param = req.body;
+        const familyRecord = await FamilyService.save(param);
+        res.send(familyRecord);
     },
-    findById: (req, res, next) => {
-        Family.findOne(req.params).then(result => res.send(result));
+    findById: async (req, res, next) => {
+        const param = req.params;
+        const familyRecord = await FamilyService.findOne(param);
+        res.send(familyRecord);
     },
-    findByMemberId: (req, res, next) => {
-        Family.findOne(req.params).then(result => res.send(result));
+    findByMemberId: async (req, res, next) => {
+        const param = req.params;
+        const familyRecord = await FamilyService.findOne(param);
+        res.send(familyRecord);
     },
-    update: (req, res, next) => {
-        // update data
-        Family.findByIdAndUpdate(req.body._id, req.body, { new: true })
-            .then(updatedDocument => {
-                if (updatedDocument) {
-                    res.send(updatedDocument);
-                }
-            })
-            .catch(error => {
-                console.error(error.message);
-                next(error);
-            });
+    update: async (req, res, next) => {
+        const param = req.body;
+        const familyRecord = await FamilyService.findByIdAndUpdate(param);
+        res.send(familyRecord);
     },
-    delete: (req, res, next) => {
-        // update data
-        Family.findByIdAndDelete({ _id: req.body._id })
-            .then(result => {
-                if (result) {
-                    res.send(result);
-                }
-            })
-            .catch(error => {
-                console.error(error.message);
-                next(error);
-            });
+    delete: async (req, res, next) => {
+        const param = req.body;
+        const familyRecord = await FamilyService.findByIdAndDelete(param);
+        res.send(familyRecord);
     },
 };

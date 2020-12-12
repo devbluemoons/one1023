@@ -21,6 +21,7 @@ module.exports = {
 
         return { result, paginator };
     },
+
     async findById(param) {
         const id = param.id;
         const memberRecord = await Member.findById(id);
@@ -28,6 +29,7 @@ module.exports = {
 
         return result;
     },
+
     async findByIdAndUpdate(param) {
         const formData = makeFormData(param);
         const memberRecord = await Member.findByIdAndUpdate(formData._id, formData, { new: true });
