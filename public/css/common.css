@@ -99,6 +99,12 @@ header a {
 .pl-8 {
     padding-left: 8px;
 }
+.pTB-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
 
 /* margin */
 
