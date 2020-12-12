@@ -4,8 +4,8 @@ import * as common from "../common.js";
 
 document.getElementById("nav-service-tab").addEventListener("shown.bs.tab", setService);
 const pagination = new Pagination(document.getElementById("servicePagination"));
-const modalEl = document.getElementById("serviceModal");
-const modal = new bootstrap.Modal(modalEl);
+const serviceModalEl = document.getElementById("serviceModal");
+const serviceModal = new bootstrap.Modal(serviceModalEl);
 
 function setService() {
     setServiceValue();
@@ -24,8 +24,8 @@ async function setServiceValue() {
 
 function setServiceEvent() {
     document.querySelector("#serviceForm #btnSave").addEventListener("click", registerService);
+    document.querySelector("#serviceModal #btnEdit").addEventListener("click", editServiceInfo);
     document.querySelector("#serviceTable").addEventListener("click", showServiceInfo);
-    document.querySelector("#btnEdit").addEventListener("click", editServiceInfo);
 
     document.querySelector("#serviceTable").addEventListener("click", setServiceInfo);
     document.querySelector("#serviceDetailForm [name=name]").addEventListener("keyup", setSelectedMemeber);
@@ -321,11 +321,11 @@ async function showServiceInfo(e) {
     const service = await findServiceByDivisionAndId(url);
 
     if (service) {
-        modalEl.querySelector("[name=_id]").value = service._id;
-        modalEl.querySelector("[name=name]").value = service.name;
-        modalEl.querySelector("[name=valid]").value = service.valid;
+        serviceModalEl.querySelector("[name=_id]").value = service._id;
+        serviceModalEl.querySelector("[name=name]").value = service.name;
+        serviceModalEl.querySelector("[name=valid]").value = service.valid;
 
-        modal.show();
+        serviceModal.show();
     }
 }
 
@@ -347,7 +347,7 @@ async function editServiceInfo() {
 
     if (service) {
         setServiceValue();
-        modal.hide();
+        serviceModal.hide();
     }
 }
 

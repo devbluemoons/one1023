@@ -20,9 +20,9 @@ function setEvent() {
         .querySelectorAll("input")
         .forEach(item => {
             item.addEventListener("keyup", e => {
-                if (e.keyCode === 13) {
-                    document.getElementById("btnSearch").dispatchEvent(new Event("click"));
-                }
+                // if (e.keyCode === 13) {
+                //     document.getElementById("btnSearch").dispatchEvent(new Event("click"));
+                // }
             });
         });
 

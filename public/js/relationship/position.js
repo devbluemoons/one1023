@@ -4,8 +4,8 @@ import * as common from "../common.js";
 
 document.getElementById("nav-position-tab").addEventListener("shown.bs.tab", setPosition);
 const pagination = new Pagination(document.getElementById("positionPagination"));
-const modalEl = document.getElementById("positionModal");
-const modal = new bootstrap.Modal(modalEl);
+const positionModalEl = document.getElementById("positionModal");
+const positionModal = new bootstrap.Modal(positionModalEl);
 
 function setPosition() {
     setPositionValue();
@@ -24,8 +24,8 @@ async function setPositionValue() {
 
 function setPositionEvent() {
     document.querySelector("#positionForm #btnSave").addEventListener("click", registerPosition);
+    document.querySelector("#positionModal #btnEdit").addEventListener("click", editPositionInfo);
     document.querySelector("#positionTable").addEventListener("click", showPositionInfo);
-    document.querySelector("#btnEdit").addEventListener("click", editPositionInfo);
 
     document.querySelector("#positionTable").addEventListener("click", setPositionInfo);
     document.querySelector("#positionDetailForm [name=name]").addEventListener("keyup", setSelectedMemeber);
@@ -321,11 +321,11 @@ async function showPositionInfo(e) {
     const position = await findPositionByDivisionAndId(url);
 
     if (position) {
-        modalEl.querySelector("[name=_id]").value = position._id;
-        modalEl.querySelector("[name=name]").value = position.name;
-        modalEl.querySelector("[name=valid]").value = position.valid;
+        positionModalEl.querySelector("[name=_id]").value = position._id;
+        positionModalEl.querySelector("[name=name]").value = position.name;
+        positionModalEl.querySelector("[name=valid]").value = position.valid;
 
-        modal.show();
+        positionModal.show();
     }
 }
 
@@ -347,7 +347,7 @@ async function editPositionInfo() {
 
     if (position) {
         setPositionValue();
-        modal.hide();
+        positionModal.hide();
     }
 }
 

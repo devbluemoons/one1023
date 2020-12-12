@@ -23,7 +23,7 @@ module.exports = {
         const codeRecord = await Code.find(param);
         const result = await this.makeRelatedCodeCount(codeRecord);
 
-        const totalCount = await Code.countDocuments();
+        const totalCount = await Code.countDocuments(param);
         const paginator = new Paginator(totalCount, param.limit, param.page);
 
         return { result, paginator };

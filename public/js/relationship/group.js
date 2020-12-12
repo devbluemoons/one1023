@@ -4,8 +4,8 @@ import * as common from "../common.js";
 
 document.getElementById("nav-group-tab").addEventListener("shown.bs.tab", setGroup);
 const pagination = new Pagination(document.getElementById("groupPagination"));
-const modalEl = document.getElementById("groupModal");
-const modal = new bootstrap.Modal(modalEl);
+const groupModalEl = document.getElementById("groupModal");
+const groupModal = new bootstrap.Modal(groupModalEl);
 
 function setGroup() {
     setGroupValue();
@@ -24,8 +24,8 @@ async function setGroupValue() {
 
 function setGroupEvent() {
     document.querySelector("#groupForm #btnSave").addEventListener("click", registerGroup);
+    document.querySelector("#groupModal #btnEdit").addEventListener("click", editGroupInfo);
     document.querySelector("#groupTable").addEventListener("click", showGroupInfo);
-    document.querySelector("#btnEdit").addEventListener("click", editGroupInfo);
 
     document.querySelector("#groupTable").addEventListener("click", setGroupInfo);
     document.querySelector("#groupDetailForm [name=name]").addEventListener("keyup", setSelectedMemeber);
@@ -321,11 +321,11 @@ async function showGroupInfo(e) {
     const group = await findGroupByDivisionAndId(url);
 
     if (group) {
-        modalEl.querySelector("[name=_id]").value = group._id;
-        modalEl.querySelector("[name=name]").value = group.name;
-        modalEl.querySelector("[name=valid]").value = group.valid;
+        groupModalEl.querySelector("[name=_id]").value = group._id;
+        groupModalEl.querySelector("[name=name]").value = group.name;
+        groupModalEl.querySelector("[name=valid]").value = group.valid;
 
-        modal.show();
+        groupModal.show();
     }
 }
 
@@ -347,7 +347,7 @@ async function editGroupInfo() {
 
     if (group) {
         setGroupValue();
-        modal.hide();
+        groupModal.hide();
     }
 }
 

@@ -78,7 +78,7 @@ const memberSchema = new Schema(
         group: {
             type: String,
         },
-        role: {
+        position: {
             type: String,
         },
         service: {
