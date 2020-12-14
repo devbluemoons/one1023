@@ -17,6 +17,7 @@ function setFamilyEvent() {
 }
 
 async function setFamilyValue() {
+    initFamilyInfo();
     const url = makeSearchParameter();
     const memberList = await findMemberList(url);
 
@@ -24,6 +25,10 @@ async function setFamilyValue() {
         setMemberTable(memberList);
         setPaging(memberList.paginator);
     }
+}
+
+function initFamilyInfo() {
+    //
 }
 
 async function setSelectedMemeber() {
