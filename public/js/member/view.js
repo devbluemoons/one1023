@@ -61,16 +61,16 @@ async function setMemberValue(data) {
     document.getElementById("address").innerHTML = addressFormatter(data);
 
     document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
-    // document.getElementById("faithState").innerHTML = faithStateFormatter(data.faithState);
-    // document.getElementById("baptism").innerHTML = baptismFormatter(data.baptism);
-    document.getElementById("group").innerHTML = data.group;
-    document.getElementById("position").innerHTML = data.position;
-    document.getElementById("service").innerHTML = data.service;
+    document.getElementById("faithState").innerHTML = data.faithState;
+    document.getElementById("baptism").innerHTML = data.baptism || "";
+    document.getElementById("group").innerHTML = data.group || "";
+    document.getElementById("position").innerHTML = data.position || "";
+    document.getElementById("service").innerHTML = data.service || "";
 
-    document.getElementById("job").innerHTML = data.job;
-    document.getElementById("email").innerHTML = data.email;
     document.getElementById("gender").innerHTML = genderFormatter(data.gender);
     document.getElementById("married").innerHTML = marriedFormatter(data.married);
+    document.getElementById("job").innerHTML = data.job;
+    document.getElementById("email").innerHTML = data.email;
 
     if (data.familyGroup) {
         // get family group member info

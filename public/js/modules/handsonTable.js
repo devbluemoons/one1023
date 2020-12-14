@@ -156,5 +156,6 @@ export function defaultSettings(data, paginator, offsetTop, colHeaders, columns)
 function getPageInfo(paginator) {
     const currentPage = Number(paginator.currentPage);
     const pageSize = Number(paginator.pageSize);
+
     return (currentPage - 1) * pageSize;
 }

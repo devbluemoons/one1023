@@ -18,7 +18,7 @@ module.exports = {
 
         const result = await this.makeFamilyGroupList(memberRecord);
         const totalCount = await Member.countDocuments({ ...query.searchCondition });
-        const paginator = new Paginator(totalCount, query.limit, query.page);
+        const paginator = new Paginator(totalCount, param.limit, param.page);
 
         return { result, paginator };
     },
