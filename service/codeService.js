@@ -38,10 +38,10 @@ module.exports = {
             const key = item.division;
             param[key] = item._id;
 
-            const list = await Member.find(param);
+            const memberList = await Member.find(param);
 
-            if (list.length > 0) {
-                item.count = list.length;
+            if (memberList.length > 0) {
+                item.count = memberList.length;
             }
 
             result.push(item);

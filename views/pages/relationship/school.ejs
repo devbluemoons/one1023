@@ -1,1 +1,88 @@
-<h1>School</h1>
+<div class="row mb-3 pt-3">
+    <div class="col-4">
+        <nav class="padding-TB__5em bg-light">
+            <div class="container">
+                <form class="d-flex" id="schoolForm">
+                    <input class="form-control mr-2" type="text" name="name" placeholder="Please, fill school name" />
+                    <button class="btn btn-outline-primary" type="button" id="btnSave">Register</button>
+                </form>
+            </div>
+        </nav>
+        <div class="row mb-3 pt-3">
+            <div class="col flex_bottom">
+                <div>[ Total : <span class="bold" id="schoolCount"></span> ]</div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <div id="schoolTable"></div>
+                <div id="schoolPagination"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="card mb-3">
+            <div class="card-header">School Detail</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <nav class="padding-TB__5em bg-light">
+                            <div class="container">
+                                <form class="d-flex" id="schoolDetailForm">
+                                    <input class="form-control mr-2" type="text" name="name" placeholder="Please, fill name to relate" />
+                                    <button class="btn btn-outline-primary" type="button">Search</button>
+                                </form>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-12">
+                        <div class="row" id="schoolSearchResult"></div>
+                    </div>
+                </div>
+                <hr class="opacity01" />
+                <p>Related <span id="selectedSchool" class="badge bg-primary"></span></p>
+                <input type="hidden" id="selectedSchoolId" />
+                <div class="row" id="relatedSchool"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="schoolModal" tabindex="-1" aria-labelledby="schoolModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="schoolModalLabel">School Information</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="schoolModalForm">
+                    <input type="hidden" name="_id" />
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="col-form-label">Name</label>
+                                <input type="text" class="form-control" name="name" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="col-form-label">Condition</label>
+                                <select class="form-select form-select" name="valid">
+                                    <option value="01">Use</option>
+                                    <option value="02">Not used</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnEdit">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/relationship/school.js" type="module"></script>

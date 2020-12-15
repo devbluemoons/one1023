@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
     // set current tab
     const triggerTabList = [].slice.call(document.querySelectorAll("#nav-tab a"));
+
     triggerTabList.forEach(function (triggerEl) {
         // reload when click tab
         triggerEl.addEventListener("click", function () {

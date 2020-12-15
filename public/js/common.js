@@ -14,7 +14,7 @@ function setEvent() {
         return false;
     }
 
-    // set [keyup] event input tag
+    // set keyup event input tag
     document
         .getElementById("searchForm")
         .querySelectorAll("input")
