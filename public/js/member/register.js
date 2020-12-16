@@ -71,12 +71,12 @@ function findMemberOne(id) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -365,7 +365,7 @@ function saveFormData(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
@@ -374,8 +374,8 @@ function saveFormData(data) {
                 location.href = "/member/list";
             }
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -388,7 +388,7 @@ function updateFormData(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
@@ -397,8 +397,8 @@ function updateFormData(data) {
                 location.href = "/member/list";
             }
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -425,11 +425,11 @@ function findGroupList(param) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }

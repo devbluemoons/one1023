@@ -34,12 +34,12 @@ function findMemberById(id) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 

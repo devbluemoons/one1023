@@ -114,12 +114,12 @@ function findMemberById(id) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -130,12 +130,12 @@ function findMemberByService(service) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -147,12 +147,12 @@ function findMemberByName() {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -163,12 +163,12 @@ function findServiceList(url) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -179,12 +179,12 @@ function findServiceByDivisionAndId(url) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -195,12 +195,12 @@ function findServiceByDivisionAndName(url) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -213,12 +213,12 @@ function updateMember(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -231,12 +231,12 @@ function createService(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -360,12 +360,12 @@ function updateService(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 

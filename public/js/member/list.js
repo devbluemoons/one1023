@@ -40,12 +40,12 @@ function findMemberList(url) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 

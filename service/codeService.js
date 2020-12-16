@@ -4,26 +4,28 @@ const Paginator = require("../middlewares/paginator");
 
 module.exports = {
     save(param) {
-        return Code(param).save();
+        return Code(param)
+            .save()
+            .catch(e => console.error(e));
     },
 
     findOne(param) {
-        return Code.findOne(param);
+        return Code.findOne(param).catch(e => console.error(e));
     },
 
     findByIdAndUpdate(param) {
-        return Code.findByIdAndUpdate(param._id, param, { new: true });
+        return Code.findByIdAndUpdate(param._id, param, { new: true }).catch(e => console.error(e));
     },
 
     findByIdAndDelete(param) {
-        return Code.findByIdAndDelete({ _id: param._id });
+        return Code.findByIdAndDelete({ _id: param._id }).catch(e => console.error(e));
     },
 
     async findByDivision(param) {
         const codeRecord = await Code.find(param);
         const result = await this.makeRelatedCodeCount(codeRecord);
 
-        const totalCount = await Code.countDocuments(param);
+        const totalCount = await Code.countDocuments(param).catch(e => console.error(e));
         const paginator = new Paginator(totalCount, param.limit, param.page);
 
         return { result, paginator };

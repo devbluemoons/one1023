@@ -6,7 +6,9 @@ const Paginator = require("../middlewares/paginator");
 module.exports = {
     save(param) {
         const formData = this.makeFormData(param);
-        return Member(formData).save();
+        return Member(formData)
+            .save()
+            .catch(e => console.error(e));
     },
 
     async find(param) {
@@ -14,10 +16,11 @@ module.exports = {
         const memberRecord = await Member.find({ ...query.searchCondition })
             .sort({ _id: -1 }) // descending
             .skip(query.pagingCondition.skip) // skip data order
-            .limit(query.pagingCondition.limit); // size per a page
+            .limit(query.pagingCondition.limit) // size per a page
+            .catch(e => console.error(e));
 
         const result = await this.makeFamilyGroupList(memberRecord);
-        const totalCount = await Member.countDocuments({ ...query.searchCondition });
+        const totalCount = await Member.countDocuments({ ...query.searchCondition }).catch(e => console.error(e));
         const paginator = new Paginator(totalCount, param.limit, param.page);
 
         return { result, paginator };
@@ -25,7 +28,7 @@ module.exports = {
 
     async findById(param) {
         const id = param.id;
-        const memberRecord = await Member.findById(id);
+        const memberRecord = await Member.findById(id).catch(e => console.error(e));
         const result = await this.makeMemberData(memberRecord);
 
         return result;
@@ -33,7 +36,7 @@ module.exports = {
 
     async findByIdAndUpdate(param) {
         const formData = this.makeFormData(param);
-        const memberRecord = await Member.findByIdAndUpdate(formData._id, formData, { new: true });
+        const memberRecord = await Member.findByIdAndUpdate(formData._id, formData, { new: true }).catch(e => console.error(e));
         return memberRecord;
     },
 
@@ -80,28 +83,28 @@ module.exports = {
     // make family group
     async makeMemberData(data) {
         if (data.family) {
-            const familyRecord = await Family.findById(data.family);
+            const familyRecord = await Family.findById(data.family).catch(e => console.error(e));
 
             if (familyRecord) {
                 data.familyGroup = familyRecord.memberId;
             }
         }
         if (data.group) {
-            const codeRecord = await Code.findById(data.group);
+            const codeRecord = await Code.findById(data.group).catch(e => console.error(e));
 
             if (codeRecord) {
                 data.group = codeRecord.name;
             }
         }
         if (data.position) {
-            const codeRecord = await Code.findById(data.position);
+            const codeRecord = await Code.findById(data.position).catch(e => console.error(e));
 
             if (codeRecord) {
                 data.position = codeRecord.name;
             }
         }
         if (data.service) {
-            const codeRecord = await Code.findById(data.service);
+            const codeRecord = await Code.findById(data.service).catch(e => console.error(e));
 
             if (codeRecord) {
                 data.service = codeRecord.name;
@@ -122,7 +125,7 @@ module.exports = {
                 continue;
             }
             // has family
-            const family = await Family.findById(item.family);
+            const family = await Family.findById(item.family).catch(e => console.error(e));
 
             if (family) {
                 item.familyGroup = family.memberId;

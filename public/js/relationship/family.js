@@ -46,12 +46,12 @@ function findMemberList(url) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -67,12 +67,12 @@ function findMemberOne(id) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -119,12 +119,12 @@ function findMemberById(id) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -137,12 +137,12 @@ function updateMember(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -152,12 +152,12 @@ function findFamilyByMemberId(memberId) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -169,12 +169,12 @@ function createFamily(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -186,12 +186,12 @@ function updateFamily(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -241,12 +241,12 @@ function deleteFamilyGroup(data) {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
@@ -258,12 +258,12 @@ function findMemberByName() {
     })
         .then(response => {
             if (!response.ok) {
-                console.error(response);
+                new Error(response.status);
             }
             return response.json();
         })
-        .catch(error => {
-            new Error(error);
+        .catch(e => {
+            console.error(e);
         });
 }
 
