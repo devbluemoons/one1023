@@ -4,17 +4,18 @@
 
 | dev tool            | version |
 | ------------------- | ------- |
+| javscript           | ES6+    |
 | nodejs              | 12.18.4 |
 | npm                 | 6.14.46 |
 | express             | 4.17.1  |
 | express-ejs-layouts | 2.5.0   |
 | bootstrap           | 5+      |
-| hansonTable         |         |
-| chartjs             |         |
+| hansonTable         | 8.1.0   |
 | mongo-community     | 4.4     |
 | mongoose            | 5.10.9  |
 | dotenv              | 8.2.0   |
-| javscript           | ES6+    |
+| fullCalendar        | 5.4     |
+| chartjs             |         |
 
 ###### validation check (for MacOS)
 
