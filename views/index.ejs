@@ -1,17 +1,64 @@
 <div class="container pt-3">
     <div class="row">
         <div class="col">
-            <div class="card border-primary mb-3" style="max-width: 18rem">
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem">
                 <div class="card-header">Header</div>
-                <div class="card-body text-primary">
+                <div class="card-body">
                     <h5 class="card-title">Primary card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">Fill in something</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Primary card title</h5>
+                    <p class="card-text">Fill in something</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Primary card title</h5>
+                    <p class="card-text">Fill in something</p>
                 </div>
             </div>
         </div>
 
         <div class="col-6">
             <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="calendarModal" tabindex="-1" aria-labelledby="calendarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="calendarModalLabel">Register Schedule</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="calendarModalForm">
+                    <input type="hidden" name="_id" />
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="col-form-label">Title</label>
+                                <input type="text" class="form-control" name="title" />
+                                <input type="hidden" class="form-control" name="start" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+            </div>
         </div>
     </div>
 </div>

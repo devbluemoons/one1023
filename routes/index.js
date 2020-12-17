@@ -18,6 +18,7 @@ router.get("/relationship/view", function (req, res, next) {
 });
 
 /* Controller Router */
+router.use("/calendar", require("./calendarRoute"));
 router.use("/file", require("./fileRoute"));
 router.use("/member", require("./memberRoute"));
 router.use("/family", require("./familyRoute"));

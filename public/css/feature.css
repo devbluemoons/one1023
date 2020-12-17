@@ -66,11 +66,6 @@
     height: auto;
 }
 
-/* data table */
-tbody tr:hover td {
-    background-color: #fafafa;
-}
-
 /* flex */
 .flex-container {
     display: flex;
@@ -114,4 +109,25 @@ tbody tr:hover td {
 /* display */
 .hide {
     display: none;
+}
+
+/* hands on table */
+.handsontable tbody tr:hover td {
+    background-color: #fafafa;
+}
+
+/* full calendar */
+#calendar thead {
+    background-color: #f0f0f0;
+    color: #222222;
+}
+#calendar tbody a {
+    color: #222222;
+    text-decoration: none;
+}
+#calendar tbody:hover {
+    background-color: #ffffff;
+}
+#calendar .btn-group button {
+    border-color: #1566b7;
 }
