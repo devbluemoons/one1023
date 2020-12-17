@@ -4,8 +4,8 @@
 
 | dev tool            | version |
 | ------------------- | ------- |
-| javscript           | ES6+    |
-| nodejs              | 12.18.4 |
+| javaScript          | ES6+    |
+| nodeJS              | 12.18.4 |
 | npm                 | 6.14.46 |
 | express             | 4.17.1  |
 | express-ejs-layouts | 2.5.0   |
