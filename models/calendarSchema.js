@@ -15,6 +15,9 @@ const calendarSchema = new Schema(
         end: {
             type: String,
         },
+        comment: {
+            type: String,
+        },
         valid: {
             type: String,
             required: true,

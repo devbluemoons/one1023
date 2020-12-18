@@ -3,25 +3,25 @@ const CalendarService = require("../service/calendarService");
 module.exports = {
     create: async (req, res, next) => {
         const param = req.body;
-        const codeRecord = await CalendarService.save(param);
-        res.send(codeRecord);
+        const calendarRecord = await CalendarService.save(param);
+        res.send(calendarRecord);
     },
 
     find: async (req, res, next) => {
-        const param = req.params;
-        const codeRecord = await CalendarService.find(param);
-        res.send(codeRecord);
+        const param = req.query;
+        const calendarRecord = await CalendarService.find(param);
+        res.send(calendarRecord);
     },
 
     update: async (req, res, next) => {
         const param = req.body;
-        const codeRecord = await CalendarService.findByIdAndUpdate(param);
-        res.send(codeRecord);
+        const calendarRecord = await CalendarService.findByIdAndUpdate(param);
+        res.send(calendarRecord);
     },
 
     delete: async (req, res, next) => {
         const param = req.body;
-        const codeRecord = await CalendarService.findByIdAndDelete(param);
-        res.send(codeRecord);
+        const calendarRecord = await CalendarService.findByIdAndDelete(param);
+        res.send(calendarRecord);
     },
 };

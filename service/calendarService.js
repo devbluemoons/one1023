@@ -8,8 +8,7 @@ module.exports = {
     },
 
     find(param) {
-        const query = makeQuery(param);
-        return Calendar.find({ ...query }).catch(e => console.error(e));
+        return Calendar.find({ start: { $gte: param.startDt, $lte: param.endDt } }).catch(e => console.error(e));
     },
 
     findByIdAndUpdate(param) {
@@ -20,8 +19,3 @@ module.exports = {
         return Calendar.findByIdAndDelete({ _id: param._id }).catch(e => console.error(e));
     },
 };
-
-// make search query
-function makeQuery(param) {
-    return new RegExp(param.start, "i");
-}
