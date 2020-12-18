@@ -152,7 +152,7 @@ function setBirthDay() {
     const date = new Date();
     const thisYear = date.getFullYear();
 
-    date.setFullYear(thisYear - 120);
+    date.setFullYear(thisYear - 99);
     const minimumYear = date.getFullYear();
 
     for (let i = minimumYear; i <= thisYear; i++) {

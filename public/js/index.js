@@ -7,7 +7,9 @@ const calendarModalEl = document.getElementById("calendarModal");
 const calendarModal = new bootstrap.Modal(calendarModalEl);
 
 function setValue() {
-    setDday();
+    // setDday();
+    setAttendanceChart();
+    setGenerationChart();
     setCalendar();
 }
 
@@ -25,6 +27,126 @@ function setDday() {
     const days = Math.ceil(period / oneDay);
 
     document.getElementById("foundingDays").textContent = `D+ ${days}`;
+}
+
+function setAttendanceChart() {
+    const ctx = document.getElementById("attendanceChart").getContext("2d");
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: [
+                "2020-10-04",
+                "2020-10-11",
+                "2020-10-18",
+                "2020-10-25",
+                "2020-11-01",
+                "2020-11-08",
+                "2020-11-15",
+                "2020-11-22",
+                "2020-11-29",
+                "2020-12-06",
+                "2020-12-13",
+                "2020-12-20",
+                "2020-12-27",
+            ],
+            datasets: [
+                {
+                    label: "Worship (part1)",
+                    backgroundColor: "rgba(204, 204, 204, 0.2)",
+                    borderColor: "rgba(204, 204, 204, 0.7)",
+                    pointBorderColor: "#ffffff",
+                    data: [92, 111, 80, 32, 41, 58, 63, 74, 56, 61, 34, 46, 25],
+                },
+                {
+                    label: "Worship (part2)",
+                    backgroundColor: "rgba(0, 85, 128, 0.2)",
+                    borderColor: "rgba(0, 85, 128, 0.3)",
+                    pointBorderColor: "#ffffff",
+                    data: [77, 68, 89, 17, 25, 53, 41, 32, 29, 55, 12, 25, 10],
+                },
+            ],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Last 3 months",
+            },
+        },
+    });
+}
+
+async function setGenerationChart() {
+    const memberList = await findMemberList();
+
+    // caculation of all generation
+    const menBirthYears = memberList.result.filter(i => i.gender === "M").map(i => Number(i.birthday.substr(0, 4)));
+    const womenBirthYears = memberList.result.filter(i => i.gender === "W").map(i => Number(i.birthday.substr(0, 4)));
+
+    const totalCount = memberList.paginator.totalCount;
+    const thisYear = new Date().getFullYear();
+
+    const menGeneration = [];
+    const womenGeneration = [];
+    const labels = ["very young", "teenager", "twenties", "thirties", "forties", "fifties", "sixties", "seventies", "eighties", "nineties", "centenary"];
+
+    for (let i = 0; i <= 10; i++) {
+        const startYear = thisYear - (i + 1) * 10 + 1;
+        const endYear = thisYear - i * 10 + 1;
+
+        menGeneration.push(menBirthYears.filter(i => startYear < i && endYear >= i).length);
+        womenGeneration.push(womenBirthYears.filter(i => startYear < i && endYear >= i).length);
+    }
+
+    const ctx = document.getElementById("generationChart").getContext("2d");
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Men",
+                    backgroundColor: "rgba(54, 162, 235, 0.7)",
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 2,
+                    pointBorderColor: "#ffffff",
+                    data: menGeneration,
+                },
+                {
+                    label: "Woen",
+                    backgroundColor: "rgba(255, 99, 132, 0.7)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 2,
+                    pointBorderColor: "#ffffff",
+                    data: womenGeneration,
+                },
+            ],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "All Generation",
+            },
+        },
+    });
+}
+
+// get member list
+function findMemberList() {
+    // create member information
+    return fetch("/member", {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                new Error(response);
+            }
+            return response.json();
+        })
+        .catch(e => {
+            console.error(e);
+        });
 }
 
 function setCalendar() {
