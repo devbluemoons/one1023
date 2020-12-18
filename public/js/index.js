@@ -23,7 +23,8 @@ function setDday() {
     const today = new Date();
     const period = today.getTime() - openDt.getTime();
     const days = Math.ceil(period / oneDay);
-    console.log(days);
+
+    document.getElementById("foundingDays").textContent = `D+ ${days}`;
 }
 
 function setCalendar() {
