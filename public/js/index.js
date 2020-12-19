@@ -10,6 +10,8 @@ function setValue() {
     // setDday();
     setAttendanceChart();
     setGenerationChart();
+    setGenerationRatioChart();
+    setMenWomenRatioChart();
     setCalendar();
 }
 
@@ -72,54 +74,39 @@ function setAttendanceChart() {
                 display: true,
                 text: "Last 3 months",
             },
+            plugins: {
+                datalabels: {
+                    display: false,
+                },
+            },
         },
     });
 }
 
 async function setGenerationChart() {
-    const memberList = await findMemberList();
-
-    // caculation of all generation
-    const menBirthYears = memberList.result.filter(i => i.gender === "M").map(i => Number(i.birthday.substr(0, 4)));
-    const womenBirthYears = memberList.result.filter(i => i.gender === "W").map(i => Number(i.birthday.substr(0, 4)));
-
-    const totalCount = memberList.paginator.totalCount;
-    const thisYear = new Date().getFullYear();
-
-    const menGeneration = [];
-    const womenGeneration = [];
-    const labels = ["very young", "teenager", "twenties", "thirties", "forties", "fifties", "sixties", "seventies", "eighties", "nineties", "centenary"];
-
-    for (let i = 0; i <= 10; i++) {
-        const startYear = thisYear - (i + 1) * 10 + 1;
-        const endYear = thisYear - i * 10 + 1;
-
-        menGeneration.push(menBirthYears.filter(i => startYear < i && endYear >= i).length);
-        womenGeneration.push(womenBirthYears.filter(i => startYear < i && endYear >= i).length);
-    }
-
+    const result = await getValuesForGeneration();
     const ctx = document.getElementById("generationChart").getContext("2d");
 
     new Chart(ctx, {
         type: "bar",
         data: {
-            labels: labels,
+            labels: result.labels,
             datasets: [
                 {
                     label: "Men",
-                    backgroundColor: "rgba(54, 162, 235, 0.7)",
-                    borderColor: "rgba(54, 162, 235, 1)",
+                    backgroundColor: "rgba(0, 89, 179, 0.5)",
+                    borderColor: "rgba(0, 89, 179, 0.5)",
                     borderWidth: 2,
                     pointBorderColor: "#ffffff",
-                    data: menGeneration,
+                    data: result.menGeneration,
                 },
                 {
                     label: "Woen",
-                    backgroundColor: "rgba(255, 99, 132, 0.7)",
-                    borderColor: "rgba(255, 99, 132, 1)",
+                    backgroundColor: "rgba(179, 0, 89, 0.5)",
+                    borderColor: "rgba(179, 0, 89, 0.5)",
                     borderWidth: 2,
                     pointBorderColor: "#ffffff",
-                    data: womenGeneration,
+                    data: result.womenGeneration,
                 },
             ],
         },
@@ -128,8 +115,157 @@ async function setGenerationChart() {
                 display: true,
                 text: "All Generation",
             },
+            plugins: {
+                datalabels: {
+                    display: true,
+                },
+                labels: {
+                    render: "value",
+                    display: false,
+                },
+            },
         },
     });
+}
+
+async function setGenerationRatioChart() {
+    const result = await getValuesForGeneration();
+    const ctx = document.getElementById("generationRatioChart").getContext("2d");
+
+    new Chart(ctx, {
+        type: "pie",
+        data: {
+            labels: result.labels,
+            datasets: [
+                {
+                    label: "Men",
+                    backgroundColor: result.backgroundColor,
+                    data: result.ratioGeneration[0],
+                },
+            ],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Ratio : each generation",
+            },
+            legend: {
+                display: false,
+            },
+            tooltips: {
+                enabled: true,
+            },
+            plugins: {
+                labels: {
+                    render: function (data) {
+                        return `${data.value}%`;
+                    },
+                    fontColor: "#ffffff",
+                },
+            },
+        },
+    });
+}
+
+async function setMenWomenRatioChart() {
+    const memberList = await findMemberList();
+
+    // caculation of all generation
+    const men = memberList.result.filter(i => i.gender === "M");
+    const women = memberList.result.filter(i => i.gender === "W");
+    const totalCount = memberList.paginator.totalCount;
+
+    const menRatio = Math.round((men.length * 100) / totalCount);
+    const womenRatio = Math.round((women.length * 100) / totalCount);
+
+    const ctx = document.getElementById("menWomenRatioChart").getContext("2d");
+
+    new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: ["men", "women"],
+            datasets: [
+                {
+                    backgroundColor: ["rgba(0, 89, 179, 0.5)", "rgba(179, 0, 89, 0.5)"],
+                    borderColor: ["rgba(0, 89, 179, 0.5)", "rgba(179, 0, 89, 0.5)"],
+                    borderWidth: 2,
+                    pointBorderColor: "#ffffff",
+                    data: [menRatio, womenRatio],
+                },
+            ],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Ratio : Men / Women",
+            },
+            legend: {
+                display: false,
+            },
+            tooltips: {
+                enabled: false,
+            },
+            plugins: {
+                labels: {
+                    render: function (data) {
+                        return `${data.label}\n\n${data.value}%`;
+                    },
+                    fontColor: "#ffffff",
+                },
+            },
+        },
+    });
+}
+
+async function getValuesForGeneration() {
+    const memberList = await findMemberList();
+
+    const labels = ["very young", "teenager", "twenties", "thirties", "forties", "fifties", "sixties", "seventies", "eighties", "nineties", "centenary"];
+    const backgroundColor = [
+        "rgba(107 ,184 ,218, 1)",
+        "rgba(105, 150, 218, 1)",
+        "rgba(104, 116, 217, 1)",
+        "rgba(128, 107,	217, 1)",
+        "rgba(162, 107,	217, 1)",
+        "rgba(198, 107,	218, 1)",
+        "rgba(218, 107,	204, 1)",
+        "rgba(218, 106,	170, 1)",
+        "rgba(218, 105,	137, 1)",
+        "rgba(236, 139,	123, 1)",
+    ];
+
+    // caculation of all generation
+    const allBirthYears = memberList.result.map(i => Number(i.birthday.substr(0, 4)));
+    const menBirthYears = memberList.result.filter(i => i.gender === "M").map(i => Number(i.birthday.substr(0, 4)));
+    const womenBirthYears = memberList.result.filter(i => i.gender === "W").map(i => Number(i.birthday.substr(0, 4)));
+
+    const totalCount = memberList.paginator.totalCount;
+    const thisYear = new Date().getFullYear();
+
+    const allGeneration = [];
+    const ratioGeneration = [];
+    const menGeneration = [];
+    const womenGeneration = [];
+
+    for (let i = 0; i <= 10; i++) {
+        const startYear = thisYear - (i + 1) * 10 + 1;
+        const endYear = thisYear - i * 10 + 1;
+
+        allGeneration.push(allBirthYears.filter(i => startYear < i && endYear >= i).length);
+        menGeneration.push(menBirthYears.filter(i => startYear < i && endYear >= i).length);
+        womenGeneration.push(womenBirthYears.filter(i => startYear < i && endYear >= i).length);
+    }
+
+    ratioGeneration.push(allGeneration.map(i => Math.round((i * 100) / totalCount)));
+
+    return {
+        allGeneration,
+        ratioGeneration,
+        menGeneration,
+        womenGeneration,
+        backgroundColor,
+        labels,
+    };
 }
 
 // get member list
