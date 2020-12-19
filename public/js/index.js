@@ -150,7 +150,13 @@ async function setGenerationRatioChart() {
                 text: "Ratio : each generation",
             },
             legend: {
-                display: false,
+                display: true,
+                position: "left",
+            },
+            elements: {
+                arc: {
+                    borderWidth: 1,
+                },
             },
             tooltips: {
                 enabled: true,
