@@ -107,6 +107,11 @@ export function familyGroupRenderer(_instance, td, _row, _col, _prop, value, _ce
     }
 }
 
+export function flagRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
+    const flag = `<img src="https://www.countryflags.io/${value}/flat/64.png" style="width:100%">`;
+    Handsontable.dom.fastInnerHTML(td, flag);
+}
+
 // set handsonTable properties
 export function defaultSettings(data, paginator, offsetTop, colHeaders, columns) {
     return {

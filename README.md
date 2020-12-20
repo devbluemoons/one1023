@@ -15,7 +15,7 @@
 | mongoose            | 5.10.9  |
 | dotenv              | 8.2.0   |
 | fullCalendar        | 5.4     |
-| chartjs             |         |
+| chartjs             | 2.9.4   |
 
 ###### validation check (for MacOS)
 
