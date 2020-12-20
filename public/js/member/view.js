@@ -110,9 +110,9 @@ async function setMemberValue(data) {
                         <div class="frame">
                             <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><b>${member.name} (${ageFormatter(member.birthday)})</b></li>
-                        </ul>
+                        <div class="border-top pTB-10">
+                            ${member.name} (${ageFormatter(member.birthday)})
+                        </div>
                     </div>
                 </div>
             `;

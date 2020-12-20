@@ -62,7 +62,7 @@ function setSearchResult(data) {
                     <div class="frame">
                         <img src="/${item.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                     </div>
-                    <div class="card-body border-top pTB-10 p-2">${item.name}</div>
+                    <div class="border-top pTB-10 p-2">${item.name}</div>
                     <button class="btn btn-outline-secondary btn-sm" id="${item._id}" >Add</button>
                 </div>
             </div>
@@ -267,7 +267,7 @@ async function setSchoolDetail(data) {
                         <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                         <button type="button" class="btn-close btn-close-white" aria-label="Close" data-id="${member._id}"></button>
                     </div>
-                    <div class="card-body border-top pTB-10">
+                    <div class="border-top pTB-10">
                         ${member.name} (${ageFormatter(member.birthday)})
                     </div>
                 </div>
