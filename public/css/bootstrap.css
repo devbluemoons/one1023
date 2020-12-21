@@ -24,6 +24,15 @@
     color: #ffffff;
 }
 
+.modal-header.bg-primary {
+    background-color: #1976d2 !important;
+    border-color: #1976d2;
+    color: #ffffff;
+}
+.modal-header.bg-primary .btn-close {
+    filter: invert(100%);
+}
+
 /* card image : vertical-align */
 .card .frame {
     display: inline-block;
