@@ -61,7 +61,8 @@ const memberSchema = new Schema(
             trim: true,
         },
         family: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: "Family",
         },
         familyGroup: {
             type: Array,
@@ -76,13 +77,16 @@ const memberSchema = new Schema(
             type: String,
         },
         group: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: "Code",
         },
         position: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: "Code",
         },
         service: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: "Code",
         },
         attendence: {
             type: String,
@@ -92,10 +96,8 @@ const memberSchema = new Schema(
         },
         opinions: [
             {
-                id: Schema.Types.ObjectId,
-            },
-            {
-                writer: String,
+                type: Schema.Types.ObjectId,
+                ref: "Member",
             },
         ],
     },

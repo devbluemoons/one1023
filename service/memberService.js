@@ -93,21 +93,21 @@ module.exports = {
             const codeRecord = await Code.findById(data.group).catch(e => console.error(e));
 
             if (codeRecord) {
-                data.group = codeRecord.name;
+                data.group = codeRecord;
             }
         }
         if (data.position) {
             const codeRecord = await Code.findById(data.position).catch(e => console.error(e));
 
             if (codeRecord) {
-                data.position = codeRecord.name;
+                data.position = codeRecord;
             }
         }
         if (data.service) {
             const codeRecord = await Code.findById(data.service).catch(e => console.error(e));
 
             if (codeRecord) {
-                data.service = codeRecord.name;
+                data.service = codeRecord;
             }
         }
 
@@ -163,13 +163,13 @@ module.exports = {
             searchCondition.faithState = new RegExp(query.faithState, "i");
         }
         if (query.group) {
-            searchCondition.group = new RegExp(query.group, "i");
+            searchCondition.group = query.group;
         }
         if (query.position) {
-            searchCondition.position = new RegExp(query.position, "i");
+            searchCondition.position = query.position;
         }
         if (query.service) {
-            searchCondition.service = new RegExp(query.service, "i");
+            searchCondition.service = query.service;
         }
 
         // set paging parameter

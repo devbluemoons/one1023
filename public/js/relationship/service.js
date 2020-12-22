@@ -38,6 +38,7 @@ async function setServiceInfo(e) {
 
         // refresh service detail
         const serviceList = await findMemberByService(e.target.dataset.id);
+        console.log(serviceList);
         setServiceDetail(serviceList);
     }
 }

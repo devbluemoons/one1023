@@ -36,9 +36,9 @@ module.exports = {
 
         for (const item of data) {
             // set param
-            const param = {};
-            const key = item.division;
-            param[key] = item._id;
+            const param = {
+                [item.division]: item._id,
+            };
 
             const memberList = await Member.find(param);
 

@@ -63,9 +63,9 @@ async function setMemberValue(data) {
     document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
     document.getElementById("faithState").innerHTML = data.faithState;
     document.getElementById("baptism").innerHTML = data.baptism || "";
-    document.getElementById("group").innerHTML = data.group || "";
-    document.getElementById("position").innerHTML = data.position || "";
-    document.getElementById("service").innerHTML = data.service || "";
+    document.getElementById("group").innerHTML = data.group ? data.group.name : "";
+    document.getElementById("position").innerHTML = data.position ? data.position.name : "";
+    document.getElementById("service").innerHTML = data.service ? data.service.name : "";
 
     document.getElementById("gender").innerHTML = genderFormatter(data.gender);
     document.getElementById("married").innerHTML = marriedFormatter(data.married);

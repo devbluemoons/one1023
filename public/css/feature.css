@@ -108,7 +108,7 @@
 
 /* display */
 .hide {
-    display: none;
+    display: none !important;
 }
 
 /* hands on table */
