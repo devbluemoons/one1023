@@ -7,7 +7,9 @@ module.exports = {
             .catch(e => console.error(e));
     },
     findOne(param) {
-        return Family.findOne(param).catch(e => console.error(e));
+        return Family.findOne(param)
+            .populate("memberId")
+            .catch(e => console.error(e));
     },
     findByIdAndUpdate(param) {
         return Family.findByIdAndUpdate(param._id, param, { new: true }).catch(e => console.error(e));

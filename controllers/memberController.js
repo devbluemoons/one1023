@@ -19,9 +19,14 @@ module.exports = {
         const memberRecord = await MemberService.find(param);
         res.send(memberRecord);
     },
-    view: async (req, res, next) => {
+    findById: async (req, res, next) => {
         const param = req.params;
         const memberRecord = await MemberService.findById(param);
+        res.send(memberRecord);
+    },
+    view: async (req, res, next) => {
+        const param = req.params;
+        const memberRecord = await MemberService.findDetailById(param);
         res.send(memberRecord);
     },
     update: async (req, res, next) => {

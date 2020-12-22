@@ -2,6 +2,7 @@ const Member = require("../models/memberSchema");
 const Family = require("../models/familySchema");
 const Code = require("../models/codeSchema");
 const Paginator = require("../middlewares/paginator");
+const { populate } = require("../models/memberSchema");
 
 module.exports = {
     save(param) {
@@ -14,24 +15,33 @@ module.exports = {
     async find(param) {
         const query = this.makeQuery(param);
         const memberRecord = await Member.find({ ...query.searchCondition })
+            .populate("family")
             .sort({ _id: -1 }) // descending
             .skip(query.pagingCondition.skip) // skip data order
             .limit(query.pagingCondition.limit) // size per a page
             .catch(e => console.error(e));
 
-        const result = await this.makeFamilyGroupList(memberRecord);
         const totalCount = await Member.countDocuments({ ...query.searchCondition }).catch(e => console.error(e));
         const paginator = new Paginator(totalCount, param.limit, param.page);
 
-        return { result, paginator };
+        return { result: memberRecord, paginator };
+    },
+
+    async findDetailById(param) {
+        const id = param.id;
+        const memberRecord = await Member.findById(id)
+            .populate({ path: "family", populate: "memberId" })
+            .populate({ path: "group", select: "name" })
+            .populate({ path: "position", select: "name" })
+            .populate({ path: "service", select: "name" });
+
+        return memberRecord;
     },
 
     async findById(param) {
         const id = param.id;
-        const memberRecord = await Member.findById(id).catch(e => console.error(e));
-        const result = await this.makeMemberData(memberRecord);
-
-        return result;
+        const memberRecord = await Member.findById(id).populate({ path: "family", populate: "memberId" });
+        return memberRecord;
     },
 
     async findByIdAndUpdate(param) {
@@ -75,62 +85,6 @@ module.exports = {
         }
         if (data.imagePath) {
             result.imagePath = data.imagePath;
-        }
-
-        return result;
-    },
-
-    // make family group
-    async makeMemberData(data) {
-        if (data.family) {
-            const familyRecord = await Family.findById(data.family).catch(e => console.error(e));
-
-            if (familyRecord) {
-                data.familyGroup = familyRecord.memberId;
-            }
-        }
-        if (data.group) {
-            const codeRecord = await Code.findById(data.group).catch(e => console.error(e));
-
-            if (codeRecord) {
-                data.group = codeRecord;
-            }
-        }
-        if (data.position) {
-            const codeRecord = await Code.findById(data.position).catch(e => console.error(e));
-
-            if (codeRecord) {
-                data.position = codeRecord;
-            }
-        }
-        if (data.service) {
-            const codeRecord = await Code.findById(data.service).catch(e => console.error(e));
-
-            if (codeRecord) {
-                data.service = codeRecord;
-            }
-        }
-
-        return data;
-    },
-
-    // make family group list
-    async makeFamilyGroupList(data) {
-        const result = [];
-
-        for (const item of data) {
-            // has no family
-            if (!item.family) {
-                result.push(item);
-                continue;
-            }
-            // has family
-            const family = await Family.findById(item.family).catch(e => console.error(e));
-
-            if (family) {
-                item.familyGroup = family.memberId;
-            }
-            result.push(item);
         }
 
         return result;

@@ -12,7 +12,7 @@ async function setValue() {
     if (!memberId) {
         return false;
     }
-    const member = await findMemberById(memberId);
+    const member = await findMemberDetailById(memberId);
 
     if (!member) {
         return false;
@@ -22,14 +22,16 @@ async function setValue() {
 
 /* set event */
 function setEvent() {
+    const memberId = getMemberId();
+
     document.getElementById("btnEdit").addEventListener("click", e => {
-        location.href = `/member/register?id=${getMemberId()}`;
+        location.href = `/member/register?id=${memberId}`;
     });
 }
 
 // get member by member id
-function findMemberById(id) {
-    return fetch(`/member/${id}`, {
+function findMemberDetailById(id) {
+    return fetch(`/member/view/${id}`, {
         method: "GET",
     })
         .then(response => {
@@ -72,19 +74,9 @@ async function setMemberValue(data) {
     document.getElementById("job").innerHTML = data.job;
     document.getElementById("email").innerHTML = data.email;
 
-    if (data.familyGroup) {
-        // get family group member info
-        const familyGroup = [];
-
-        for (const memberId of data.familyGroup) {
-            // except myself family info
-            if (data._id === memberId) {
-                continue;
-            }
-
-            const member = await findMemberById(memberId);
-            familyGroup.push(member);
-        }
+    if (data.family) {
+        // except myself family info
+        const familyGroup = data.family.memberId.filter(info => info._id !== data._id);
 
         // sort by birthday
         familyGroup.sort(function (a, b) {
@@ -94,7 +86,7 @@ async function setMemberValue(data) {
             if (a.birthday < b.birthday) {
                 return -1;
             }
-            // a must be equal to b
+            // "a" must be equal to "b"
             return 0;
         });
 

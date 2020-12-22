@@ -17,7 +17,6 @@ function setFamilyEvent() {
 }
 
 async function setFamilyValue() {
-    initFamilyInfo();
     const url = makeSearchParameter();
     const memberList = await findMemberList(url);
 
@@ -25,10 +24,6 @@ async function setFamilyValue() {
         setMemberTable(memberList);
         setPaging(memberList.paginator);
     }
-}
-
-function initFamilyInfo() {
-    //
 }
 
 async function setSelectedMemeber() {
@@ -41,7 +36,7 @@ async function setSelectedMemeber() {
 
 // get member list
 function findMemberList(url) {
-    return fetch("/member" + url.params.search, {
+    return fetch("/member/" + url.params.search, {
         method: "GET",
     })
         .then(response => {
@@ -86,7 +81,7 @@ function setMemberTable(data) {
         { data: "name", renderer: expands.identityRenderer },
         { data: "birthday", renderer: expands.ageRenderer },
         { data: "address1", className: "htLeft htMiddle" },
-        { data: "familyGroup", renderer: expands.familyGroupRenderer },
+        { data: "family", renderer: expands.familyGroupRenderer },
     ];
     // initialize container
     const container = document.getElementById("familyTable");
@@ -286,18 +281,8 @@ async function setFamilyGroup(data) {
     document.getElementById("title").innerHTML = titleFormatter(data);
     document.getElementById("title").dataset.id = data._id;
 
-    // get family group member info
-    const familyGroup = [];
-
-    for (const memberId of data.familyGroup) {
-        // except myself family info
-        if (data._id === memberId) {
-            continue;
-        }
-
-        const member = await findMemberById(memberId);
-        familyGroup.push(member);
-    }
+    // except myself family info
+    const familyGroup = data.family.memberId.filter(info => info._id !== data._id);
 
     // sort by birthday
     familyGroup.sort(function (a, b) {
@@ -395,7 +380,7 @@ async function addFamily(e) {
     if (family) {
         // check duplication member id
         const hasMemberId = family.memberId.indexOf(addId);
-
+        console.log(hasMemberId, family);
         // return when duplication member id is exist
         if (hasMemberId > -1) {
             alert("There is a same member in this family");

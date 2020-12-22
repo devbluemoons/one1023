@@ -142,8 +142,8 @@ export function defaultSettings(data, paginator, containerTop, colHeaders, colum
             // so we should set height property dynamically to suit each case
 
             // set browser max-height without scrolling
-            const paginationHeight = 75;
-            const maxHeight = window.innerHeight - containerTop - paginationHeight;
+            const pagingHeight = 75;
+            const maxHeight = window.innerHeight - containerTop - pagingHeight;
 
             const totalCount = Number(paginator.totalCount);
             const currentPage = Number(paginator.currentPage);

@@ -62,7 +62,7 @@ function setDataTable(data) {
         { data: "gender", renderer: expands.genderRenderer },
         { data: "birthday", renderer: expands.birthdayRenderer },
         { data: "birthday", renderer: expands.ageRenderer },
-        { data: "familyGroup", renderer: expands.familyGroupRenderer },
+        { data: "family", renderer: expands.familyGroupRenderer },
         { data: "married" },
         { data: "faithState" },
     ];
