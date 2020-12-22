@@ -113,24 +113,36 @@ export function flagRenderer(_instance, td, _row, _col, _prop, value, _cellPrope
 }
 
 // set handsonTable properties
-export function defaultSettings(data, paginator, offsetTop, colHeaders, columns) {
+export function defaultSettings(data, paginator, containerTop, colHeaders, columns) {
     return {
         data: data,
         columns: columns,
         colHeaders: colHeaders,
         columnHeaderHeight: 30,
-        rowHeaders: index => getPageInfo(paginator) + (index + 1),
         rowHeights: 30,
         readOnly: true,
+        stretchH: "all",
+        className: "htCenter htMiddle",
+        licenseKey: "non-commercial-and-evaluation",
+        afterGetRowHeader: function (col, TH) {
+            TH.className = "htMiddle";
+        },
+        afterGetColHeader: function (col, TH) {
+            TH.className = "htMiddle";
+        },
+        rowHeaders: function (index) {
+            return getPageInfo(paginator) + (index + 1);
+        },
         height: function () {
             // handsonTable doesn't provide max-height property
             // therefore must define fixed pixcel at height property
             // but there is a problem
             // pagination area is always placed after fixed height
-            // so I should set height property dynamically to suit each case
+            // so we should set height property dynamically to suit each case
 
             // set browser max-height without scrolling
-            const maxHeight = window.innerHeight - offsetTop - 135;
+            const paginationHeight = 75;
+            const maxHeight = window.innerHeight - containerTop - paginationHeight;
 
             const totalCount = Number(paginator.totalCount);
             const currentPage = Number(paginator.currentPage);
@@ -143,17 +155,8 @@ export function defaultSettings(data, paginator, offsetTop, colHeaders, columns)
             const totalRowHeight = currentRowsCount * (data.filter(item => item.imagePath).length > 0 ? 45 : 30);
             // set table height
             const tableHeight = totalRowHeight > maxHeight ? maxHeight : "auto";
-
+            // console.log(window.innerHeight, window.offsetTop);
             return tableHeight;
-        },
-        stretchH: "all",
-        className: "htCenter htMiddle",
-        licenseKey: "non-commercial-and-evaluation",
-        afterGetRowHeader: function (col, TH) {
-            TH.className = "htMiddle";
-        },
-        afterGetColHeader: function (col, TH) {
-            TH.className = "htMiddle";
         },
     };
 }

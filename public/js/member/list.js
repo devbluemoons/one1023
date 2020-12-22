@@ -57,7 +57,7 @@ function setDataTable(data) {
     const columns = [
         { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
         { data: "name", renderer: expands.memberDetailRenderer },
-        { data: this, renderer: expands.contactRenderer },
+        { data: null, renderer: expands.contactRenderer },
         { data: "address1", className: "htLeft htMiddle" },
         { data: "gender", renderer: expands.genderRenderer },
         { data: "birthday", renderer: expands.birthdayRenderer },
@@ -68,9 +68,12 @@ function setDataTable(data) {
     ];
 
     const container = document.getElementById("dataTable");
+    const positionInfo = container.getBoundingClientRect();
+    const containerTop = positionInfo.top;
+
     container.innerHTML = "";
 
-    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, container.offsetTop, colHeaders, columns));
+    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, containerTop, colHeaders, columns));
 }
 
 function searchMember(e) {

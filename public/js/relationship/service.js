@@ -294,9 +294,12 @@ function setServiceTable(data) {
     const columns = [{ data: "name", renderer: expands.identityRenderer }, { data: "valid", renderer: expands.conditionRenderer }, { data: "count" }, { data: this, renderer: expands.editRenderer }];
     // initialize container
     const container = document.getElementById("serviceTable");
+    const positionInfo = container.getBoundingClientRect();
+    const containerTop = positionInfo.top;
+
     container.innerHTML = "";
 
-    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, container.offsetTop, colHeaders, columns));
+    new Handsontable(container, expands.defaultSettings(data.result, data.paginator, containerTop, colHeaders, columns));
 }
 
 // set paging
