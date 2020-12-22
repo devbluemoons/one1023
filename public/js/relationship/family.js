@@ -281,28 +281,29 @@ async function setFamilyGroup(data) {
     document.getElementById("title").innerHTML = titleFormatter(data);
     document.getElementById("title").dataset.id = data._id;
 
-    // except myself family info
-    const familyGroup = data.family.memberId.filter(info => info._id !== data._id);
+    if (data.family) {
+        // except myself family info
+        const familyGroup = data.family.memberId.filter(info => info._id !== data._id);
 
-    // sort by birthday
-    familyGroup.sort(function (a, b) {
-        if (a.birthday > b.birthday) {
-            return 1;
-        }
-        if (a.birthday < b.birthday) {
-            return -1;
-        }
-        // a must be equal to b
-        return 0;
-    });
+        // sort by birthday
+        familyGroup.sort(function (a, b) {
+            if (a.birthday > b.birthday) {
+                return 1;
+            }
+            if (a.birthday < b.birthday) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
 
-    // set simple member info in family group
-    const defaultImage = "uploads/blank_profile.png";
-    const related = document.getElementById("related");
-    related.innerHTML = "";
+        // set simple member info in family group
+        const defaultImage = "uploads/blank_profile.png";
+        const related = document.getElementById("related");
+        related.innerHTML = "";
 
-    familyGroup.forEach(member => {
-        related.innerHTML += `
+        familyGroup.forEach(member => {
+            related.innerHTML += `
             <div class="col-3">
                 <div class="card text-center">
                     <div class="frame">
@@ -315,16 +316,17 @@ async function setFamilyGroup(data) {
                 </div>
             </div>
         `;
-    });
+        });
+
+        // set delete member in family group
+        document.querySelectorAll(".btn-close").forEach(member => {
+            member.addEventListener("click", deleteFamily);
+        });
+    }
 
     // set to same height and width
     // set vertical-align : middle
     common.setVerticalImage();
-
-    // set delete member in family group
-    document.querySelectorAll(".btn-close").forEach(member => {
-        member.addEventListener("click", deleteFamily);
-    });
 }
 
 function setSearchResult(data) {

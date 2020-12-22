@@ -65,9 +65,16 @@ async function setMemberValue(data) {
     document.getElementById("joinDate").innerHTML = joinDateFormatter(data.joinDate);
     document.getElementById("faithState").innerHTML = data.faithState;
     document.getElementById("baptism").innerHTML = data.baptism || "";
-    document.getElementById("group").innerHTML = data.group ? data.group.name : "";
-    document.getElementById("position").innerHTML = data.position ? data.position.name : "";
-    document.getElementById("service").innerHTML = data.service ? data.service.name : "";
+
+    if (data.group) {
+        document.getElementById("group").innerHTML = data.group.name;
+    }
+    if (data.position) {
+        document.getElementById("position").innerHTML = data.position.name;
+    }
+    if (data.service) {
+        document.getElementById("service").innerHTML = data.service.name;
+    }
 
     document.getElementById("gender").innerHTML = genderFormatter(data.gender);
     document.getElementById("married").innerHTML = marriedFormatter(data.married);
@@ -109,11 +116,11 @@ async function setMemberValue(data) {
                 </div>
             `;
         });
-
-        // set to same height and width
-        // set vertical-align : middle
-        common.setVerticalImage();
     }
+
+    // set to same height and width
+    // set vertical-align : middle
+    common.setVerticalImage();
 }
 
 /* formatter */
