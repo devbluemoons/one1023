@@ -97,14 +97,15 @@ export function conditionRenderer(_instance, td, _row, _col, _prop, value, _cell
 }
 
 export function familyGroupRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
-    if (value) {
-        // when each cell has not any value
-        // cell value will be filled random value
-        // so must fill empty string value in each cell if value is empty
-        const count = value.length > 0 ? value.length - 1 : "";
-        Handsontable.renderers.HtmlRenderer.apply(this, arguments);
-        Handsontable.dom.fastInnerHTML(td, count);
-    }
+    // when each cell has not any value
+    // cell value will be filled random value
+    // so must fill empty string value in each cell if value is empty
+
+    const _id = _instance.getDataAtRowProp(_row, "_id");
+    const count = value && value.memberId ? value.memberId.filter(info => info !== _id).length : "";
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, count);
 }
 
 export function flagRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
