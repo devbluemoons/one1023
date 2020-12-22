@@ -4,12 +4,18 @@ const { Schema } = mongoose;
 
 const familySchema = new Schema(
     {
-        memberId: {
-            type: Array,
-            unique: true,
-            required: true,
+        memberId: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Member",
+                required: true,
+            },
+        ],
+        updatedId: {
+            type: Schema.Types.ObjectId,
+            ref: "Member",
+            // required: true,
         },
-        updatedId: String,
     },
     {
         timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },

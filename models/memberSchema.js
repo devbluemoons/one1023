@@ -64,9 +64,6 @@ const memberSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "Family",
         },
-        familyGroup: {
-            type: Array,
-        },
         email: {
             type: String,
         },
