@@ -156,7 +156,7 @@ export function defaultSettings(data, paginator, containerTop, colHeaders, colum
             const totalRowHeight = currentRowsCount * (data.filter(item => item.imagePath).length > 0 ? 45 : 30);
             // set table height
             const tableHeight = totalRowHeight > maxHeight ? maxHeight : "auto";
-            // console.log(window.innerHeight, window.offsetTop);
+
             return tableHeight;
         },
     };

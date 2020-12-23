@@ -34,7 +34,7 @@ module.exports = {
             .populate({ path: "group", select: "name" })
             .populate({ path: "position", select: "name" })
             .populate({ path: "service", select: "name" });
-        console.log(memberRecord);
+
         return memberRecord;
     },
 
@@ -124,6 +124,9 @@ module.exports = {
         }
         if (query.service) {
             searchCondition.service = query.service;
+        }
+        if (query.school) {
+            searchCondition.school = query.school;
         }
 
         // set paging parameter

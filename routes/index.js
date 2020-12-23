@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 /* GET page. */
 router.get("/", function (req, res, next) {
-    res.render("index", { title: "Express" });
+    res.render("login", { layout: false });
 });
 router.get("/member/register", function (req, res, next) {
     res.render("pages/member/register");

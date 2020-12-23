@@ -350,7 +350,6 @@ function setCalendar() {
             calendarModal.show();
         },
         datesSet: async info => {
-            console.log(info);
             //set search period
             const startDt = info.startStr.substr(0, 10);
             const endDt = info.endStr.substr(0, 10);

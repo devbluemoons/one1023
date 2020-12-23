@@ -241,7 +241,6 @@ function createSchool(data) {
 }
 
 async function setSchoolDetail(data) {
-    console.log(data);
     const schoolList = data.result;
     // sort by birthday
     schoolList.sort(function (a, b) {
