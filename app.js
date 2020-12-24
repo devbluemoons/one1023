@@ -3,12 +3,13 @@
 const createError = require("http-errors");
 const express = require("express");
 const layouts = require("express-ejs-layouts");
-const path = require("path");
 const cookieParser = require("cookie-parser");
+const connectFlash = require("connect-flash");
+const expressSession = require("express-session");
 const logger = require("morgan");
+const path = require("path");
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/usersRoute");
 
 const app = express();
 
@@ -23,11 +24,29 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(cookieParser("secret_passcode"));
+app.use(
+    expressSession({
+        secret: "secret_passcode",
+        cookie: {
+            maxAge: 4000000,
+        },
+        resave: false,
+        saveUninitialized: false,
+    })
+);
+app.use(connectFlash());
+app.use((req, res, next) => {
+    // res.locals.loggedIn = req.isAuthenticated();
+    // res.locals.currentUser = req.user;
+    res.locals.flashMessages = req.flash();
+    next();
+});
+
 // image directory
 app.use("/uploads", express.static("uploads"));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

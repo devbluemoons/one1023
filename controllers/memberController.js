@@ -2,6 +2,15 @@ const MemberService = require("../service/memberService");
 const uploadFile = require("../middlewares/uploadFile");
 
 module.exports = {
+    register: (req, res, next) => {
+        res.render("pages/member/register");
+    },
+    list: (req, res, next) => {
+        res.render("pages/member/list");
+    },
+    view: (req, res, next) => {
+        res.render("pages/member/view");
+    },
     create: async (req, res, next) => {
         // upload File
         await uploadFile(req, res);
@@ -14,7 +23,7 @@ module.exports = {
         const memberRecord = await MemberService.save(param);
         res.send(memberRecord);
     },
-    list: async (req, res, next) => {
+    find: async (req, res, next) => {
         const param = req.query;
         const memberRecord = await MemberService.find(param);
         res.send(memberRecord);
@@ -24,7 +33,7 @@ module.exports = {
         const memberRecord = await MemberService.findById(param);
         res.send(memberRecord);
     },
-    view: async (req, res, next) => {
+    detail: async (req, res, next) => {
         const param = req.params;
         const memberRecord = await MemberService.findDetailById(param);
         res.send(memberRecord);
