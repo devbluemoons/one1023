@@ -1,3 +1,5 @@
+"use strict";
+
 import * as common from "./../common.js";
 
 window.addEventListener("DOMContentLoaded", e => {

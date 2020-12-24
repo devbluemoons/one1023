@@ -1,8 +1,7 @@
+"use strict";
+
 const Member = require("../models/memberSchema");
-const Family = require("../models/familySchema");
-const Code = require("../models/codeSchema");
 const Paginator = require("../middlewares/paginator");
-const { populate } = require("../models/memberSchema");
 
 module.exports = {
     save(param) {

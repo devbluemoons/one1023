@@ -1,3 +1,5 @@
+"use strict";
+
 const Calendar = require("../models/calendarSchema");
 
 module.exports = {

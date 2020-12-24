@@ -1,3 +1,5 @@
+"use strict";
+
 const Code = require("../models/codeSchema");
 const Member = require("../models/memberSchema");
 const Paginator = require("../middlewares/paginator");

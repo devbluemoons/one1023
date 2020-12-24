@@ -1,3 +1,5 @@
+"use strict";
+
 export class Pagination {
     constructor(pagination) {
         this.pagination = pagination;

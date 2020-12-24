@@ -1,3 +1,5 @@
+"use strict";
+
 const createError = require("http-errors");
 const express = require("express");
 const layouts = require("express-ejs-layouts");

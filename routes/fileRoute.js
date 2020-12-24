@@ -1,3 +1,5 @@
+"use strict";
+
 const router = require("express").Router();
 const multer = require("multer");
 const fileController = require("../controllers/fileController");

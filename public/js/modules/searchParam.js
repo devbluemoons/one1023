@@ -1,3 +1,5 @@
+"use strict";
+
 export class SearchParam {
     constructor(currentPage, formData, limit) {
         this.params = new URL(document.URL);

@@ -1,3 +1,5 @@
+"use strict";
+
 export function getAddress(layer) {
     new daum.Postcode({
         oncomplete: function (data) {

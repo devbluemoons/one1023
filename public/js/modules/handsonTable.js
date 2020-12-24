@@ -1,8 +1,4 @@
-////////////////////
-//                //
-//  handsonTable  //
-//                //
-////////////////////
+"use strict";
 
 /* renderer */
 export function imageRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {

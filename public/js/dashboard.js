@@ -1,3 +1,5 @@
+"use strict";
+
 document.addEventListener("DOMContentLoaded", async function () {
     await setValue();
     await setEvent();

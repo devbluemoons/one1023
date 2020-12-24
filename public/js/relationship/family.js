@@ -1,3 +1,5 @@
+"use strict";
+
 import * as expands from "../modules/handsonTable.js";
 import { Pagination } from "../modules/pagination.js";
 import { SearchParam } from "../modules/searchParam.js";

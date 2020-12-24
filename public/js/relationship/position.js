@@ -1,3 +1,5 @@
+"use strict";
+
 import { Pagination } from "../modules/pagination.js";
 import * as expands from "../modules/handsonTable.js";
 import * as common from "../common.js";

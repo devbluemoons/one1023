@@ -1,3 +1,5 @@
+"use strict";
+
 const Family = require("../models/familySchema");
 
 module.exports = {

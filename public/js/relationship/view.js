@@ -1,3 +1,5 @@
+"use strict";
+
 window.addEventListener("DOMContentLoaded", e => {
     // active tab (default: first tab)
     document.querySelector("#nav-tab a:first-child").dispatchEvent(new Event("click"));
