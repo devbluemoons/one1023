@@ -30,6 +30,11 @@ module.exports = {
         const memberRecord = await MemberService.find(param);
         res.send(memberRecord);
     },
+    findAll: async (req, res, next) => {
+        const param = req.query;
+        const memberRecord = await MemberService.findAll();
+        res.send(memberRecord);
+    },
     findById: async (req, res, next) => {
         const param = req.params;
         const memberRecord = await MemberService.findById(param);

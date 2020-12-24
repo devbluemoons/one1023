@@ -11,6 +11,12 @@ module.exports = {
             .catch(e => console.error(e));
     },
 
+    findAll() {
+        return Member.find()
+            .populate("family")
+            .catch(e => console.error(e));
+    },
+
     async find(param) {
         const query = this.makeQuery(param);
         const memberRecord = await Member.find({ ...query.searchCondition })

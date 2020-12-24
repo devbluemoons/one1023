@@ -59,7 +59,7 @@ function makeSearchParameter() {
 
 // get member one
 function findMemberOne(id) {
-    return fetch(`/member/${id}`, {
+    return fetch(`/member/${id}/one`, {
         method: "GET",
     })
         .then(response => {
@@ -114,7 +114,7 @@ async function setFamilyInfo(e) {
 }
 
 function findMemberById(id) {
-    return fetch(`/member/${id}`, {
+    return fetch(`/member/${id}/one`, {
         method: "GET",
     })
         .then(response => {

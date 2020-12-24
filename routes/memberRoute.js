@@ -8,8 +8,9 @@ router.get("/list", controller.list);
 router.get("/view", controller.view);
 
 router.get("/", controller.find);
-router.get("/:id", controller.findById);
-router.get("/view/:id", controller.detail);
+router.get("/all", controller.findAll);
+router.get("/:id/one", controller.findById);
+router.get("/:id/detail", controller.detail);
 router.post("/", controller.create);
 router.put("/", controller.update);
 

@@ -33,7 +33,7 @@ function setEvent() {
 
 // get member by member id
 function findMemberDetailById(id) {
-    return fetch(`/member/view/${id}`, {
+    return fetch(`/member/${id}/detail`, {
         method: "GET",
     })
         .then(response => {

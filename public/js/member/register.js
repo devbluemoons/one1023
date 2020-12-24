@@ -68,7 +68,7 @@ function setDaumPostCode() {
 // get member list
 function findMemberOne(id) {
     // find one member information
-    return fetch(`/member/${id}`, {
+    return fetch(`/member/${id}/one`, {
         method: "GET",
     })
         .then(response => {

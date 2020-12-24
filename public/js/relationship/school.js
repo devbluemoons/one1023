@@ -111,7 +111,7 @@ async function addSchool(e) {
 
 // get member by member id
 function findMemberById(id) {
-    return fetch(`/member/${id}`, {
+    return fetch(`/member/${id}/one`, {
         method: "GET",
     })
         .then(response => {
