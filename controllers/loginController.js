@@ -7,13 +7,12 @@ module.exports = {
         res.render("login", { layout: false });
     },
     authenticate: (req, res, next) => {
-        console.log(req.body);
-        console.log(req.locals);
-        // req.flash("test");
-        // res.locals.redirect = "/member/list";
-        // next();
+        res.locals.redirect = "/member/list";
+        next();
     },
-    view: (req, res, next) => {
-        res.render("login", { layout: false });
+    redirectView: (req, res, next) => {
+        const redirectPath = res.locals.redirect;
+        if (redirectPath) res.redirect(redirectPath);
+        else next();
     },
 };

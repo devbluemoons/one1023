@@ -2,13 +2,13 @@
 
 const router = require("express").Router();
 
-const loginRoute = require("./login");
-const fileRoute = require("./file");
-const calendarRoute = require("./calendar");
-const memberRoute = require("./member");
-const familyRoute = require("./family");
-const codeRoute = require("./code");
-const relationshipRoute = require("./relationship");
+const loginRoute = require("./loginRoute");
+const fileRoute = require("./fileRoute");
+const calendarRoute = require("./calendarRoute");
+const memberRoute = require("./memberRoute");
+const familyRoute = require("./familyRoute");
+const codeRoute = require("./codeRoute");
+const relationshipRoute = require("./relationshipRoute");
 
 router.use("/login", loginRoute);
 router.use("/file", fileRoute);

@@ -1,13 +1,13 @@
 "use strict";
 
-const router = require("express").Router();
 const multer = require("multer");
-const fileController = require("../controllers/fileController");
+const router = require("express").Router();
+const controller = require("../controllers/fileController");
 
-router.post("/upload", uploadSingleFile(), fileController.upload);
-router.get("/find", fileController.find);
-router.put("/replace", fileController.replace);
-router.delete("/delete", fileController.delete);
+router.post("/upload", uploadSingleFile(), controller.upload);
+router.get("/find", controller.find);
+router.put("/replace", controller.replace);
+router.delete("/delete", controller.delete);
 
 module.exports = router;
 
