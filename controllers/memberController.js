@@ -1,3 +1,5 @@
+"use strict";
+
 const MemberService = require("../service/memberService");
 const uploadFile = require("../middlewares/uploadFile");
 

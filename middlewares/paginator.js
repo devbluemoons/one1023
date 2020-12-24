@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = class Paginator {
     constructor(totalCount, limit, currentPage) {
         // range size

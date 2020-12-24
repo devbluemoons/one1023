@@ -1,3 +1,5 @@
+"use strict";
+
 const CalendarService = require("../service/calendarService");
 
 module.exports = {

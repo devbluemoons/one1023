@@ -1,4 +1,6 @@
-const util = require("util");
+"use strict";
+
+const Util = require("util");
 const multer = require("multer");
 const maxSize = 10 * 1024 * 1024;
 
@@ -22,5 +24,5 @@ const uploadFile = multer({
     limits: { fileSize: maxSize },
 }).single("imageFile");
 
-const uploadFileMiddleware = util.promisify(uploadFile);
+const uploadFileMiddleware = Util.promisify(uploadFile);
 module.exports = uploadFileMiddleware;

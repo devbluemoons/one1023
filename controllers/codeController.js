@@ -1,3 +1,5 @@
+"use strict";
+
 const CodeService = require("../service/codeService");
 
 module.exports = {

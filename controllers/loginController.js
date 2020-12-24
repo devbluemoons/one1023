@@ -1,3 +1,5 @@
+"use strict";
+
 const LoginService = require("../service/loginService");
 
 module.exports = {
@@ -6,9 +8,12 @@ module.exports = {
     },
     authenticate: (req, res, next) => {
         console.log(req.body);
-
-        req.flash("test");
-        res.locals.redirect = "/member/list";
-        next();
+        console.log(req.locals);
+        // req.flash("test");
+        // res.locals.redirect = "/member/list";
+        // next();
+    },
+    view: (req, res, next) => {
+        res.render("login", { layout: false });
     },
 };

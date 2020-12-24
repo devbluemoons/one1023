@@ -283,6 +283,9 @@ async function setFamilyGroup(data) {
     document.getElementById("title").innerHTML = titleFormatter(data);
     document.getElementById("title").dataset.id = data._id;
 
+    const related = document.getElementById("related");
+    related.innerHTML = "";
+
     if (data.family) {
         // except myself family info
         const familyGroup = data.family.memberId.filter(info => info._id !== data._id);
@@ -301,8 +304,6 @@ async function setFamilyGroup(data) {
 
         // set simple member info in family group
         const defaultImage = "uploads/blank_profile.png";
-        const related = document.getElementById("related");
-        related.innerHTML = "";
 
         familyGroup.forEach(member => {
             related.innerHTML += `

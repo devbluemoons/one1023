@@ -2,17 +2,6 @@
 
 const router = require("express").Router();
 
-router.get("/", function (req, res, next) {
-    // get session
-    const session = req.session.loggedIn;
-
-    if (session) {
-        res.render("dashboard");
-    } else {
-        res.render("login", { layout: false });
-    }
-});
-
 const loginRoute = require("./login");
 const fileRoute = require("./file");
 const calendarRoute = require("./calendar");
@@ -28,5 +17,13 @@ router.use("/member", memberRoute);
 router.use("/family", familyRoute);
 router.use("/code", codeRoute);
 router.use("/relationship", relationshipRoute);
+
+router.get("/", function (req, res, next) {
+    if (req.session.loggedIn) {
+        res.render("dashboard");
+    } else {
+        res.render("login", { layout: false });
+    }
+});
 
 module.exports = router;

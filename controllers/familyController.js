@@ -1,3 +1,5 @@
+"use strict";
+
 const FamilyService = require("../service/familyService");
 
 module.exports = {

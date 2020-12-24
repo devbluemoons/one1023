@@ -1,4 +1,5 @@
-// file Shema
+"use strict";
+
 const File = require("../models/fileSchema");
 
 module.exports = {
