@@ -1,4 +1,6 @@
 <!-- bootstrap -->
+<link rel="shortcut icon" href="#" />
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" />
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
 
@@ -84,7 +86,18 @@
             headers: { "Content-Type": "application/json" },
             method: "POST",
             body: JSON.stringify(param),
-        });
+        })
+            .then(response => {
+                if (!response.ok) {
+                    new Error(response.status);
+                }
+                if (response.redirected) {
+                    location.href = response.url;
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     function maxLengthCheck(object) {

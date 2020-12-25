@@ -1,8 +1,8 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", async function () {
-    await setValue();
-    await setEvent();
+document.addEventListener("DOMContentLoaded", function () {
+    setValue();
+    setEvent();
 });
 
 const calendarModalEl = document.getElementById("calendarModal");
@@ -176,12 +176,12 @@ async function setGenerationRatioChart() {
 }
 
 async function setMenWomenRatioChart() {
-    const memberList = await findMemberList();
+    const memberList = await findAllMemberList();
 
     // caculation of all generation
-    const men = memberList.result.filter(i => i.gender === "M");
-    const women = memberList.result.filter(i => i.gender === "W");
-    const totalCount = memberList.paginator.totalCount;
+    const men = memberList.filter(i => i.gender === "M");
+    const women = memberList.filter(i => i.gender === "W");
+    const totalCount = memberList.length;
 
     const menRatio = Math.round((men.length * 100) / totalCount);
     const womenRatio = Math.round((women.length * 100) / totalCount);
@@ -226,7 +226,7 @@ async function setMenWomenRatioChart() {
 }
 
 async function getValuesForGeneration() {
-    const memberList = await findMemberList();
+    const memberList = await findAllMemberList();
 
     const labels = ["very young", "teenager", "twenties", "thirties", "forties", "fifties", "sixties", "seventies", "eighties", "nineties", "centenary"];
     const backgroundColor = [
@@ -243,11 +243,11 @@ async function getValuesForGeneration() {
     ];
 
     // caculation of all generation
-    const allBirthYears = memberList.result.map(i => Number(i.birthday.substr(0, 4)));
-    const menBirthYears = memberList.result.filter(i => i.gender === "M").map(i => Number(i.birthday.substr(0, 4)));
-    const womenBirthYears = memberList.result.filter(i => i.gender === "W").map(i => Number(i.birthday.substr(0, 4)));
+    const allBirthYears = memberList.map(i => Number(i.birthday.substr(0, 4)));
+    const menBirthYears = memberList.filter(i => i.gender === "M").map(i => Number(i.birthday.substr(0, 4)));
+    const womenBirthYears = memberList.filter(i => i.gender === "W").map(i => Number(i.birthday.substr(0, 4)));
 
-    const totalCount = memberList.paginator.totalCount;
+    const totalCount = memberList.length;
     const thisYear = new Date().getFullYear();
 
     const allGeneration = [];
@@ -276,10 +276,9 @@ async function getValuesForGeneration() {
     };
 }
 
-// get member list
-function findMemberList() {
-    // create member information
-    return fetch("/member", {
+// get all member list
+function findAllMemberList() {
+    return fetch("/member/all", {
         method: "GET",
     })
         .then(response => {

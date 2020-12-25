@@ -1,15 +1,20 @@
 "use strict";
 
+// use dotenv
+require("dotenv").config();
+
 const createError = require("http-errors");
 const express = require("express");
 const layouts = require("express-ejs-layouts");
 const cookieParser = require("cookie-parser");
 const connectFlash = require("connect-flash");
 const expressSession = require("express-session");
-const logger = require("morgan");
+const passport = require("passport");
 const path = require("path");
+const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
+const Admin = require("./models/adminSchema");
 
 const app = express();
 
@@ -24,10 +29,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(cookieParser("secret_passcode"));
+// app.use(cookieParser(`${process.env.SECRET_KEY}`));
 app.use(
     expressSession({
-        secret: "secret_passcode",
+        secret: `${process.env.SECRET_KEY}`,
         cookie: {
             maxAge: 4000000,
         },
@@ -37,11 +42,17 @@ app.use(
 );
 app.use(connectFlash());
 app.use((req, res, next) => {
-    // res.locals.loggedIn = req.isAuthenticated();
-    // res.locals.currentUser = req.user;
+    res.locals.loggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
     res.locals.flashMessages = req.flash();
     next();
 });
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(Admin.createStrategy());
+passport.serializeUser(Admin.serializeUser());
+passport.deserializeUser(Admin.deserializeUser());
 
 // image directory
 app.use("/uploads", express.static("uploads"));
@@ -72,11 +83,7 @@ module.exports = app;
 //               //
 ///////////////////
 
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-
-// use dotenv
-dotenv.config();
 
 // use native Promise of nodejs
 mongoose.Promise = global.Promise;

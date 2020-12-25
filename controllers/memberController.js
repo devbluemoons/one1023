@@ -13,6 +13,7 @@ module.exports = {
     view: (req, res, next) => {
         res.render("pages/member/view");
     },
+
     create: async (req, res, next) => {
         // upload File
         await uploadFile(req, res);
@@ -31,7 +32,6 @@ module.exports = {
         res.send(memberRecord);
     },
     findAll: async (req, res, next) => {
-        const param = req.query;
         const memberRecord = await MemberService.findAll();
         res.send(memberRecord);
     },

@@ -1,18 +1,37 @@
 "use strict";
 
-const LoginService = require("../service/loginService");
+const passport = require("passport");
 
 module.exports = {
     login: (req, res, next) => {
         res.render("login", { layout: false });
     },
-    authenticate: (req, res, next) => {
-        res.locals.redirect = "/member/list";
+
+    authenticate: passport.authenticate("local", {
+        failureRedirect: "/",
+        failureFlash: "Failed to login.",
+        successRedirect: "/dashboard",
+        successFlash: "Logged in!",
+    }),
+
+    isAuthenticated: (req, res, next) => {
+        if (req.isAuthenticated()) {
+            next();
+        } else {
+            res.status(301).redirect("/login");
+        }
+    },
+
+    logout: (req, res, next) => {
+        req.logout();
+        req.flash("success", "You have been logged out!");
+        res.locals.redirect = "/";
         next();
     },
+
     redirectView: (req, res, next) => {
-        const redirectPath = res.locals.redirect;
-        if (redirectPath) res.redirect(redirectPath);
+        let redirectPath = res.locals.redirect;
+        if (redirectPath !== undefined) res.redirect(redirectPath);
         else next();
     },
 };
