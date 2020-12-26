@@ -15,7 +15,9 @@ module.exports = {
     }),
 
     isAuthenticated: (req, res, next) => {
+        console.log("@@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@");
         if (req.isAuthenticated()) {
+            res.locals.redirect = "/dashboard";
             next();
         } else {
             res.status(301).redirect("/login");

@@ -8,7 +8,7 @@ const express = require("express");
 const layouts = require("express-ejs-layouts");
 const cookieParser = require("cookie-parser");
 const connectFlash = require("connect-flash");
-const expressSession = require("express-session");
+const session = require("express-session");
 const passport = require("passport");
 const path = require("path");
 const logger = require("morgan");
@@ -29,10 +29,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use(cookieParser(`${process.env.SECRET_KEY}`));
+app.use(cookieParser(process.env.SECRET_KEY));
 app.use(
-    expressSession({
-        secret: `${process.env.SECRET_KEY}`,
+    session({
+        secret: process.env.SECRET_KEY,
         cookie: {
             maxAge: 4000000,
         },
