@@ -3,8 +3,8 @@
 const passport = require("passport");
 
 module.exports = {
-    login: (req, res, next) => {
-        res.render("login", { layout: false });
+    main: (req, res, next) => {
+        res.render("dashboard");
     },
 
     authenticate: passport.authenticate("local", {
@@ -13,16 +13,6 @@ module.exports = {
         successRedirect: "/dashboard",
         successFlash: "Logged in!",
     }),
-
-    isAuthenticated: (req, res, next) => {
-        console.log("@@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@ @@@");
-        if (req.isAuthenticated()) {
-            res.locals.redirect = "/dashboard";
-            next();
-        } else {
-            res.status(301).redirect("/login");
-        }
-    },
 
     logout: (req, res, next) => {
         req.logout();

@@ -57,7 +57,20 @@ passport.deserializeUser(Admin.deserializeUser());
 // image directory
 app.use("/uploads", express.static("uploads"));
 
-app.use("/", indexRouter);
+// check all route path is authenticated
+const authenticateUser = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.status(301).redirect("/login");
+    }
+};
+
+app.use("/login", (req, res, next) => {
+    res.render("login", { layout: false });
+});
+
+app.use("/", authenticateUser, indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

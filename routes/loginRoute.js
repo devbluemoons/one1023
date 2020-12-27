@@ -3,9 +3,8 @@
 const router = require("express").Router();
 const controller = require("../controllers/loginController");
 
-router.get("/", controller.isAuthenticated, controller.redirectView);
+router.get("/", controller.main);
 router.post("/login", controller.authenticate);
-router.get("/login", controller.login);
 router.get("/logout", controller.logout, controller.redirectView);
 
 module.exports = router;
