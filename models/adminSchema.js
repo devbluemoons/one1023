@@ -13,12 +13,9 @@ const adminSchema = new Schema(
             required: true,
         },
         contact: {
-            type: Number,
-            required: true,
-        },
-        password: {
             type: String,
-            require: true,
+            required: true,
+            unique: true,
         },
         question: {
             type: String,

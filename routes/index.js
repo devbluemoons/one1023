@@ -1,5 +1,6 @@
 "use strict";
 
+const loginController = require("../controllers/loginController");
 const router = require("express").Router();
 
 const loginRoute = require("./loginRoute");
@@ -10,7 +11,15 @@ const familyRoute = require("./familyRoute");
 const codeRoute = require("./codeRoute");
 const relationshipRoute = require("./relationshipRoute");
 
-router.use("/", loginRoute);
+router.get("/login", (req, res, next) => {
+    if (req.isAuthenticated()) {
+        res.redirect("/");
+    } else {
+        res.render("login", { layout: false });
+    }
+});
+
+router.use("/", loginController.isAuthenticated, loginRoute);
 router.use("/file", fileRoute);
 router.use("/calendar", calendarRoute);
 router.use("/member", memberRoute);

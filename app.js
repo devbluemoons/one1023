@@ -40,13 +40,8 @@ app.use(
         saveUninitialized: false,
     })
 );
+
 app.use(connectFlash());
-app.use((req, res, next) => {
-    res.locals.loggedIn = req.isAuthenticated();
-    res.locals.currentUser = req.user;
-    res.locals.flashMessages = req.flash();
-    next();
-});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,23 +49,18 @@ passport.use(Admin.createStrategy());
 passport.serializeUser(Admin.serializeUser());
 passport.deserializeUser(Admin.deserializeUser());
 
+app.use((req, res, next) => {
+    res.locals.loggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
+    res.locals.flashMessages = req.flash();
+    next();
+});
+
 // image directory
 app.use("/uploads", express.static("uploads"));
 
-// check all route path is authenticated
-const authenticateUser = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(301).redirect("/login");
-    }
-};
-
-app.use("/login", (req, res, next) => {
-    res.render("login", { layout: false });
-});
-
-app.use("/", authenticateUser, indexRouter);
+// router
+app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

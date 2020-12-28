@@ -21,7 +21,8 @@
     #divLogin {
         background-color: #ffffff;
         color: #666666;
-        max-width: 350px;
+        min-width: 300px;
+        max-width: 300px;
     }
     .btn-primary {
         background-color: #1976d2 !important;
@@ -50,6 +51,13 @@
                     <div class="col-12">
                         <button class="btn btn-primary btn-block" type="button" id="btnLogin">Login</button>
                     </div>
+                    <% if(flashMessages){ %> <% if(flashMessages.failureFlash){ %>
+                    <div class="col pt-3">
+                        <div class="alert alert-danger">
+                            <strong> <%= flashMessages.failureFlash %> </strong>
+                        </div>
+                    </div>
+                    <% } %> <% } %>
                 </div>
                 <div class="row">
                     <div class="col pt-3">
