@@ -22,7 +22,7 @@ module.exports = {
 
     isAuthenticated: (req, res, next) => {
         // valid login status
-        if (Object.entries(req.body).length) {
+        if (req.body && req.body.contact && req.body.password) {
             validLogin(req, res, next);
         } else if (req.isAuthenticated()) {
             next();
@@ -75,9 +75,7 @@ async function validLogin(req, res, next) {
                 }
             });
         }
-    } else if (req.body.contact && req.body.password) {
-        next();
     } else {
-        res.status(301).redirect("/login");
+        next();
     }
 }

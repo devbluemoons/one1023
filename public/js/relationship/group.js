@@ -388,8 +388,7 @@ async function deleteGroupMember(e) {
     const member = await findMemberById(memberId);
 
     if (member) {
-        member.group = null;
-
+        delete member.group;
         await updateMember(member);
 
         // re-render table

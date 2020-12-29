@@ -6,6 +6,7 @@ const Paginator = require("../middlewares/paginator");
 module.exports = {
     save(param) {
         const formData = this.makeFormData(param);
+
         return Member(formData)
             .save()
             .catch(e => console.error(e));
@@ -74,15 +75,14 @@ module.exports = {
             email: data.email,
             job: data.job,
             baptism: data.baptism,
-            group: data.group,
-            position: data.position,
-            service: data.service,
             attendance: data.attendance,
-        };
 
-        if (data.family) {
-            result.family = data.family;
-        }
+            // ref field
+            family: data.family || null,
+            group: data.group || null,
+            position: data.position || null,
+            service: data.service || null,
+        };
 
         if (data._id) {
             result._id = data._id;

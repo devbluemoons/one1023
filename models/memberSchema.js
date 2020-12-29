@@ -64,6 +64,7 @@ const memberSchema = new Schema(
         family: {
             type: Schema.Types.ObjectId,
             ref: "Family",
+            default: null,
         },
         email: {
             type: String,
@@ -77,14 +78,17 @@ const memberSchema = new Schema(
         group: {
             type: Schema.Types.ObjectId,
             ref: "Code",
+            default: null,
         },
         position: {
             type: Schema.Types.ObjectId,
             ref: "Code",
+            default: null,
         },
         service: {
             type: Schema.Types.ObjectId,
             ref: "Code",
+            default: null,
         },
         attendence: {
             type: String,
@@ -96,6 +100,7 @@ const memberSchema = new Schema(
             {
                 type: Schema.Types.ObjectId,
                 ref: "Member",
+                default: null,
             },
         ],
     },

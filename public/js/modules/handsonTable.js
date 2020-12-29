@@ -97,6 +97,8 @@ export function familyGroupRenderer(_instance, td, _row, _col, _prop, value, _ce
     // cell value will be filled random value
     // so must fill empty string value in each cell if value is empty
 
+    // if (value.memberId) console.log(value);
+
     const _id = _instance.getDataAtRowProp(_row, "_id");
     const count = value && value.memberId ? value.memberId.filter(info => info !== _id).length : "";
 

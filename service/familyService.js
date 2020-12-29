@@ -17,6 +17,6 @@ module.exports = {
         return Family.findByIdAndUpdate(param._id, param, { new: true }).catch(e => console.error(e));
     },
     findByIdAndDelete(param) {
-        return Family.findByIdAndDelete({ _id: req.body._id }).catch(e => console.error(e));
+        return Family.findByIdAndDelete({ _id: param._id }).catch(e => console.error(e));
     },
 };

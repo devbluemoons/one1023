@@ -388,7 +388,7 @@ async function deletePositionMember(e) {
     const member = await findMemberById(memberId);
 
     if (member) {
-        member.position = null;
+        delete member.position;
 
         await updateMember(member);
 

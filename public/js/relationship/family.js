@@ -206,20 +206,19 @@ async function deleteFamily(e) {
         const family = await findFamilyByMemberId(memberId);
 
         if (family) {
-            // set to delete memberid from family group
-            const idx = family.memberId.findIndex(item => item === memberId);
-            family.memberId.splice(idx, 1);
+            // set to delete member id from family group
+            family.memberId = family.memberId.filter(item => item._id !== memberId);
 
             // delete member id from family group
-            const updatedFamily = await updateFamily(family);
-
+            await updateFamily(family);
             // delete family group when there is one member in family group
-            if (updatedFamily && updatedFamily.memberId.length === 1) {
-                deleteFamilyGroup(updatedFamily);
+            if (family && family.memberId.length === 1) {
+                console.log(family);
+                deleteFamilyGroup(family);
             }
             // delete family id from family field of member Schema
             const member = await findMemberById(memberId);
-            member.family = null;
+            delete member.family;
 
             await updateMember(member);
         }

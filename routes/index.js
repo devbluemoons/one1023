@@ -10,6 +10,7 @@ const memberRoute = require("./memberRoute");
 const familyRoute = require("./familyRoute");
 const codeRoute = require("./codeRoute");
 const relationshipRoute = require("./relationshipRoute");
+const systemRoute = require("./systemRoute");
 
 router.get("/login", (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -20,12 +21,14 @@ router.get("/login", (req, res, next) => {
     }
 });
 
-router.use("/", loginController.isAuthenticated, loginRoute);
+// router.use("/", loginController.isAuthenticated, loginRoute);
+router.use("/", loginRoute);
 router.use("/file", fileRoute);
 router.use("/calendar", calendarRoute);
 router.use("/member", memberRoute);
 router.use("/family", familyRoute);
 router.use("/code", codeRoute);
 router.use("/relationship", relationshipRoute);
+router.use("/system", systemRoute);
 
 module.exports = router;
