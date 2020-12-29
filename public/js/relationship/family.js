@@ -38,39 +38,15 @@ async function setSelectedMemeber() {
 
 // get member list
 function findMemberList(url) {
-    return fetch("/member/" + url.params.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/member/" + url.params.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get searh param
 function makeSearchParameter() {
     return new SearchParam(pagination.currentPage, null);
-}
-
-// get member one
-function findMemberOne(id) {
-    return fetch(`/member/${id}/one`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
 }
 
 // set member list
@@ -105,8 +81,8 @@ async function setFamilyInfo(e) {
     if (!e.target.dataset.id) {
         return false;
     }
-    const selectedId = e.target.dataset.id;
-    const member = await findMemberById(selectedId);
+    const selectedMemberId = e.target.dataset.id;
+    const member = await findMemberById(selectedMemberId);
 
     if (member) {
         setFamilyGroup(member);
@@ -114,85 +90,39 @@ async function setFamilyInfo(e) {
 }
 
 function findMemberById(id) {
-    return fetch(`/member/${id}/one`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member/${id}/one`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // update family field of member
 function updateMember(data) {
-    return fetch("/member", {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .put("/member", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 function findFamilyByMemberId(memberId) {
-    return fetch(`/family/member/${memberId}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/family/member/${memberId}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 function createFamily(data) {
-    return fetch("/family", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .post("/family", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 function updateFamily(data) {
-    return fetch("/family", {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .put("/family", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 async function deleteFamily(e) {
@@ -207,13 +137,12 @@ async function deleteFamily(e) {
 
         if (family) {
             // set to delete member id from family group
-            family.memberId = family.memberId.filter(item => item._id !== memberId);
+            family.memberId = family.memberId.filter(member => member._id !== memberId);
 
             // delete member id from family group
             await updateFamily(family);
             // delete family group when there is one member in family group
-            if (family && family.memberId.length === 1) {
-                console.log(family);
+            if (family.memberId.length === 1) {
                 deleteFamilyGroup(family);
             }
             // delete family id from family field of member Schema
@@ -226,44 +155,26 @@ async function deleteFamily(e) {
         setFamilyValue();
 
         // refresh family group
-        const selectedId = document.getElementById("title").dataset.id;
-        const member = await findMemberById(selectedId);
+        const selectedMemberId = document.getElementById("title").dataset.id;
+        const member = await findMemberById(selectedMemberId);
         setFamilyGroup(member);
     }
 }
 
 function deleteFamilyGroup(data) {
-    return fetch("/family", {
-        headers: { "Content-Type": "application/json" },
-        method: "DELETE",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .delete("/family", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 function findMemberByName() {
     const name = document.querySelector("#familyForm [name=name]").value || null;
 
-    return fetch(`/member?name=${name}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member?name=${name}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 function searchMember(e) {
@@ -336,15 +247,15 @@ function setSearchResult(data) {
     const searchResult = document.getElementById("familySearchResult");
     searchResult.innerHTML = "";
 
-    data.forEach(item => {
+    data.forEach(member => {
         searchResult.innerHTML += `
             <div class="col-3 pt-3">
                 <div class="card text-center">
                     <div class="frame">
-                        <img src="/${item.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
+                        <img src="/${member.imagePath || defaultImage}" class="card-img-top" id="imagePath" />
                     </div>
-                    <div class="border-top pTB-10 p-2">${item.name}</div>
-                    <button class="btn btn-outline-secondary btn-sm" id="${item._id}" >Add</button>
+                    <div class="border-top pTB-10 p-2">${member.name}</div>
+                    <button class="btn btn-outline-secondary btn-sm" id="${member._id}" >Add</button>
                 </div>
             </div>
         `;
@@ -360,39 +271,37 @@ function setSearchResult(data) {
 
 async function addFamily(e) {
     // standard member id
-    const selectedId = document.getElementById("title").dataset.id;
+    const selectedMemberId = document.getElementById("title").dataset.id;
     // to add member id
-    const addId = e.target.id;
+    const toAddMemberId = e.target.id;
 
-    if (!selectedId) {
+    if (!selectedMemberId) {
         alert("Please, select a standard member");
         return false;
     }
-    if (!addId) {
+    if (!toAddMemberId) {
         alert("Please, select member to add");
         return false;
     }
-    if (selectedId === addId) {
+    if (selectedMemberId === toAddMemberId) {
         alert("Do not add myself");
         return false;
     }
 
     // get family info by standard member id
-    const family = await findFamilyByMemberId(selectedId);
+    const family = await findFamilyByMemberId(selectedMemberId);
 
-    // create new family group
     if (family) {
         // check duplication member id
-        const hasMemberId = family.memberId.indexOf(addId);
-        console.log(hasMemberId, family);
-        // return when duplication member id is exist
-        if (hasMemberId > -1) {
+        const sameMember = family.memberId.filter(member => member._id === toAddMemberId);
+
+        if (sameMember.length > 0) {
             alert("There is a same member in this family");
             return false;
         }
 
         // check duplicaation member id in another family group
-        const anotherGroup = await findFamilyByMemberId(addId);
+        const anotherGroup = await findFamilyByMemberId(toAddMemberId);
 
         // return when duplication member id is already another group
         if (anotherGroup && anotherGroup.memberId.length > 0) {
@@ -401,7 +310,7 @@ async function addFamily(e) {
         }
 
         // add member id to family group
-        family.memberId = [...family.memberId, addId];
+        family.memberId = [...family.memberId, toAddMemberId];
         const result = await updateFamily(family);
 
         // set family after saving family group
@@ -411,7 +320,7 @@ async function addFamily(e) {
 
         for (const memberId of result.memberId) {
             // get member one by member id
-            const member = await findMemberOne(memberId);
+            const member = await findMemberById(memberId);
 
             // update family info to standard member
             if (!member) {
@@ -427,14 +336,15 @@ async function addFamily(e) {
         const standardId = document.getElementById("title").dataset.id;
         const member = await findMemberById(standardId);
         setFamilyGroup(member);
-
-        // update exist family group
     } else {
         // set data of member id
-        const data = { memberId: [selectedId, addId] };
+        const data = { memberId: [selectedMemberId, toAddMemberId] };
 
         // create family group
         const result = await createFamily(data);
+
+        console.log(result);
+        return;
 
         // set family after saving family group
         if (!result) {
@@ -443,7 +353,7 @@ async function addFamily(e) {
 
         for (const memberId of result.memberId) {
             // get member one by member id
-            const member = await findMemberOne(memberId);
+            const member = await findMemberById(memberId);
 
             // update family info to standard member
             if (!member) {

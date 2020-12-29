@@ -389,8 +389,7 @@ async function deleteServiceMember(e) {
     const member = await findMemberById(memberId);
 
     if (member) {
-        member.service = null;
-
+        delete member.service;
         await updateMember(member);
 
         // re-render table
