@@ -51,7 +51,10 @@ passport.deserializeUser(Admin.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.loggedIn = req.isAuthenticated();
-    res.locals.currentUser = req.user;
+    res.locals.currentUser = {
+        name: req.user ? req.user.name : null,
+        contact: req.user ? req.user.contact : null,
+    };
     res.locals.flashMessages = req.flash();
     next();
 });

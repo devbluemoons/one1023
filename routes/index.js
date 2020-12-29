@@ -15,6 +15,7 @@ router.get("/login", (req, res, next) => {
     if (req.isAuthenticated()) {
         res.redirect("/");
     } else {
+        req.flash("error", "[ ! ] Invalid login information");
         res.render("login", { layout: false });
     }
 });
