@@ -1,0 +1,58 @@
+<div class="container pt-4">
+    <h6>System</h6>
+    <hr />
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col">
+                    <h6>
+                        <strong>Register</strong> : Sunday Worship Attendance
+                        <button type="button" class="btn btn-outline-primary ml-3" id="btnRegister">Register</button>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h6>Menu Pages</h6>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="worshipAttendanceModal" tabindex="-1" aria-labelledby="worshipAttendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="worshipAttendanceModalLabel">Worship Attendance</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="worshipAttendanceModalForm">
+                    <div class="row mb-3">
+                        <label class="col-6 col-form-label"><b class="must">*</b>Worship(part1)</label>
+                        <div class="col-6">
+                            <input type="number" class="form-control" name="worship1" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-6 col-form-label"><b class="must">*</b>Worship(part2)</label>
+                        <div class="col-6">
+                            <input type="number" class="form-control" name="worship2" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-3 col-form-label"><b class="must">*</b>Date</label>
+                        <div class="col-9">
+                            <input type="date" class="form-control" name="date" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/system.js" type="module"></script>

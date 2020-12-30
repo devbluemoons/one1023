@@ -36,19 +36,6 @@ async function setSelectedMemeber() {
     }
 }
 
-// get member list
-function findMemberList(url) {
-    return axios
-        .get("/member/" + url.params.search)
-        .then(response => response.data)
-        .catch(e => console.error(e));
-}
-
-// get searh param
-function makeSearchParameter() {
-    return new SearchParam(pagination.currentPage, null);
-}
-
 // set member list
 function setMemberTable(data) {
     // make colHeaders
@@ -89,6 +76,37 @@ async function setFamilyInfo(e) {
     }
 }
 
+function createFamily(data) {
+    return axios
+        .post("/family", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// get member list
+function findMemberList(url) {
+    return axios
+        .get("/member/" + url.params.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+function findMemberByName() {
+    const name = document.querySelector("#familyForm [name=name]").value || null;
+
+    return axios
+        .get(`/member?name=${name}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+function findFamilyByMemberId(memberId) {
+    return axios
+        .get(`/family/member/${memberId}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
 function findMemberById(id) {
     return axios
         .get(`/member/${id}/one`)
@@ -104,25 +122,23 @@ function updateMember(data) {
         .catch(e => console.error(e));
 }
 
-function findFamilyByMemberId(memberId) {
-    return axios
-        .get(`/family/member/${memberId}`)
-        .then(response => response.data)
-        .catch(e => console.error(e));
-}
-
-function createFamily(data) {
-    return axios
-        .post("/family", data)
-        .then(response => response.data)
-        .catch(e => console.error(e));
-}
-
 function updateFamily(data) {
     return axios
         .put("/family", data)
         .then(response => response.data)
         .catch(e => console.error(e));
+}
+
+function deleteFamilyGroup(data) {
+    return axios
+        .delete("/family", { data: { _id: data._id } })
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// get searh param
+function makeSearchParameter() {
+    return new SearchParam(pagination.currentPage, null);
 }
 
 async function deleteFamily(e) {
@@ -166,22 +182,6 @@ async function deleteFamily(e) {
         const member = await findMemberById(selectedMemberId);
         setFamilyGroup(member);
     }
-}
-
-function deleteFamilyGroup(data) {
-    return axios
-        .delete("/family", { data: { _id: data._id } })
-        .then(response => response.data)
-        .catch(e => console.error(e));
-}
-
-function findMemberByName() {
-    const name = document.querySelector("#familyForm [name=name]").value || null;
-
-    return axios
-        .get(`/member?name=${name}`)
-        .then(response => response.data)
-        .catch(e => console.error(e));
 }
 
 function searchMember(e) {
