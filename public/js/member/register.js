@@ -65,21 +65,42 @@ function setDaumPostCode() {
     });
 }
 
+// save form data
+// param : member information
+function saveFormData(data) {
+    axios
+        .post("/member", data)
+        .then(() => {
+            location.href = "/member/list";
+        })
+        .catch(e => console.error(e));
+}
+
 // get member list
 function findMemberOne(id) {
-    // find one member information
-    return fetch(`/member/${id}/one`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
+    return axios
+        .get(`/member/${id}/one`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// get group list
+function findGroupList(param) {
+    return axios
+        .get("/code/division?" + param)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// update form data
+// param : member information
+function updateFormData(data) {
+    axios
+        .put("/member", data)
+        .then(() => {
+            location.href = "/member/list";
         })
-        .catch(e => {
-            console.error(e);
-        });
+        .catch(e => console.error(e));
 }
 
 function setMemberValue(data) {
@@ -358,52 +379,6 @@ function verifyFormData(data) {
     return true;
 }
 
-// save form data
-// param : member information
-function saveFormData(data) {
-    fetch("/member", {
-        method: "POST",
-        body: data,
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data) {
-                location.href = "/member/list";
-            }
-        })
-        .catch(e => {
-            console.error(e);
-        });
-}
-
-// update form data
-// param : member information
-function updateFormData(data) {
-    fetch("/member", {
-        method: "PUT",
-        body: data,
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data) {
-                location.href = "/member/list";
-            }
-        })
-        .catch(e => {
-            console.error(e);
-        });
-}
-
 // number regular expression
 function numberRegExp(e) {
     e.target.value = e.target.value.replace(/[^0-9]/, "");
@@ -417,21 +392,4 @@ function getId() {
     const id = params.get("id");
 
     return id;
-}
-
-// get group list
-function findGroupList(param) {
-    // create member information
-    return fetch("/code/division?" + param, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
 }

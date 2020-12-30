@@ -40,7 +40,6 @@ async function setServiceInfo(e) {
 
         // refresh service detail
         const serviceList = await findMemberByService(e.target.dataset.id);
-
         setServiceDetail(serviceList);
     }
 }
@@ -112,135 +111,68 @@ async function addService(e) {
 
 // get member by member id
 function findMemberById(id) {
-    return fetch(`/member/${id}/one`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member/${id}/one`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get member by member service
 function findMemberByService(service) {
-    return fetch(`/member?service=${service}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member?service=${service}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
+// get member by name
 function findMemberByName() {
     const name = document.querySelector("#serviceDetailForm [name=name]").value || null;
 
-    return fetch(`/member?name=${name}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member?name=${name}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get service list
 function findServiceList(url) {
-    return fetch("/code/division" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/code/division" + url.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get service by id
 function findServiceByDivisionAndId(url) {
-    return fetch("/code/division/id" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/code/division/id" + url.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get service by name
 function findServiceByDivisionAndName(url) {
-    return fetch("/code/division/name" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/code/division/name" + url.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // update family field of member
 function updateMember(data) {
-    return fetch("/member", {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .put("/member", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // create service
 function createService(data) {
-    return fetch("/code", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .post("/code", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 async function setServiceDetail(data) {
@@ -296,8 +228,8 @@ function setServiceTable(data) {
     const columns = [{ data: "name", renderer: expands.identityRenderer }, { data: "valid", renderer: expands.conditionRenderer }, { data: "count" }, { data: this, renderer: expands.editRenderer }];
     // initialize container
     const container = document.getElementById("serviceTable");
-    const positionInfo = container.getBoundingClientRect();
-    const containerTop = positionInfo.top;
+    const serviceInfo = container.getBoundingClientRect();
+    const containerTop = serviceInfo.top;
 
     container.innerHTML = "";
 
@@ -359,20 +291,10 @@ async function editServiceInfo() {
 
 // update service info
 function updateService(data) {
-    return fetch("/code", {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .put("/code", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 async function deleteServiceMember(e) {

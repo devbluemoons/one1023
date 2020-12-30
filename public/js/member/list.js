@@ -36,19 +36,10 @@ function setEvent() {
 
 // get member list
 function findMemberList(url) {
-    // create member information
-    return fetch("/member" + url.params.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/member" + url.params.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // find member list

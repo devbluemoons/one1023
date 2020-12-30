@@ -33,18 +33,10 @@ function setEvent() {
 
 // get member by member id
 function findMemberDetailById(id) {
-    return fetch(`/member/${id}/detail`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member/${id}/detail`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 function getMemberId() {

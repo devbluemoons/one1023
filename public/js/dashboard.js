@@ -278,18 +278,42 @@ async function getValuesForGeneration() {
 
 // get all member list
 function findAllMemberList() {
-    return fetch("/member/all", {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/member/all")
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// create schedule
+function registerSchedule(param) {
+    return axios
+        .post("/calendar", param)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// get calendarScheme list
+function findSchedule(param) {
+    return axios
+        .get(`/calendar?${param}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// update schedule
+function updateSchedule(param) {
+    return axios
+        .put("/calendar", param)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
+// delete schedule
+function deleteSchedule(param) {
+    return axios
+        .delete("/calendar", { data: param })
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 function setCalendar() {
@@ -400,24 +424,6 @@ async function setRegisterSchedule() {
     setCalendar();
 }
 
-function registerSchedule(param) {
-    // create schedule
-    return fetch("/calendar", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(param),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
-}
-
 async function setUpdateSchedule() {
     // set field value to calendar modal form
     const title = calendarModalEl.querySelector("[name=title]").value;
@@ -444,24 +450,6 @@ async function setUpdateSchedule() {
     setCalendar();
 }
 
-function updateSchedule(param) {
-    // update schedule
-    return fetch("/calendar", {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify(param),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
-}
-
 async function setDeleteSchedule() {
     const _id = calendarModalEl.querySelector("[name=_id]").value;
     const param = { _id: _id };
@@ -473,38 +461,4 @@ async function setDeleteSchedule() {
 
     // refresh calendar
     setCalendar();
-}
-
-function deleteSchedule(param) {
-    // update schedule
-    return fetch("/calendar", {
-        headers: { "Content-Type": "application/json" },
-        method: "DELETE",
-        body: JSON.stringify(param),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
-}
-
-// get calendarScheme list
-function findSchedule(param) {
-    return fetch(`/calendar?${param}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
 }

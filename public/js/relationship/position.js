@@ -111,135 +111,68 @@ async function addPosition(e) {
 
 // get member by member id
 function findMemberById(id) {
-    return fetch(`/member/${id}/one`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member/${id}/one`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get member by member position
 function findMemberByPosition(position) {
-    return fetch(`/member?position=${position}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member?position=${position}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
+// get member by name
 function findMemberByName() {
     const name = document.querySelector("#positionDetailForm [name=name]").value || null;
 
-    return fetch(`/member?name=${name}`, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get(`/member?name=${name}`)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get position list
 function findPositionList(url) {
-    return fetch("/code/division" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/code/division" + url.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get position by id
 function findPositionByDivisionAndId(url) {
-    return fetch("/code/division/id" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/code/division/id" + url.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // get position by name
 function findPositionByDivisionAndName(url) {
-    return fetch("/code/division/name" + url.search, {
-        method: "GET",
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .get("/code/division/name" + url.search)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // update family field of member
 function updateMember(data) {
-    return fetch("/member", {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .put("/member", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 // create position
 function createPosition(data) {
-    return fetch("/code", {
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .post("/code", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 async function setPositionDetail(data) {
@@ -358,20 +291,10 @@ async function editPositionInfo() {
 
 // update position info
 function updatePosition(data) {
-    return fetch("/code", {
-        headers: { "Content-Type": "application/json" },
-        method: "PUT",
-        body: JSON.stringify(data),
-    })
-        .then(response => {
-            if (!response.ok) {
-                new Error(response.status);
-            }
-            return response.json();
-        })
-        .catch(e => {
-            console.error(e);
-        });
+    return axios
+        .put("/code", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
 }
 
 async function deletePositionMember(e) {
@@ -389,7 +312,6 @@ async function deletePositionMember(e) {
 
     if (member) {
         delete member.position;
-
         await updateMember(member);
 
         // re-render table
