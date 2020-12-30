@@ -85,7 +85,7 @@ async function setMemberValue(data) {
 
     if (data.family) {
         // except myself family info
-        const familyGroup = data.family.memberId.filter(info => info._id !== data._id);
+        const familyGroup = data.family.members.filter(info => info._id !== data._id);
 
         // sort by birthday
         familyGroup.sort(function (a, b) {

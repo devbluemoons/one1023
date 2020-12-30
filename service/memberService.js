@@ -35,7 +35,7 @@ module.exports = {
     async findDetailById(param) {
         const id = param.id;
         const memberRecord = await Member.findById(id)
-            .populate({ path: "family", populate: "memberId" })
+            .populate({ path: "family", populate: "members" })
             .populate({ path: "group", select: "name" })
             .populate({ path: "position", select: "name" })
             .populate({ path: "service", select: "name" });
@@ -45,7 +45,7 @@ module.exports = {
 
     async findById(param) {
         const id = param.id;
-        const memberRecord = await Member.findById(id).populate({ path: "family", populate: "memberId" });
+        const memberRecord = await Member.findById(id).populate({ path: "family", populate: "members" });
         return memberRecord;
     },
 

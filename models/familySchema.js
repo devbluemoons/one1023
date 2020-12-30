@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const familySchema = new Schema(
     {
-        memberId: [
+        members: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Member",

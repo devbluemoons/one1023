@@ -126,30 +126,37 @@ function updateFamily(data) {
 }
 
 async function deleteFamily(e) {
-    const memberId = e.target.dataset.id;
+    const toDeleteMemberId = e.target.dataset.id;
 
-    if (!memberId) {
+    if (!toDeleteMemberId) {
         return false;
     }
 
     if (confirm("Are you sure to delete this member from family group?")) {
-        const family = await findFamilyByMemberId(memberId);
+        const family = await findFamilyByMemberId(toDeleteMemberId);
 
         if (family) {
-            // set to delete member id from family group
-            family.memberId = family.memberId.filter(member => member._id !== memberId);
+            // set the delete member id from family group
+            const toUpdateFamily = { ...family };
+            toUpdateFamily.members = family.members.filter(member => member._id !== toDeleteMemberId);
 
-            // delete member id from family group
-            await updateFamily(family);
-            // delete family group when there is one member in family group
-            if (family.memberId.length === 1) {
-                deleteFamilyGroup(family);
+            // delete member id from family
+            const updatedFamily = await updateFamily(toUpdateFamily);
+
+            // delete family id from member
+            const toUpdateMember = family.members.find(member => member._id === toDeleteMemberId);
+            delete toUpdateMember.family;
+            await updateMember(toUpdateMember);
+
+            // delete family document when remaining only one member
+            if (updatedFamily.members.length === 1) {
+                await deleteFamilyGroup(updatedFamily);
+
+                updatedFamily.members.map(async member => {
+                    delete member.family;
+                    await updateMember(member);
+                });
             }
-            // delete family id from family field of member Schema
-            const member = await findMemberById(memberId);
-            delete member.family;
-
-            await updateMember(member);
         }
         // re-render table
         setFamilyValue();
@@ -163,7 +170,7 @@ async function deleteFamily(e) {
 
 function deleteFamilyGroup(data) {
     return axios
-        .delete("/family", data)
+        .delete("/family", { data: { _id: data._id } })
         .then(response => response.data)
         .catch(e => console.error(e));
 }
@@ -198,7 +205,7 @@ async function setFamilyGroup(data) {
 
     if (data.family) {
         // except myself family info
-        const familyGroup = data.family.memberId.filter(info => info._id !== data._id);
+        const familyGroup = data.family.members.filter(info => info._id !== data._id);
 
         // sort by birthday
         familyGroup.sort(function (a, b) {
@@ -237,7 +244,7 @@ async function setFamilyGroup(data) {
         });
     }
 
-    // set to same height and width
+    // set the same height and width
     // set vertical-align : middle
     common.setVerticalImage();
 }
@@ -260,7 +267,7 @@ function setSearchResult(data) {
             </div>
         `;
 
-        // set to same height and width
+        // set the same height and width
         // set vertical-align : middle
         common.setVerticalImage();
 
@@ -293,42 +300,37 @@ async function addFamily(e) {
 
     if (family) {
         // check duplication member id
-        const sameMember = family.memberId.filter(member => member._id === toAddMemberId);
+        const sameMember = family.members.find(member => member._id === toAddMemberId);
 
-        if (sameMember.length > 0) {
+        if (sameMember) {
             alert("There is a same member in this family");
             return false;
         }
 
         // check duplicaation member id in another family group
-        const anotherGroup = await findFamilyByMemberId(toAddMemberId);
+        const sameFamily = await findFamilyByMemberId(toAddMemberId);
 
         // return when duplication member id is already another group
-        if (anotherGroup && anotherGroup.memberId.length > 0) {
-            alert("There is already same member in another group");
+        if (sameFamily && sameFamily.members.length > 0) {
+            alert("There is already same member in another family group");
             return false;
         }
 
         // add member id to family group
-        family.memberId = [...family.memberId, toAddMemberId];
-        const result = await updateFamily(family);
+        family.members = [...family.members, toAddMemberId];
+        const updatedFamily = await updateFamily(family);
 
         // set family after saving family group
-        if (!result) {
+        if (!updatedFamily) {
             return false;
         }
 
-        for (const memberId of result.memberId) {
-            // get member one by member id
-            const member = await findMemberById(memberId);
-
-            // update family info to standard member
-            if (!member) {
-                return false;
-            }
-            member.family = result._id;
+        // update family info to each member
+        updatedFamily.members.map(async member => {
+            member.family = updatedFamily._id;
             await updateMember(member);
-        }
+        });
+
         // re-render data table
         setFamilyValue();
 
@@ -338,30 +340,23 @@ async function addFamily(e) {
         setFamilyGroup(member);
     } else {
         // set data of member id
-        const data = { memberId: [selectedMemberId, toAddMemberId] };
+        const data = { members: [selectedMemberId, toAddMemberId] };
 
         // create family group
-        const result = await createFamily(data);
+        const createdFamily = await createFamily(data);
 
-        console.log(result);
-        return;
-
-        // set family after saving family group
-        if (!result) {
+        // check family is created
+        if (!createdFamily) {
             return false;
         }
 
-        for (const memberId of result.memberId) {
-            // get member one by member id
-            const member = await findMemberById(memberId);
-
-            // update family info to standard member
-            if (!member) {
-                return false;
-            }
-            member.family = result._id;
+        // update family info to each member
+        createdFamily.members.map(async member => {
+            // console.log(member);
+            member.family = createdFamily._id;
             await updateMember(member);
-        }
+        });
+
         // re-render data table
         setFamilyValue();
 

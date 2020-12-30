@@ -5,7 +5,7 @@ const FamilyService = require("../service/familyService");
 module.exports = {
     create: async (req, res, next) => {
         const param = req.body;
-        const familyRecord = await FamilyService.save(param);
+        const familyRecord = await FamilyService.create(param);
         res.send(familyRecord);
     },
     findById: async (req, res, next) => {
@@ -13,7 +13,7 @@ module.exports = {
         const familyRecord = await FamilyService.findOne(param);
         res.send(familyRecord);
     },
-    findByMemberId: async (req, res, next) => {
+    findByMembers: async (req, res, next) => {
         const param = req.params;
         const familyRecord = await FamilyService.findOne(param);
         res.send(familyRecord);
