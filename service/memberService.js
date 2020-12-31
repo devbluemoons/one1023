@@ -59,6 +59,7 @@ module.exports = {
         if (!data) {
             return false;
         }
+
         const result = {
             name: data.name,
             contact1: data.contact1,
@@ -76,6 +77,8 @@ module.exports = {
             job: data.job,
             baptism: data.baptism,
             attendance: data.attendance,
+            interest: data.interest,
+            dream: data.dream,
 
             // ref field
             family: data.family || null,

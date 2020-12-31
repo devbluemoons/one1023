@@ -9,5 +9,6 @@ router.get("/", (req, res, next) => {
 
 router.post("/worship/attendance", controller.create);
 router.get("/worship/attendance", controller.findOne);
+router.get("/admin", controller.findAll);
 
 module.exports = router;

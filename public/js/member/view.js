@@ -74,6 +74,8 @@ async function setMemberValue(data) {
     document.getElementById("married").innerHTML = marriedFormatter(data.married);
     document.getElementById("job").innerHTML = data.job;
     document.getElementById("email").innerHTML = data.email;
+    document.getElementById("interest").innerHTML = data.interest;
+    document.getElementById("dream").innerHTML = data.dream;
 
     if (data.family) {
         // except myself family info

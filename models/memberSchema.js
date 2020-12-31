@@ -103,6 +103,12 @@ const memberSchema = new Schema(
                 default: null,
             },
         ],
+        interest: {
+            type: String,
+        },
+        dream: {
+            type: String,
+        },
     },
     {
         timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },

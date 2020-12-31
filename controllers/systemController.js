@@ -14,4 +14,9 @@ module.exports = {
         const attendanceRecord = await SystemService.findOne(param);
         res.send(attendanceRecord);
     },
+
+    findAll: async (req, res, next) => {
+        const adminRecord = await SystemService.findAll();
+        res.send(adminRecord);
+    },
 };
