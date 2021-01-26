@@ -103,7 +103,7 @@ async function setGenerationChart() {
                     data: result.menGeneration,
                 },
                 {
-                    label: "Woen",
+                    label: "Women",
                     backgroundColor: "rgba(179, 0, 89, 0.5)",
                     borderColor: "rgba(179, 0, 89, 0.5)",
                     borderWidth: 2,

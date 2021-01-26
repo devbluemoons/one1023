@@ -21,6 +21,8 @@ router.get("/login", (req, res, next) => {
     }
 });
 
+/** 개발할 동안만 임시로 로그인 기능 주석 처리  */
+/** 배포할 때는 다시 주석해제 해야 한다 */
 // router.use("/", loginController.isAuthenticated, loginRoute);
 router.use("/", loginRoute);
 router.use("/file", fileRoute);

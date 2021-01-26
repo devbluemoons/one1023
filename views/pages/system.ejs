@@ -66,7 +66,59 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                <button type="button" class="btn btn-primary" id="btnSaveWorship">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="administratorModal" tabindex="-1" aria-labelledby="administratorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="administratorModalLabel">Administrator</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <nav class="padding-TB__5em bg-light">
+                            <div class="container">
+                                <form class="d-flex" id="memberForm">
+                                    <input class="form-control" type="text" name="name" placeholder="Please, fill name to register" />
+                                </form>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-12">
+                        <div class="row" id="memberSearchResult"></div>
+                    </div>
+                </div>
+                <form id="administratorModalForm">
+                    <div class="row mb-3">
+                        <label class="col-form-label"><b class="must">*</b>Name</label>
+                        <div class="col-12">
+                            <input type="text" class="form-control" name="name" readonly />
+                        </div>
+                        <label class="col-form-label"><b class="must">*</b>Contact</label>
+                        <div class="col-12">
+                            <input type="text" class="form-control" name="contact" readonly />
+                        </div>
+                        <label class="col-form-label"><b class="must">*</b>Level</label>
+                        <div class="col-12">
+                            <select class="form-select" name="level">
+                                <option value="">...</option>
+                                <option value="01">System Manager</option>
+                                <option value="02">Group Manager</option>
+                                <option value="03">Pastor</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSaveAdmin">Save</button>
             </div>
         </div>
     </div>

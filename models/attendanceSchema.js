@@ -9,12 +9,8 @@ const attendanceSchema = new Schema(
             type: String,
             required: true,
         },
-        type: {
-            type: String,
-            require: true,
-        },
         count: {
-            type: Number,
+            type: [Number],
             required: true,
         },
         date: {

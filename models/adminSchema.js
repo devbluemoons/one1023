@@ -17,14 +17,14 @@ const adminSchema = new Schema(
             required: true,
             unique: true,
         },
-        question: {
-            type: String,
-            require: true,
-        },
-        answer: {
-            type: String,
-            require: true,
-        },
+        // question: {
+        //     type: String,
+        //     require: true,
+        // },
+        // answer: {
+        //     type: String,
+        //     require: true,
+        // },
         level: {
             type: String,
             require: true,
