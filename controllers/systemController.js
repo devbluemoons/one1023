@@ -9,6 +9,10 @@ module.exports = {
         res.send(attendanceRecord);
     },
 
+    addAdmin: (req, res, next) => {
+        SystemService.addAdmin(req, res, next);
+    },
+
     findOne: async (req, res, next) => {
         const param = req.body;
         const attendanceRecord = await SystemService.findOne(param);
@@ -18,5 +22,11 @@ module.exports = {
     findAll: async (req, res, next) => {
         const adminRecord = await SystemService.findAll();
         res.send(adminRecord);
+    },
+
+    redirectView: (req, res, next) => {
+        let redirectPath = res.locals.redirect;
+        if (redirectPath !== undefined) res.redirect(redirectPath);
+        else next();
     },
 };

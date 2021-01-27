@@ -15,7 +15,7 @@ const administratorModalEl = document.getElementById("administratorModal");
 const administratorModal = new bootstrap.Modal(administratorModalEl);
 
 function setValue() {
-    setFamilyValue();
+    setAdminValue();
 }
 
 function setEvent() {
@@ -104,16 +104,24 @@ function setSearchResult(data) {
     });
 }
 
-function setSaveAdministrator() {
+async function setSaveAdministrator() {
     const formData = document.getElementById("administratorModalForm");
     const valid = validAdministratorFormData(formData);
 
     if (valid) {
-        //
+        const param = {
+            name: formData.name.value,
+            contact: formData.contact.value,
+            level: formData.level.value,
+        };
+
+        await registerAdministrator(param);
+        await setAdminValue();
+        administratorModal.hide();
     }
 }
 
-async function setFamilyValue() {
+async function setAdminValue() {
     const adminList = await findAdminList();
 
     if (adminList) {
@@ -152,6 +160,13 @@ function registerWorshipAttendance(data) {
         .catch(e => console.error(e));
 }
 
+function registerAdministrator(data) {
+    return axios
+        .post("/system/administrator", data)
+        .then(response => response.data)
+        .catch(e => console.error(e));
+}
+
 function findOneWorshipAttendance(data) {
     return axios
         .get("/system/worship/attendance", data)
@@ -169,7 +184,7 @@ function findAdminList() {
 // get member by member id
 function findMemberDetailById(id) {
     return axios
-        .get(`/member/${id}/detail`)
+        .get(`/member/${id}/one`)
         .then(response => response.data)
         .catch(e => console.error(e));
 }

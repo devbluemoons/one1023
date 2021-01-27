@@ -1,5 +1,7 @@
 "use strict";
 
+require("dotenv").config();
+
 const Attendance = require("../models/attendanceSchema");
 const Admin = require("../models/adminSchema");
 const Paginator = require("../middlewares/paginator");
@@ -9,6 +11,18 @@ module.exports = {
         return Attendance(param)
             .save()
             .catch(e => console.error(e));
+    },
+
+    addAdmin(req, res, next) {
+        Admin.register(req.body, process.env.DEFAULT_PASSWORD, (e, admin) => {
+            if (admin) {
+                req.flash("success", `${req.body.name}'s account created successfully!`);
+                res.redirect("/system");
+            } else {
+                req.flash("error", `Failed to create user account because: ${e.message}.`);
+                res.redirect("/system");
+            }
+        });
     },
 
     findOne(param) {

@@ -8,6 +8,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/worship/attendance", controller.create);
+router.post("/administrator", controller.addAdmin, controller.redirectView);
 router.get("/worship/attendance", controller.findOne);
 router.get("/admin", controller.findAll);
 
