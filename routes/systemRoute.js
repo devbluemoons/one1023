@@ -11,5 +11,6 @@ router.post("/worship/attendance", controller.create);
 router.post("/administrator", controller.addAdmin, controller.redirectView);
 router.get("/worship/attendance", controller.findOne);
 router.get("/admin", controller.findAll);
+router.delete("/administrator", controller.findByIdAndDelete);
 
 module.exports = router;

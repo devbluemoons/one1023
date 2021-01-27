@@ -85,6 +85,14 @@ export function editRenderer(_instance, td, _row, _col, _prop, value, _cellPrope
     Handsontable.dom.fastInnerHTML(td, button);
 }
 
+export function deleteRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
+    const _id = _instance.getDataAtRowProp(_row, "_id");
+    const button = `<button type="button" class="btn btn-outline-warning" data-id="${_id}" >Delete</button>`;
+
+    Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+    Handsontable.dom.fastInnerHTML(td, button);
+}
+
 export function conditionRenderer(_instance, td, _row, _col, _prop, value, _cellProperties) {
     const valid = value === "01" ? "Use" : "Unused";
 

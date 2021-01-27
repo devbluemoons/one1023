@@ -17,14 +17,6 @@ const adminSchema = new Schema(
             required: true,
             unique: true,
         },
-        // question: {
-        //     type: String,
-        //     require: true,
-        // },
-        // answer: {
-        //     type: String,
-        //     require: true,
-        // },
         level: {
             type: String,
             require: true,
@@ -33,6 +25,10 @@ const adminSchema = new Schema(
             type: String,
             required: true,
             default: "01", // means: use
+        },
+        member: {
+            type: Schema.Types.ObjectId,
+            ref: "Member",
         },
         updatedId: {
             type: Schema.Types.ObjectId,

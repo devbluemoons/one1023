@@ -22,8 +22,9 @@ function setEvent() {
     document.getElementById("btnWorship").addEventListener("click", setRegisterWorshipAttendance);
     document.getElementById("btnSaveWorship").addEventListener("click", setSaveWorshiopAttendance);
     document.getElementById("btnAdmin").addEventListener("click", setRegisterAdministrator);
-    document.querySelector("#memberForm [name=name]").addEventListener("keyup", setSelectedMemeber);
     document.getElementById("btnSaveAdmin").addEventListener("click", setSaveAdministrator);
+    document.querySelector("#adminTable").addEventListener("click", deleteAdministrator);
+    document.querySelector("#memberForm [name=name]").addEventListener("keyup", setSelectedMemeber);
     document.querySelector("input[name=date]").addEventListener("change", validDateValue);
 }
 
@@ -113,6 +114,7 @@ async function setSaveAdministrator() {
             name: formData.name.value,
             contact: formData.contact.value,
             level: formData.level.value,
+            member: formData.memberId.value,
         };
 
         await registerAdministrator(param);
@@ -123,7 +125,6 @@ async function setSaveAdministrator() {
 
 async function setAdminValue() {
     const adminList = await findAdminList();
-
     if (adminList) {
         setAdminTable(adminList);
     }
@@ -132,16 +133,15 @@ async function setAdminValue() {
 // set admin list
 function setAdminTable(data) {
     // make colHeaders
-    const colHeaders = ["Image", "Name", "Age", "Group", "Position", "Level", ""];
+    const colHeaders = ["Image", "Name", "Group", "Position", "Level", ""];
     // make columns
     const columns = [
-        { data: "imagePath", renderer: expands.imageRenderer, width: 50 },
+        { data: "member.imagePath", renderer: expands.imageRenderer, width: 50 },
         { data: "name", renderer: expands.identityRenderer },
-        { data: "birthday" },
-        { data: "address1", className: "htLeft htMiddle" },
-        { data: "" },
-        { data: "" },
-        { data: this, renderer: expands.editRenderer },
+        { data: "member.group.name" },
+        { data: "member.position.name" },
+        { data: "level" },
+        { data: this, renderer: expands.deleteRenderer },
     ];
     // initialize container
     const container = document.getElementById("adminTable");
@@ -202,12 +202,36 @@ async function addMember(e) {
     if (member) {
         const adminForm = document.getElementById("administratorModalForm");
 
+        const memberId = member._id;
         const name = member.name;
         const contact = member.contact1 + member.contact2 + member.contact3;
 
+        adminForm.memberId.value = memberId;
         adminForm.name.value = name;
         adminForm.contact.value = contact;
     }
+}
+
+async function deleteAdministrator(e) {
+    if (!e.target.classList.contains("btn")) {
+        return false;
+    }
+    if (!e.target.dataset.id) {
+        return false;
+    }
+
+    if (!confirm("Are you sure to delete this administrator?")) {
+        return false;
+    }
+
+    const param = { _id: e.target.dataset.id };
+
+    await axios
+        .delete("/system/administrator", { data: param })
+        .then(response => response.data)
+        .catch(e => console.error(e));
+
+    setAdminValue();
 }
 
 function validWorshipAttendanceFormData(formData) {

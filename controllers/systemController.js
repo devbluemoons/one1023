@@ -24,6 +24,12 @@ module.exports = {
         res.send(adminRecord);
     },
 
+    findByIdAndDelete: async (req, res, next) => {
+        const param = req.body;
+        const adminRecord = await SystemService.findByIdAndDelete(param);
+        res.send(adminRecord);
+    },
+
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath !== undefined) res.redirect(redirectPath);

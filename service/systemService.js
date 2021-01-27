@@ -30,10 +30,19 @@ module.exports = {
     },
 
     async findAll() {
-        const adminRecord = await Admin.find().catch(e => console.error(e));
+        // get all administrator account except engineer account
+        const adminRecord = await Admin.find({ name: { $ne: "Engineer" } })
+            .populate({ path: "member", populate: ["group", "position"] })
+            .catch(e => console.error(e));
+
         const totalCount = await Admin.countDocuments().catch(e => console.error(e));
 
         const paginator = new Paginator(totalCount, null, null);
         return { result: adminRecord, paginator };
+    },
+
+    findByIdAndDelete(param) {
+        console.log(param);
+        return Admin.findByIdAndDelete({ _id: param._id }).catch(e => console.error(e));
     },
 };
