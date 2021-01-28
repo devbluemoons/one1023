@@ -10,6 +10,7 @@
         position: fixed;
         display: flex;
         justify-content: space-between;
+        z-index: 10;
     }
 
     header span {
@@ -22,11 +23,23 @@
         <span class="font24">One1023</span>
         <span class="font16 beta">(Beta)</span>
     </a>
-    <span>
+    <span class="dropdown">
         Hello, <b id="loginName"><%= currentUser.name %></b>
         &nbsp;
-        <a href="#">
-            <img src="/img/icons/gear-fill.svg" class="icons" alt="" width="24" height="24" />
+        <a data-bs-toggle="dropdown">
+            <img src="/img/icons/gear-fill.svg" class="icons" width="24" height="24" />
         </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" id="changePassword">Change Password</a></li>
+            <li><a class="dropdown-item" href="/logout" id="logout">Logout</a></li>
+        </ul>
     </span>
 </header>
+
+<script>
+    document.getElementById("changePassword").addEventListener("click", changePassword);
+
+    function changePassword() {
+        //
+    }
+</script>
