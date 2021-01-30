@@ -316,7 +316,7 @@ function deleteSchedule(param) {
         .catch(e => console.error(e));
 }
 
-function setCalendar() {
+function setCalendar(specificDate) {
     const calendarEl = document.getElementById("calendar");
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -399,6 +399,11 @@ function setCalendar() {
     });
 
     calendar.render();
+
+    /** when data is changed in real database */
+    if (specificDate) {
+        calendar.gotoDate(specificDate);
+    }
 }
 
 async function setRegisterSchedule() {
@@ -415,13 +420,14 @@ async function setRegisterSchedule() {
         return false;
     }
 
-    await registerSchedule(param);
+    const result = await registerSchedule(param);
+    const specificDate = result && result.start ? result.start : null;
 
     // close modal
     calendarModal.hide();
 
     // refresh calendar
-    setCalendar();
+    setCalendar(specificDate);
 }
 
 async function setUpdateSchedule() {
@@ -441,24 +447,26 @@ async function setUpdateSchedule() {
         comment: comment,
     };
 
-    await updateSchedule(param);
+    const result = await updateSchedule(param);
+    const specificDate = result && result.start ? result.start : null;
 
     // close modal
     calendarModal.hide();
 
     // refresh calendar
-    setCalendar();
+    setCalendar(specificDate);
 }
 
 async function setDeleteSchedule() {
     const _id = calendarModalEl.querySelector("[name=_id]").value;
     const param = { _id: _id };
 
-    await deleteSchedule(param);
+    const result = await deleteSchedule(param);
+    const specificDate = result && result.start ? result.start : null;
 
     // close modal
     calendarModal.hide();
 
     // refresh calendar
-    setCalendar();
+    setCalendar(specificDate);
 }
